@@ -6,6 +6,5 @@
 
 body {
   @apply bg-main dark:bg-main-dark bg-cover bg-center bg-fixed bg-no-repeat dark:text-white selection:bg-rose-500 selection:text-white;
-  min-height: 100vh;
-  min-height: 100dvh;
+
 }
