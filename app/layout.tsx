@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import I18nProvider from "@/components/i18nProvider";
 import Navbar from "@/components/TheNavbar";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const metadata: Metadata = {
   title: "Felipe Bueno",
@@ -55,6 +57,8 @@ export default function RootLayout({
         <I18nProvider>
           <Navbar />
           {children}
+          <Analytics />
+          <SpeedInsights />
         </I18nProvider>
       </body>
     </html>
