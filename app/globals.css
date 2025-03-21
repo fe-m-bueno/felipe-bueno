@@ -9,17 +9,28 @@ html {
 }
 
 body {
-  @apply bg-main dark:bg-main-dark bg-cover bg-center bg-no-repeat dark:text-white selection:bg-rose-500 selection:text-white;
-  background-attachment: fixed;
   min-height: 100dvh;
   min-height: -webkit-fill-available;
+  position: relative;
+  color: theme('colors.black');
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  @apply bg-main dark:bg-main-dark bg-cover bg-center bg-no-repeat;
   background-size: cover;
 }
 
-@media (max-width: 768px) {
-  body {
-    @apply bg-main dark:bg-main-dark bg-cover bg-center bg-no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-  }
+.dark body {
+  color: theme('colors.white');
+}
+
+::selection {
+  @apply bg-rose-500 text-white;
 }
