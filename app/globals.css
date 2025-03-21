@@ -8,3 +8,9 @@ body {
   @apply bg-main dark:bg-main-dark bg-cover bg-center bg-fixed bg-no-repeat dark:text-white selection:bg-rose-500 selection:text-white;
 
 }
+
+@media (max-width: 768px) {
+  body {
+    @apply bg-main-mobile dark:bg-main-dark-mobile bg-cover bg-center bg-fixed bg-no-repeat dark:text-white selection:bg-rose-500 selection:text-white;
+  }
+}

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import I18nProvider from "@/components/i18nProvider";
 import Navbar from "@/components/TheNavbar";
@@ -38,12 +38,12 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+};
+
+export const viewport: Viewport = {
   themeColor: "#f43f5e",
-  colorScheme: "dark",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
