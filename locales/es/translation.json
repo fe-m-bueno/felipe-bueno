@@ -1,0 +1,41 @@
+{
+    "navbar": {
+        "home": "Inicio",
+        "projects": "Proyectos",
+        "about": "Acerca de",
+        "contact": "Contacto"
+    },
+    "hero": {
+        "title": "¡Hola, soy Felipe!",
+        "description": "Soy un desarrollador front-end viviendo en Curitiba, Paraná, Brasil.",
+        "description2": "Para mí, crear experiencias digitales comienza transformando ideas en algo rápido, accesible y envolvente.",
+        "scrollDown": "Desplázate hacia abajo",
+        "clickToRemoveBlur": "Clique para ver la cara de Felipe"
+    },
+    "resume": {
+        "experience": "Experiencia",
+        "education": "Educación",
+        "additionalEducation": "Educación Adicional",
+        "seeFullResume": "Ver Currículo Completo"
+    },
+    "about": {
+        "recentTrack": "Reproduciendo Ahora 🎧"
+    },
+    "projects": {
+        "seeAllProjects": "Ver Todos los Proyectos",
+        "title": "Proyectos Seleccionados",
+        "viewProject": "Ver Proyecto",
+        "alltitle": "Todos los Proyectos"
+    },
+    "contact": {
+        "title": "Contáctame",
+        "name": "Nombre",
+        "email": "Correo Electrónico",
+        "message": "Mensaje",
+        "send": "Enviar Mensaje",
+        "sending": "Enviando...",
+        "success": "¡Mensaje enviado con éxito! Me pondré en contacto pronto.",
+        "errorSending": "Error al enviar el mensaje. Por favor, inténtalo de nuevo.",
+        "tooManySubmissions": "Demasiados intentos. Por favor, inténtalo más tarde."
+    }
+}

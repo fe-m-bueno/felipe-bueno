@@ -1,27 +1,13 @@
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/geist-mono';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-main dark:bg-main-dark bg-cover bg-fixed bg-no-repeat dark:text-white selection:bg-rose-500 selection:text-white;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
+
+
