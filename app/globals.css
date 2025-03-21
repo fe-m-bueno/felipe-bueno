@@ -19,7 +19,7 @@ body {
 @media (max-width: 768px) {
   body {
     @apply bg-main dark:bg-main-dark bg-cover bg-center bg-no-repeat;
-    background-attachment: scroll;
+    background-attachment: fixed;
     background-size: cover;
   }
 }
