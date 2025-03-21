@@ -5,7 +5,7 @@ import Navbar from "@/components/TheNavbar";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   title: "Felipe Bueno",
   description:
     "Felipe Bueno is a frontend web developer with a passion for creating beautiful and functional user interfaces.",
