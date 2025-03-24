@@ -32,17 +32,17 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-10 w-screen">
       <div className="relative">
-        <div className="mx-4 md:mx-48 flex items-center justify-between p-4">
+        <div className="~mx-4/8 lg:~mx-24/48 flex items-center justify-between p-4">
           <div className="flex items-center space-x-4">
             <Link
               href={path === "/projects" ? "/" : "#landing"}
               aria-label="Home"
-              className="font-bold text-xl"
+              className="font-bold ~text-base/xl"
             >
               Felipe Bueno
             </Link>
           </div>
-          <div className="hidden md:flex items-center space-x-8 text-medium">
+          <div className="hidden lg:flex items-center space-x-8 text-medium">
             <Link
               href="https://linkedin.com/in/felipe-martins-bueno"
               target="_blank"
@@ -92,7 +92,7 @@ export default function Navbar() {
           </div>
           <div
             onClick={() => setOpen(true)}
-            className="md:hidden flex gap-2 dark:hover:bg-white/25 transition-all duration-200 ease-in-out active:translate-y-1 dark:active:bg-white/45 active:bg-black/15 hover:bg-black/5 rounded px-2 py-2 cursor-pointer"
+            className="lg:hidden flex gap-2 dark:hover:bg-white/25 transition-all duration-200 ease-in-out active:translate-y-1 dark:active:bg-white/45 active:bg-black/15 hover:bg-black/5 rounded px-2 py-2 cursor-pointer"
           >
             <Menu className="w-6 h-6" />
           </div>
@@ -167,8 +167,8 @@ export default function Navbar() {
           </motion.div>
         </div>
 
-        <div className="absolute inset-0 bg-white dark:bg-black blur -z-10 h-2/3 md:h-4/6"></div>
-        <div className="fixed inset-0 bg-gradient-to-b from-white via-white/[99%]  to-transparent dark:from-black md:dark:via-black/35 dark:via-black/95 dark:to-transparent h-20 -z-10"></div>
+        <div className="absolute inset-0 bg-white dark:bg-black blur -z-10 h-2/3 lg:h-4/6"></div>
+        <div className="fixed inset-0 bg-gradient-to-b from-white via-white/[99%]  to-transparent dark:from-black lg:dark:via-black/35 dark:via-black/95 dark:to-transparent h-20 -z-10"></div>
       </div>
     </nav>
   );

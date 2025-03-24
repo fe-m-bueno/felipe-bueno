@@ -11,11 +11,11 @@ export default function ProjectsPage() {
   const data = projects[locale] || projects.en;
 
   return (
-    <div className="w-screen mx-auto py-6 md:px-16 px-4 flex flex-col items-center justify-center">
+    <div className="w-screen mx-auto py-6 lg:px-16 px-4 flex flex-col items-center justify-center">
       <h1 className="text-3xl font-bold mt-10 mb-6">
         {t("projects.alltitle")}
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 w-full">
         {data.map((project) => (
           <ProjectCard
             key={project.id}

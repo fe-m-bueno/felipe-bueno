@@ -15,7 +15,7 @@ export default function MouseGradient() {
 
   return (
     <div
-      className="fixed inset-0 pointer-events-none z-[-1] transition-opacity duration-200 md:opacity-100 opacity-0"
+      className="fixed inset-0 pointer-events-none z-[-1] transition-opacity duration-200 lg:opacity-100 opacity-0"
       style={gradientStyle}
     ></div>
   );

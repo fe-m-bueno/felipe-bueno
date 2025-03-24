@@ -40,16 +40,16 @@ export default function Hero() {
   const { x, y } = useMousePosition();
   const [filter, setFilter] = useState(true);
   return (
-    <section className="relative grid grid-cols-1 md:grid-cols-2 items-center justify-center text-center px-4 w-screen mt-24 md:mt-0">
-      <div className="md:grid md:grid-rows-4 md:h-screen flex flex-col justify-center items-center">
-        <div className="md:row-start-2 flex flex-col justify-center items-center md:items-start md:ml-32 ml-4">
+    <section className="relative grid grid-cols-1 lg:grid-cols-2 items-center justify-center text-center px-4 w-screen mt-24 lg:mt-0">
+      <div className="lg:grid lg:grid-rows-4 lg:h-screen flex flex-col justify-center items-center">
+        <div className="lg:row-start-2 flex flex-col justify-center items-center lg:items-start lg:ml-32 mx-auto sm:pl-0 lg:pl-24">
           <motion.h1
             className="~text-3xl/7xl mb-8 "
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            <span className="font-bold">
+            <span className="font-bold inline-block text-nowrap">
               {t("hero.title")}
               <motion.span
                 animate={{ rotateZ: [0, 10, -10, 10, -10, 0] }}
@@ -65,7 +65,7 @@ export default function Hero() {
             </span>
           </motion.h1>
           <motion.p
-            className="~text-base/2xl mb-8 text-center md:text-start"
+            className="~text-base/2xl mb-8 text-center lg:text-start"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
@@ -73,7 +73,7 @@ export default function Hero() {
             {t("hero.description")}
           </motion.p>
           <motion.p
-            className="~text-base/2xl mb-8 text-center md:text-start font-semibold"
+            className="~text-base/2xl mb-8 text-center lg:text-start font-semibold"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
@@ -81,7 +81,7 @@ export default function Hero() {
             {t("hero.description2")}
           </motion.p>
         </div>
-        <div className="md:row-start-3 flex flex-wrap justify-center items-center md:justify-start md:items-start gap-2 md:ml-32 h-fit ml-4">
+        <div className="lg:row-start-3 flex flex-wrap justify-center items-center lg:justify-start lg:items-start gap-2 lg:ml-32 h-fit lg:mt-12 lg:mt-24 mx-auto sm:pl-0 lg:pl-24">
           {skills.map((skill) => (
             <Badge key={skill.name} name={skill.name} icon={skill.icon} />
           ))}
@@ -89,7 +89,7 @@ export default function Hero() {
       </div>
 
       <motion.div
-        className="relative flex flex-col items-center justify-center mt-8 md:mt-0"
+        className="relative flex flex-col items-center justify-center mt-8 lg:mt-0"
         initial={{ opacity: 0 }}
         animate={{
           opacity: 1,
@@ -108,11 +108,11 @@ export default function Hero() {
         transition={{ type: "spring", stiffness: 50, damping: 10 }}
       >
         <div
-          className="rounded-3xl p-px h-1/2 w-1/2 md:h-full overflow-hidden bg-gradient-to-b from-rose-400 to-rose-400/10 shadow-2xl shadow-white/10"
+          className="rounded-3xl p-px h-1/2 w-1/2 lg:h-full overflow-hidden bg-gradient-to-b from-rose-400 to-rose-400/10 shadow-2xl shadow-white/10"
           onClick={() => setFilter(!filter)}
         >
           {filter && (
-            <p className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-base z-10 text-white font-semibold px-8 md:px-0">
+            <p className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-base z-10 text-white font-semibold px-8 lg:px-0">
               <span className="inline-flex items-center gap-2">
                 <EyeClosed className="w-6 h-6" /> {t("hero.clickToRemoveBlur")}
               </span>
@@ -140,12 +140,12 @@ export default function Hero() {
 
       <Link
         href="#about"
-        className="hidden md:block absolute top-1/2 -translate-y-1/2 right-8 z-10 cursor-pointer transition-all duration-100 hover:scale-110 active:scale-105 bg-white/85 backdrop-blur rounded-full p-2 border border-gray-200 "
+        className="hidden lg:block absolute top-1/2 -translate-y-1/2 right-8 z-10 cursor-pointer transition-all duration-100 hover:scale-110 active:scale-105 bg-white/85 backdrop-blur rounded-full p-2 border border-gray-200 "
       >
         <ArrowRight className="w-6 h-6 text-black" />
       </Link>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:block">
         <motion.div
           className="animate-bounce items-center justify-center"
           initial={{ opacity: 0 }}

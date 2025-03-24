@@ -14,7 +14,7 @@ export default function SectionContainer() {
     const container = scrollRef.current;
     if (!container) return;
 
-    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
     let isScrolling: NodeJS.Timeout;
     let accumulatedDelta = 0;
 
@@ -58,7 +58,7 @@ export default function SectionContainer() {
   return (
     <motion.div
       ref={scrollRef}
-      className="md:flex md:overflow-x-auto md:mt-0 overflow-y-auto md:overflow-y-hidden md:snap-x md:snap-mandatory md:h-screen flex flex-col md:flex-row scroll-smooth no-scrollbar"
+      className="lg:flex lg:overflow-x-auto lg:mt-0 overflow-y-auto lg:overflow-y-hidden lg:snap-x lg:snap-mandatory lg:h-screen flex flex-col lg:flex-row scroll-smooth no-scrollbar"
       style={{
         scrollSnapType: "x mandatory",
         WebkitOverflowScrolling: "touch",
@@ -66,28 +66,28 @@ export default function SectionContainer() {
     >
       <section
         id="landing"
-        className="w-full md:w-screen h-full md:h-screen flex flex-col justify-center items-center md:snap-center"
+        className="w-full lg:w-screen h-full lg:h-screen flex flex-col justify-center items-center lg:snap-center"
       >
         <Hero />
       </section>
       <section
         id="about"
-        className="w-full md:w-screen h-full md:h-screen flex flex-col justify-center items-center md:snap-center"
+        className="w-full lg:w-screen h-full lg:h-screen flex flex-col justify-center items-center lg:snap-center"
       >
         <AboutMe />
       </section>
       <section
         id="projects"
-        className="w-full md:w-screen h-full md:h-screen flex flex-col justify-center items-center md:snap-center"
+        className="w-full lg:w-screen h-full lg:h-screen flex flex-col justify-center items-center lg:snap-center"
       >
         <ProjectsSection />
       </section>
       <section
         id="contact"
-        className="relative w-full md:w-screen h-full md:h-screen flex flex-col md:justify-center justify-between items-center md:snap-center"
+        className="relative w-full lg:w-screen h-full lg:h-screen flex flex-col lg:justify-center justify-between items-center lg:snap-center"
       >
         <ContactForm />
-        <div className="md:absolute md:bottom-0">
+        <div className="lg:absolute lg:bottom-0">
           <TheFooter />
         </div>
       </section>
