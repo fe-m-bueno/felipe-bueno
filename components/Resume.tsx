@@ -11,7 +11,7 @@ export default function Resume() {
   const data = resume[locale] || resume.en;
 
   return (
-    <section className="px-6 py-6 md:py-24 flex flex-col justify-between md:h-screen min-h-screen ">
+    <section className="px-6 py-6 lg:py-24 flex flex-col justify-between lg:h-screen min-h-screen overflow-scroll">
       <h2 className="~text-xl/2xl font-bold">{t("resume.experience")}</h2>
       <ul className="my-4 space-y-4">
         {data.experience.map((exp, index) => (
@@ -60,7 +60,7 @@ export default function Resume() {
         ))}
       </ul>
 
-      <div className="mt-6 flex flex-col items-center justify-center md:items-end md:justify-end">
+      <div className="mt-6 flex flex-col items-center justify-center lg:items-end lg:justify-end">
         <Link
           href={data.pdf}
           target="_blank"

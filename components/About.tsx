@@ -10,7 +10,7 @@ export default function About() {
   const data = about[locale] || about.en;
 
   return (
-    <section className="px-6 py-6 lg:py-24 flex flex-col justify-between lg:h-screen min-h-screen">
+    <section className="px-6 py-6 lg:py-24 flex flex-col justify-between lg:h-screen min-h-screen overflow-scroll">
       <h2 className="~text-xl/2xl font-bold">{data.title}</h2>
       <p className="mt-4 whitespace-pre-line text-justify backdrop-blur-3xl p-6 bg-white/[3%] rounded-3xl">
         {data.description}
