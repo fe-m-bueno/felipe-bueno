@@ -1,20 +1,17 @@
-"use client";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { contactFormSchema } from "@/lib/validation";
-import type { ContactFormData } from "@/lib/validation";
-import { z } from "zod";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
-import TheFooter from "./TheFooter";
+'use client';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { contactFormSchema } from '@/lib/validation';
+import type { ContactFormData } from '@/lib/validation';
+import { z } from 'zod';
 
 export default function ContactForm() {
   const { t } = useTranslation();
   const [form, setForm] = useState<ContactFormData & { honeypot?: string }>({
-    name: "",
-    email: "",
-    message: "",
-    honeypot: "",
+    name: '',
+    email: '',
+    message: '',
+    honeypot: '',
   });
   const [errors, setErrors] = useState<{
     name?: string;
@@ -41,7 +38,7 @@ export default function ContactForm() {
     e.preventDefault();
 
     if (submitCount > 10) {
-      setErrors({ form: t("contact.tooManySubmissions") });
+      setErrors({ form: t('contact.tooManySubmissions') });
       return;
     }
 
@@ -64,9 +61,9 @@ export default function ContactForm() {
     setErrors({});
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
 
@@ -76,34 +73,34 @@ export default function ContactForm() {
         if (data.details?.fieldErrors) {
           setErrors(data.details.fieldErrors);
         } else {
-          setErrors({ form: data.error || t("contact.errorSending") });
+          setErrors({ form: data.error || t('contact.errorSending') });
         }
         return;
       }
 
       setSuccess(true);
-      setForm({ name: "", email: "", message: "", honeypot: "" });
+      setForm({ name: '', email: '', message: '', honeypot: '' });
       setSubmitCount((prev) => prev + 1);
     } catch (error) {
-      console.error("Error:", error);
-      setErrors({ form: t("contact.errorSending") });
+      console.error('Error:', error);
+      setErrors({ form: t('contact.errorSending') });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section className="relative w-screen px-4 md:px-16 py-6">
+    <section className="relative w-full px-4 md:px-16 py-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-center">
         <h1 className="~text-2xl/3xl font-bold mt-10 mb-6">
-          {t("contact.title")}
+          {t('contact.title')}
         </h1>
       </div>
 
       <div className="max-w-lg mx-auto">
         {success && (
           <div className="mb-6 p-4 bg-green-500/20 border border-green-500/50 rounded-lg">
-            <p className="text-green-500">{t("contact.success")}</p>
+            <p className="text-green-500">{t('contact.success')}</p>
           </div>
         )}
 
@@ -116,7 +113,7 @@ export default function ContactForm() {
         <form onSubmit={handleSubmit} noValidate className="space-y-6">
           <div className="space-y-2">
             <label htmlFor="name" className="block text-sm font-medium">
-              {t("contact.name")}
+              {t('contact.name')}
             </label>
             <input
               type="text"
@@ -126,7 +123,7 @@ export default function ContactForm() {
               onChange={handleChange}
               disabled={loading}
               className="w-full p-3 bg-white/[3%] border border-gray-400/20 dark:border-gray-200/20 rounded-lg shadow-sm backdrop-blur-3xl focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-              aria-invalid={errors.name ? "true" : "false"}
+              aria-invalid={errors.name ? 'true' : 'false'}
             />
             {errors.name && (
               <span className="text-red-500 text-sm">{errors.name}</span>
@@ -135,7 +132,7 @@ export default function ContactForm() {
 
           <div className="space-y-2">
             <label htmlFor="email" className="block text-sm font-medium">
-              {t("contact.email")}
+              {t('contact.email')}
             </label>
             <input
               type="email"
@@ -145,7 +142,7 @@ export default function ContactForm() {
               onChange={handleChange}
               disabled={loading}
               className="w-full p-3 bg-white/[3%] border border-gray-400/20 dark:border-gray-200/20 rounded-lg shadow-sm backdrop-blur-3xl focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-              aria-invalid={errors.email ? "true" : "false"}
+              aria-invalid={errors.email ? 'true' : 'false'}
             />
             {errors.email && (
               <span className="text-red-500 text-sm">{errors.email}</span>
@@ -154,7 +151,7 @@ export default function ContactForm() {
 
           <div className="space-y-2">
             <label htmlFor="message" className="block text-sm font-medium">
-              {t("contact.message")}
+              {t('contact.message')}
             </label>
             <textarea
               id="message"
@@ -164,7 +161,7 @@ export default function ContactForm() {
               disabled={loading}
               rows={5}
               className="w-full p-3 bg-white/[3%] border border-gray-400/20 dark:border-gray-200/20 rounded-lg shadow-sm backdrop-blur-3xl focus:ring-2 focus:ring-rose-500 focus:border-transparent max-h-[30rem]"
-              aria-invalid={errors.message ? "true" : "false"}
+              aria-invalid={errors.message ? 'true' : 'false'}
             />
             {errors.message && (
               <span className="text-red-500 text-sm">{errors.message}</span>
@@ -189,15 +186,9 @@ export default function ContactForm() {
             disabled={loading}
             className="w-full px-4 py-3 bg-rose-600/85 hover:bg-rose-500/85 backdrop-blur-md dark:bg-rose-600/85 dark:hover:bg-rose-700/85 border border-gray-200/20 rounded-xl text-white transition font-bold disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? t("contact.sending") : t("contact.send")}
+            {loading ? t('contact.sending') : t('contact.send')}
           </button>
         </form>
-        <Link
-          href="#projects"
-          className="hidden md:block absolute top-1/2 -translate-y-1/2 left-8 z-10 cursor-pointer transition-all duration-100 hover:scale-110 active:scale-105 bg-white/85 backdrop-blur rounded-full p-2 border border-gray-200 "
-        >
-          <ArrowLeft className="w-6 h-6 text-black" />
-        </Link>
       </div>
     </section>
   );

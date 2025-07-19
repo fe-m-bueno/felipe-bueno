@@ -1,8 +1,8 @@
-import Image from "next/image";
-import Badge from "./Badge";
-import Link from "next/link";
-import { GitHub } from "@mui/icons-material";
-import { useTranslation } from "react-i18next";
+import Image from 'next/image';
+import Badge from './Badge';
+import Link from 'next/link';
+import { GitHub } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 type ProjectProps = {
   title: string;
@@ -28,7 +28,7 @@ export default function ProjectCard({
     <div className="relative p-2 border border-gray-400/20 dark:border-gray-200/20 rounded-lg shadow-lg bg-white/[3%] hover:bg-white/[9%] transition-all ease-in-out duration-200 backdrop-blur-3xl group">
       <div
         className="w-full overflow-hidden rounded-lg"
-        style={{ height: height ? `${height}px` : "24rem" }}
+        style={{ height: height ? `${height}px` : '24rem' }}
       >
         <Image
           src={image}
@@ -62,7 +62,7 @@ export default function ProjectCard({
             target="_blank"
             className="px-3 py-1 bg-rose-600/85 hover:bg-rose-500/85 backdrop-blur-md dark:bg-rose-600/85 dark:hover:bg-rose-700/85 border border-gray-200/20 rounded-xl text-white transition font-bold ~text-sm/base"
           >
-            {t("projects.viewProject")}
+            {t('projects.viewProject')}
           </Link>
           <Link
             href={github}

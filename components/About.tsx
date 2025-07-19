@@ -1,16 +1,16 @@
-import { useTranslation } from "react-i18next";
-import { about } from "@/data/about";
-import RecentTrack from "./RecentTrack";
+import { useTranslation } from 'react-i18next';
+import { about } from '@/data/about';
+import RecentTrack from './RecentTrack';
 
-type LocaleKey = "en" | "pt" | "es";
+type LocaleKey = 'en' | 'pt' | 'es';
 
 export default function About() {
   const { i18n, t } = useTranslation();
-  const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";
+  const locale = (i18n.language.split('-')[0] as LocaleKey) || 'en';
   const data = about[locale] || about.en;
 
   return (
-    <section className="px-6 py-6 lg:py-24 flex flex-col justify-between lg:h-screen min-h-screen overflow-scroll">
+    <section className="px-6 py-6 lg:py-24 flex flex-col justify-start min-h-screen">
       <h2 className="~text-xl/2xl font-bold">{data.title}</h2>
       <p className="mt-4 whitespace-pre-line text-justify backdrop-blur-3xl p-6 bg-white/[3%] rounded-3xl">
         {data.description}
@@ -28,9 +28,9 @@ export default function About() {
         ))}
       </ul>
 
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center mt-8">
         <h3 className="mt-6 ~text-xl/2xl font-semibold">
-          {t("about.recentTrack")}
+          {t('about.recentTrack')}
         </h3>
         <RecentTrack />
       </div>

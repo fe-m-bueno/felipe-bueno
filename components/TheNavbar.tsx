@@ -1,13 +1,13 @@
-"use client";
-import Link from "next/link";
-import { useTranslation } from "react-i18next";
-import { LinkedIn, GitHub } from "@mui/icons-material";
-import ThemeToggle from "./ThemeToggle";
-import LanguageSelector from "./LanguageSelector";
-import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
-import { motion } from "motion/react";
+'use client';
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+import { LinkedIn, GitHub } from '@mui/icons-material';
+import ThemeToggle from './ThemeToggle';
+import LanguageSelector from './LanguageSelector';
+import { usePathname } from 'next/navigation';
+import { Menu, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 
 export default function Navbar() {
   const { t } = useTranslation();
@@ -16,17 +16,17 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         setOpen(false);
       }
     };
 
     if (open) {
-      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener('keydown', handleKeyDown);
     }
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [open]);
   return (
@@ -35,7 +35,7 @@ export default function Navbar() {
         <div className="~mx-4/8 lg:~mx-24/48 flex items-center justify-between p-4">
           <div className="flex items-center space-x-4">
             <Link
-              href={path === "/projects" ? "/" : "#landing"}
+              href={path === '/projects' ? '/' : '#landing'}
               aria-label="Home"
               className="font-bold ~text-base/xl"
             >
@@ -73,19 +73,19 @@ export default function Navbar() {
               href="#about"
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
             >
-              {t("navbar.about")}
+              {t('navbar.about')}
             </Link>
             <Link
               href="#projects"
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
             >
-              {t("navbar.projects")}
+              {t('navbar.projects')}
             </Link>
             <Link
               href="#contact"
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
             >
-              {t("navbar.contact")}
+              {t('navbar.contact')}
             </Link>
             <ThemeToggle />
             <LanguageSelector />
@@ -103,10 +103,10 @@ export default function Navbar() {
             />
           )}
           <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: open ? "0%" : "100%" }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            onKeyDown={(e) => e.key === "Enter" && setOpen(false)}
+            initial={{ x: '100%' }}
+            animate={{ x: open ? '0%' : '100%' }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            onKeyDown={(e) => e.key === 'Enter' && setOpen(false)}
             className="fixed top-0 right-0 w-64 h-full bg-white dark:bg-zinc-950 z-50 shadow-xl flex flex-col items-start p-6"
           >
             <button
@@ -121,21 +121,21 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className="text-lg font-medium hover:text-rose-500"
               >
-                {t("navbar.home")}
+                {t('navbar.home')}
               </Link>
               <Link
                 href="#about"
                 onClick={() => setOpen(false)}
                 className="text-lg font-medium hover:text-rose-500"
               >
-                {t("navbar.about")}
+                {t('navbar.about')}
               </Link>
               <Link
                 href="#projects"
                 onClick={() => setOpen(false)}
                 className="text-lg font-medium hover:text-rose-500"
               >
-                {t("navbar.projects")}
+                {t('navbar.projects')}
               </Link>
 
               <Link
@@ -143,7 +143,7 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className="text-lg font-medium hover:text-rose-500"
               >
-                {t("navbar.contact")}
+                {t('navbar.contact')}
               </Link>
               <Link
                 href="https://linkedin.com/in/felipe-martins-bueno"
@@ -167,7 +167,7 @@ export default function Navbar() {
           </motion.div>
         </div>
 
-        <div className="absolute inset-0 bg-white dark:bg-black blur -z-10 h-2/3 lg:h-4/6"></div>
+        <div className="absolute inset-0 bg-white dark:bg-black blur -z-10 h-2/3 lg:h-5/6"></div>
         <div className="fixed inset-0 bg-gradient-to-b from-white via-white/[99%]  to-transparent dark:from-black lg:dark:via-black/35 dark:via-black/95 dark:to-transparent h-20 -z-10"></div>
       </div>
     </nav>
