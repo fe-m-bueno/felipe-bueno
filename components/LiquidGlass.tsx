@@ -6,14 +6,12 @@ interface LiquidGlassProps {
   children: React.ReactNode;
   className?: string;
   variant?: "badge" | "card" | "default";
-  as?: keyof JSX.IntrinsicElements;
 }
 
 function LiquidGlassComponent({
   children,
   className = "",
   variant = "default",
-  as: Component = "div",
 }: LiquidGlassProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
@@ -71,7 +69,12 @@ function LiquidGlassComponent({
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [handleMouseMove, handleMouseEnter, handleMouseLeave, prefersReducedMotion]);
+  }, [
+    handleMouseMove,
+    handleMouseEnter,
+    handleMouseLeave,
+    prefersReducedMotion,
+  ]);
 
   const variantClasses = {
     badge: "liquid-glass-badge",
@@ -83,8 +86,8 @@ function LiquidGlassComponent({
   const hoveredClass = isHovered ? "liquid-glass-active" : "";
 
   return (
-    <Component
-      ref={containerRef as React.RefObject<HTMLDivElement>}
+    <div
+      ref={containerRef}
       className={`${baseClass} ${hoveredClass} ${className}`}
       style={
         {
@@ -94,10 +97,9 @@ function LiquidGlassComponent({
       }
     >
       {children}
-    </Component>
+    </div>
   );
 }
 
 const LiquidGlass = memo(LiquidGlassComponent);
 export default LiquidGlass;
-
