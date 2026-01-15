@@ -22,7 +22,7 @@ body {
   min-height: -webkit-fill-available;
   position: relative;
   color: theme('colors.black');
-  transition: color 0.2s ease-in-out;
+  transition: color 0.15s ease-in-out;
 }
 
 body::before {
@@ -37,7 +37,7 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  transition: background-image 0.3s ease-in-out;
+  transition: background-image 0.15s ease-in-out;
 }
 
 .dark body {
