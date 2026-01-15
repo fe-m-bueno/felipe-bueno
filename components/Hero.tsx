@@ -350,7 +350,7 @@ export default function Hero() {
   return (
     <section
       id="landing"
-      className="relative grid grid-cols-1 lg:grid-cols-2 items-center justify-center text-center px-4 w-full pt-28 lg:pt-20 max-w-8xl mx-auto isolation-auto"
+      className="relative grid grid-cols-1 lg:grid-cols-2 items-center justify-center text-center px-4 w-full pt-28 lg:pt-20 max-w-8xl mx-auto isolation-auto overflow-x-clip"
     >
       <div className="flex flex-col justify-center items-center lg:h-screen gap-8 lg:gap-12">
         <div className="flex flex-col justify-center items-center lg:items-start lg:ml-16 mx-auto sm:pl-0 lg:pl-12">
