@@ -2,19 +2,28 @@ import { useState, useEffect, useCallback } from 'react';
 
 export type Theme = 'light' | 'dark';
 
+// Função para obter o tema inicial do DOM (setado pelo script inline no layout)
+function getInitialTheme(): Theme {
+  if (typeof window !== 'undefined') {
+    return (document.documentElement.getAttribute('data-mode') as Theme) || 'light';
+  }
+  return 'light';
+}
+
 export function useTheme() {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const storedTheme = (localStorage.getItem('theme') as Theme) || 'light';
-    setTheme(storedTheme);
+    // Sincroniza com o estado atual do DOM (que foi setado pelo script inline)
+    const currentTheme = (document.documentElement.getAttribute('data-mode') as Theme) || 'light';
+    setTheme(currentTheme);
   }, []);
 
-  const applyTheme = useCallback((theme: Theme) => {
-    document.documentElement.setAttribute('data-mode', theme);
-    if (theme === 'dark') {
+  const applyTheme = useCallback((newTheme: Theme) => {
+    document.documentElement.setAttribute('data-mode', newTheme);
+    if (newTheme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
@@ -27,16 +36,6 @@ export function useTheme() {
     localStorage.setItem('theme', newTheme);
     applyTheme(newTheme);
   }, [theme, applyTheme]);
-
-  // Sincronizar com o estado atual quando mounted
-  useEffect(() => {
-    if (mounted) {
-      const currentTheme =
-        (document.documentElement.getAttribute('data-mode') as Theme) ||
-        'light';
-      setTheme(currentTheme);
-    }
-  }, [mounted]);
 
   return { theme, toggleTheme, mounted };
 }

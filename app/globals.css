@@ -47,3 +47,73 @@ body::before {
 ::selection {
   @apply bg-rose-500 text-white;
 }
+
+/* Wave animation for emoji - CSS-only, no JS overhead */
+@keyframes wave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(14deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  30% {
+    transform: rotate(14deg);
+  }
+  40% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  60%, 100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-wave {
+  animation: wave 2.5s ease-in-out infinite;
+  transform-origin: 70% 70%;
+  will-change: transform;
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-wave {
+    animation: none;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* MouseGradient - GPU accelerated with CSS variables */
+.mouse-gradient {
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 105, 180, 0.3) 40px,
+    transparent 140px
+  );
+  will-change: background;
+}
+
+/* Performance optimizations for transforms */
+.will-change-transform {
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Optimize backdrop-filter performance */
+@supports (backdrop-filter: blur(1px)) {
+  .backdrop-blur-xl {
+    will-change: backdrop-filter;
+  }
+}
