@@ -2,6 +2,13 @@ export const resume = {
   en: {
     experience: [
       {
+        company: "Pilgrims Consulting",
+        role: "Junior Systems Analyst",
+        date: "Jul 2024 - Present",
+        description:
+          "Developed scalable fullstack applications with Python (Django) and TypeScript (Angular). Orchestrated ETL pipelines via Apache Airflow ensuring data integrity. Implemented Docker containerization, built web crawlers with Selenium, and optimized PostgreSQL/SQL Server databases for high-performance operations. Maintained legacy C# systems and AWS infrastructure.",
+      },
+      {
         company: "Straumann",
         role: "Planning and Control Intern",
         date: "Feb 2022 - Sep 2022",
@@ -18,8 +25,13 @@ export const resume = {
     ],
     education: [
       {
+        institution: "Pontifical Catholic University of Paraná (PUCPR)",
+        degree: "Systems Analysis and Development",
+        date: "Apr 2025 - Nov 2027",
+      },
+      {
         institution: "Federal University of Paraná",
-        degree: "Bachelor’s in Administration",
+        degree: "Bachelor's in Administration",
         date: "Jan 2019 - Sep 2023",
       },
     ],
@@ -30,10 +42,17 @@ export const resume = {
         date: "Sep 2023 - Present",
       },
     ],
-    pdf: "/pdfs/resume_en.pdf",
+    pdf: "/pdfs/resume_2026_en.pdf",
   },
   pt: {
     experience: [
+      {
+        company: "Pilgrims Consulting",
+        role: "Analista de Sistemas Júnior",
+        date: "Jul 2024 - Presente",
+        description:
+          "Desenvolvi aplicações fullstack escaláveis com Python (Django) e TypeScript (Angular). Orquestrei pipelines ETL via Apache Airflow garantindo integridade de dados. Implementei containerização com Docker, construí web crawlers com Selenium e otimizei bancos PostgreSQL/SQL Server para operações de alta performance. Mantive sistemas legados em C# e infraestrutura AWS.",
+      },
       {
         company: "Straumann",
         role: "Estagiário de Planejamento e Controle",
@@ -51,6 +70,11 @@ export const resume = {
     ],
     education: [
       {
+        institution: "Pontifícia Universidade Católica do Paraná (PUCPR)",
+        degree: "Análise e Desenvolvimento de Sistemas",
+        date: "Abr 2025 - Nov 2027",
+      },
+      {
         institution: "Universidade Federal do Paraná",
         degree: "Bacharelado em Administração",
         date: "Jan 2019 - Set 2023",
@@ -63,39 +87,6 @@ export const resume = {
         date: "Set 2023 - Presente",
       },
     ],
-    pdf: "/pdfs/resume_pt.pdf",
-  },
-  es: {
-    experience: [
-      {
-        company: "Straumann",
-        role: "Pasante de Planificación y Control",
-        date: "Feb 2022 - Sep 2022",
-        description:
-          "Gestión de datos en los sistemas Senior y SAP, monitoreo de headcount, automatización de procesos, soporte en análisis de costos para Business Cases, elaboración de presupuestos y previsiones, desarrollo de KPIs.",
-      },
-      {
-        company: "Paraná Banco",
-        role: "Pasante de Compensación",
-        date: "Sep 2022 - Jun 2023",
-        description:
-          "Procesos de contratación, soporte a los empleados, administración de beneficios, creación de dashboards, informes de datos y gestión de tiempos y asistencia. Experiencia con Microsoft Office, Power BI, SQL Server, TopDesk y Sinergy.",
-      },
-    ],
-    education: [
-      {
-        institution: "Universidad Federal de Paraná",
-        degree: "Licenciatura en Administración",
-        date: "Ene 2019 - Sep 2023",
-      },
-    ],
-    additionalEducation: [
-      {
-        institution: "Frontend Masters",
-        degree: "Ingeniería de Software (Autodidacta)",
-        date: "Sep 2023 - Presente",
-      },
-    ],
-    pdf: "/pdfs/resume_en.pdf",
+    pdf: "/pdfs/resume_2026_pt.pdf",
   },
 };

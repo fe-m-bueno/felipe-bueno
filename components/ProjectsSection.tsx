@@ -1,21 +1,21 @@
-import { useTranslation } from 'react-i18next';
-import { ArrowUpRight } from 'lucide-react';
-import { projects } from '@/data/projects';
-import ProjectCard from './ProjectCard';
-import Link from 'next/link';
+import { useTranslation } from "react-i18next";
+import { ArrowUpRight } from "lucide-react";
+import { projects } from "@/data/projects";
+import ProjectCard from "./ProjectCard";
+import Link from "next/link";
 
-type LocaleKey = 'en' | 'pt' | 'es';
+type LocaleKey = "en" | "pt";
 
 export default function ProjectsSection() {
   const { i18n, t } = useTranslation();
-  const locale = (i18n.language.split('-')[0] as LocaleKey) || 'en';
+  const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";
   const data = projects[locale] || projects.en;
 
   return (
     <section className="relative w-full mx-auto py-6 md:px-16 px-4 max-w-7xl">
       <div className="flex items-center justify-center">
         <h1 className="~text-2xl/3xl font-bold mt-10 mb-6">
-          {t('projects.title')}
+          {t("projects.title")}
         </h1>
       </div>
 
@@ -39,7 +39,7 @@ export default function ProjectsSection() {
           className="inline-flex items-center gap-2 px-3 py-2 hover:bg-white/85 hover:shadow-sm dark:hover:bg-white/5 rounded-lg transition-all ease-in-out duration-200 group "
         >
           <span className="inline-flex items-center gap-2">
-            {t('projects.seeAllProjects')}
+            {t("projects.seeAllProjects")}
             <ArrowUpRight className="w-6 h-6 hover:translate-x-1 group-hover:-translate-y-1 group-hover:translate-x-1 transition-all ease-in-out duration-200" />
           </span>
         </Link>

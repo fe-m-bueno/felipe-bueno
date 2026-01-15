@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import ProjectCard from "@/components/ProjectCard";
 import { projects } from "@/data/projects";
 
-type LocaleKey = "en" | "pt" | "es";
+type LocaleKey = "en" | "pt";
 export default function ProjectsPage() {
   const { t, i18n } = useTranslation();
   const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";

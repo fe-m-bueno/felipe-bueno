@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import LiquidGlass from "./LiquidGlass";
 
-type LocaleKey = "en" | "pt" | "es";
+type LocaleKey = "en" | "pt";
 
 export default function Resume() {
   const { i18n, t } = useTranslation();

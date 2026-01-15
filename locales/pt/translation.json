@@ -1,41 +1,41 @@
 {
-    "navbar": {
-        "home": "Início",
-        "projects": "Projetos",
-        "about": "Sobre",
-        "contact": "Contato"
-    },
-    "hero": {
-        "title": "Oi, Felipe aqui!",
-        "description": "Sou um desenvolvedor front-end morando em Curitiba, Paraná, Brasil.",
-        "description2": "Para mim, criar experiências digitais começa transformando ideias em algo rápido, acessível e envolvente.",
-        "scrollDown": "Deslize para baixo",
-        "clickToRemoveBlur": "Clique para ver o rosto de Felipe"
-    },
-    "resume": {
-        "experience": "Experiência",
-        "education": "Educação",
-        "additionalEducation": "Educação Adicional",
-        "seeFullResume": "Ver Currículo Completo"
-    },
-    "about": {
-        "recentTrack": "Tocando Agora 🎧"
-    },
-    "projects": {
-        "seeAllProjects": "Ver Todos os Projetos",
-        "title": "Projetos Selecionados",
-        "viewProject": "Ver Projeto",
-        "alltitle": "Todos os Projetos"
-    },
-    "contact": {
-        "title": "Entre em Contato",
-        "name": "Nome",
-        "email": "Email",
-        "message": "Mensagem",
-        "send": "Enviar Mensagem",
-        "sending": "Enviando...",
-        "success": "Mensagem enviada com sucesso! Entrarei em contato em breve.",
-        "errorSending": "Erro ao enviar mensagem. Por favor, tente novamente.",
-        "tooManySubmissions": "Muitas tentativas. Por favor, tente novamente mais tarde."
-    }
+  "navbar": {
+    "home": "Início",
+    "projects": "Projetos",
+    "about": "Sobre",
+    "contact": "Contato"
+  },
+  "hero": {
+    "title": "Oi, Felipe aqui!",
+    "description": "Desenvolvedor Fullstack especializado em soluções web escaláveis com Python, TypeScript e frameworks modernos.",
+    "description2": "Projeto pipelines de dados, construo APIs robustas e crio interfaces responsivas que os usuários adoram.",
+    "scrollDown": "Deslize para baixo",
+    "clickToRemoveBlur": "Clique para ver o rosto de Felipe"
+  },
+  "resume": {
+    "experience": "Experiência",
+    "education": "Educação",
+    "additionalEducation": "Educação Adicional",
+    "seeFullResume": "Ver Currículo Completo"
+  },
+  "about": {
+    "recentTrack": "Tocando Agora 🎧"
+  },
+  "projects": {
+    "seeAllProjects": "Ver Todos os Projetos",
+    "title": "Projetos Selecionados",
+    "viewProject": "Ver Projeto",
+    "alltitle": "Todos os Projetos"
+  },
+  "contact": {
+    "title": "Entre em Contato",
+    "name": "Nome",
+    "email": "Email",
+    "message": "Mensagem",
+    "send": "Enviar Mensagem",
+    "sending": "Enviando...",
+    "success": "Mensagem enviada com sucesso! Entrarei em contato em breve.",
+    "errorSending": "Erro ao enviar mensagem. Por favor, tente novamente.",
+    "tooManySubmissions": "Muitas tentativas. Por favor, tente novamente mais tarde."
+  }
 }

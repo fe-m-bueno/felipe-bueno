@@ -17,7 +17,6 @@ const LanguageSelector = () => {
   const languageOptions = [
     { value: "en", label: "fi fi-us" },
     { value: "pt", label: "fi fi-br" },
-    { value: "es", label: "fi fi-es" },
   ];
 
   const menuPlacement = "top";

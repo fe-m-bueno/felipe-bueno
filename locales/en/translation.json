@@ -1,41 +1,41 @@
 {
-    "navbar": {
-        "home": "Home",
-        "projects": "Projects",
-        "about": "About",
-        "contact": "Contact"
-    },
-    "hero": {
-        "title": "Hey, I'm Felipe!",
-        "description": "I'm a front-end developer living in Curitiba, Paraná, Brazil.",
-        "description2": "For me, creating digital experiences starts with turning ideas into something fast, accessible, and visually engaging.",
-        "scrollDown": "Scroll Down",
-        "clickToRemoveBlur": "Click to see Felipe's face"
-    },
-    "resume": {
-        "experience": "Experience",
-        "education": "Education",
-        "additionalEducation": "Additional Education",
-        "seeFullResume": "See Full Resume"
-    },
-    "about": {
-        "recentTrack": "Now Playing 🎧"
-    },
-    "projects": {
-        "seeAllProjects": "See All Projects",
-        "title": "Selected Projects",
-        "viewProject": "View Project",
-        "alltitle": "All Projects"
-    },
-    "contact": {
-        "title": "Get in Touch",
-        "name": "Name",
-        "email": "Email",
-        "message": "Message",
-        "send": "Send Message",
-        "sending": "Sending...",
-        "success": "Message sent successfully! I'll get back to you soon.",
-        "errorSending": "Error sending message. Please try again.",
-        "tooManySubmissions": "Too many attempts. Please try again later."
-    }
+  "navbar": {
+    "home": "Home",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Hey, I'm Felipe!",
+    "description": "Fullstack Developer specializing in scalable web solutions with Python, TypeScript, and modern frameworks.",
+    "description2": "I design data pipelines, build robust APIs, and create responsive interfaces that users love.",
+    "scrollDown": "Scroll Down",
+    "clickToRemoveBlur": "Click to see Felipe's face"
+  },
+  "resume": {
+    "experience": "Experience",
+    "education": "Education",
+    "additionalEducation": "Additional Education",
+    "seeFullResume": "See Full Resume"
+  },
+  "about": {
+    "recentTrack": "Now Playing 🎧"
+  },
+  "projects": {
+    "seeAllProjects": "See All Projects",
+    "title": "Selected Projects",
+    "viewProject": "View Project",
+    "alltitle": "All Projects"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Message sent successfully! I'll get back to you soon.",
+    "errorSending": "Error sending message. Please try again.",
+    "tooManySubmissions": "Too many attempts. Please try again later."
+  }
 }

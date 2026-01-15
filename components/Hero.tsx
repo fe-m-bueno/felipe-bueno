@@ -7,29 +7,31 @@ import { EyeClosed } from "lucide-react";
 import Badge from "@/components/Badge";
 
 const skills = [
-  { name: "HTML", icon: "flowbite:html-solid" },
-  { name: "CSS", icon: "flowbite:css-solid" },
-  { name: "JavaScript", icon: "ri:javascript-fill" },
   { name: "TypeScript", icon: "bxl:typescript" },
+  { name: "JavaScript", icon: "ri:javascript-fill" },
+  { name: "Python", icon: "mdi:language-python" },
   { name: "React", icon: "mdi:react" },
-  { name: "React Native", icon: "mdi:react" },
-  { name: "Vue.js", icon: "mdi:vuejs" },
-  { name: "Nuxt.js", icon: "lineicons:nuxt" },
   { name: "Next.js", icon: "ri:nextjs-fill" },
   { name: "Node.js", icon: "mdi:nodejs" },
-  { name: "Svelte", icon: "ri:svelte-fill" },
+  { name: "Vue.js", icon: "mdi:vuejs" },
+  { name: "PostgreSQL", icon: "mdi:database-outline" },
+  { name: "Docker", icon: "mdi:docker" },
   { name: "Tailwind CSS", icon: "mdi:tailwind" },
+  { name: "Django", icon: "simple-icons:django" },
+  { name: "Angular", icon: "mdi:angular" },
+  { name: "Apache Airflow", icon: "simple-icons:apacheairflow" },
+  { name: "LangGraph", icon: "mdi:graph" },
   { name: "GraphQL", icon: "mdi:graphql" },
+  { name: "React Native", icon: "mdi:react" },
+  { name: "Nuxt.js", icon: "lineicons:nuxt" },
+  { name: "Svelte", icon: "ri:svelte-fill" },
   { name: "Apollo Studio", icon: "file-icons:apollo" },
   { name: "Swift", icon: "lineicons:swift" },
   { name: "Drizzle", icon: "lineicons:drizzle" },
   { name: "Prisma", icon: "lineicons:prisma" },
   { name: "Figma", icon: "solar:figma-bold" },
-  { name: "Storybook", icon: "cib:storybook" },
-  { name: "Adobe Premiere", icon: "basil:adobe-premiere-solid" },
-  { name: "Adobe After Effects", icon: "basil:adobe-after-effects-solid" },
-  { name: "Adobe Illustrator", icon: "basil:adobe-illustrator-solid" },
-  { name: "Adobe Photoshop", icon: "basil:adobe-photoshop-solid" },
+  { name: "HTML", icon: "flowbite:html-solid" },
+  { name: "CSS", icon: "flowbite:css-solid" },
 ];
 
 // Memoized Badge component to prevent unnecessary re-renders
@@ -183,9 +185,9 @@ export default function Hero() {
       };
 
   return (
-    <section className="relative grid grid-cols-1 lg:grid-cols-2 items-center justify-center text-center px-4 w-full mt-24 lg:mt-0 max-w-8xl mx-auto">
-      <div className="lg:grid lg:grid-rows-4 lg:h-screen flex flex-col justify-center items-center">
-        <div className="lg:row-start-2 flex flex-col justify-center items-center lg:items-start lg:ml-32 mx-auto sm:pl-0 lg:pl-24">
+    <section className="relative grid grid-cols-1 lg:grid-cols-2 items-center justify-center text-center px-4 w-full mt-24 lg:mt-0 lg:pt-20 max-w-8xl mx-auto">
+      <div className="flex flex-col justify-center items-center lg:h-screen gap-8 lg:gap-12">
+        <div className="flex flex-col justify-center items-center lg:items-start lg:ml-32 mx-auto sm:pl-0 lg:pl-24">
           <motion.h1 className="~text-3xl/7xl mb-8" {...animationProps}>
             <span className="font-bold inline-block text-nowrap">
               {t("hero.title")}
@@ -198,19 +200,19 @@ export default function Hero() {
             </span>
           </motion.h1>
           <motion.p
-            className="~text-base/2xl mb-8 text-center lg:text-start"
+            className="~text-base/2xl mb-6 text-center lg:text-start"
             {...animationProps}
           >
             {t("hero.description")}
           </motion.p>
           <motion.p
-            className="~text-base/2xl mb-8 text-center lg:text-start font-semibold"
+            className="~text-base/2xl mb-0 text-center lg:text-start font-semibold"
             {...delayedAnimationProps}
           >
             {t("hero.description2")}
           </motion.p>
         </div>
-        <div className="lg:row-start-3 flex flex-wrap justify-center items-center lg:justify-start lg:items-start gap-2 lg:ml-32 h-fit lg:mt-12 lg:mt-24 mx-auto sm:pl-0 lg:pl-24">
+        <div className="flex flex-wrap justify-center items-center lg:justify-start lg:items-start gap-2 lg:ml-32 h-fit mx-auto sm:pl-0 lg:pl-24">
           <SkillsList />
         </div>
       </div>

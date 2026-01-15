@@ -37,12 +37,12 @@ export default function Navbar() {
             <Link
               href={path === '/projects' ? '/' : '#landing'}
               aria-label="Home"
-              className="font-bold ~text-base/xl"
+              className="font-bold ~text-base/xl font-space-grotesk"
             >
-              Felipe Bueno
+              FELIPE BUENO
             </Link>
           </div>
-          <div className="hidden lg:flex items-center space-x-8 text-medium">
+          <div className="hidden lg:flex items-center space-x-8 text-medium font-space-grotesk">
             <Link
               href="https://linkedin.com/in/felipe-martins-bueno"
               target="_blank"
@@ -115,7 +115,7 @@ export default function Navbar() {
             >
               <X className="w-6 h-6" />
             </button>
-            <nav className="flex flex-col space-y-4 mt-4 w-full pr-8">
+            <nav className="flex flex-col space-y-4 mt-4 w-full pr-8 font-space-grotesk">
               <Link
                 href="#landing"
                 onClick={() => setOpen(false)}
