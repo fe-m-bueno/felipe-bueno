@@ -8,8 +8,7 @@ import TheFooter from "@/components/TheFooter";
 import StructuredData from "@/components/StructuredData";
 
 export const metadata: Metadata = {
-  title:
-    "Felipe Bueno | Fullstack Developer - Python, TypeScript, React, Django",
+  title: "Felipe Bueno | Fullstack Developer",
   description:
     "Fullstack Developer specializing in Python (Django), TypeScript (React, Angular, Next.js), Apache Airflow, and PostgreSQL. Building scalable web solutions and ETL pipelines. Open to remote work worldwide.",
   authors: [{ name: "Felipe Bueno", url: "https://felipe-bueno.com" }],

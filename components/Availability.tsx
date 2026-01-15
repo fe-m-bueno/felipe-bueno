@@ -22,7 +22,7 @@ export default function Availability() {
           <Briefcase className="w-5 h-5 text-rose-500" />
           {status}
         </h3>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div className="flex items-start gap-2">
             <Globe className="w-4 h-4 text-gray-600 dark:text-gray-400 mt-0.5 flex-shrink-0" />
@@ -72,4 +72,3 @@ export default function Availability() {
     </LiquidGlass>
   );
 }
-

@@ -23,7 +23,6 @@ i18nInstance.init({
   debug: false,
   // Não usa detecção automática na inicialização para evitar mismatch
   // O idioma será ajustado manualmente após a hidratação
-  detection: false,
   interpolation: {
     escapeValue: false,
   },
