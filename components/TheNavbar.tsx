@@ -30,7 +30,7 @@ export default function Navbar() {
     };
   }, [open]);
   return (
-    <nav className="fixed top-0 left-0 right-0 z-10 w-screen">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-screen">
       <div className="relative">
         <div className="~mx-4/8 lg:~mx-24/48 flex items-center justify-between p-4">
           <div className="flex items-center space-x-4">
@@ -72,18 +72,21 @@ export default function Navbar() {
             <Link
               href="#about"
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
+              suppressHydrationWarning
             >
               {t('navbar.about')}
             </Link>
             <Link
               href="#projects"
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
+              suppressHydrationWarning
             >
               {t('navbar.projects')}
             </Link>
             <Link
               href="#contact"
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
+              suppressHydrationWarning
             >
               {t('navbar.contact')}
             </Link>
@@ -120,6 +123,7 @@ export default function Navbar() {
                 href="#landing"
                 onClick={() => setOpen(false)}
                 className="text-lg font-medium hover:text-rose-500"
+                suppressHydrationWarning
               >
                 {t('navbar.home')}
               </Link>
@@ -127,6 +131,7 @@ export default function Navbar() {
                 href="#about"
                 onClick={() => setOpen(false)}
                 className="text-lg font-medium hover:text-rose-500"
+                suppressHydrationWarning
               >
                 {t('navbar.about')}
               </Link>
@@ -134,6 +139,7 @@ export default function Navbar() {
                 href="#projects"
                 onClick={() => setOpen(false)}
                 className="text-lg font-medium hover:text-rose-500"
+                suppressHydrationWarning
               >
                 {t('navbar.projects')}
               </Link>
@@ -142,6 +148,7 @@ export default function Navbar() {
                 href="#contact"
                 onClick={() => setOpen(false)}
                 className="text-lg font-medium hover:text-rose-500"
+                suppressHydrationWarning
               >
                 {t('navbar.contact')}
               </Link>

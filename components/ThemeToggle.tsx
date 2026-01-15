@@ -1,7 +1,7 @@
-'use client';
-import React from 'react';
-import { Sun, Moon } from 'lucide-react';
-import { useTheme } from '@/hooks/useTheme';
+"use client";
+import React from "react";
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 const ThemeToggle: React.FC = () => {
   const { theme, toggleTheme, mounted } = useTheme();
@@ -10,7 +10,7 @@ const ThemeToggle: React.FC = () => {
     <button
       onClick={mounted ? toggleTheme : undefined}
       aria-label="Theme Toggle"
-      className="relative flex ~h-6/8 ~w-12/16 items-center rounded-full border border-gray-200 bg-gray-100 p-1 transition-colors dark:border-gray-400 dark:bg-[#242424] focus:ring-2 focus:ring-orange-500"
+      className="relative flex ~h-6/8 ~w-12/16 items-center rounded-full border border-gray-200 bg-gray-100 p-1 transition-colors dark:border-gray-400 dark:bg-[#242424] focus:ring-2 focus:ring-rose-500"
     >
       {/* Usa CSS para mostrar a posição correta baseado no dark mode, evitando flicker */}
       <div

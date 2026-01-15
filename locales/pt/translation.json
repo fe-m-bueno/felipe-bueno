@@ -37,5 +37,13 @@
     "success": "Mensagem enviada com sucesso! Entrarei em contato em breve.",
     "errorSending": "Erro ao enviar mensagem. Por favor, tente novamente.",
     "tooManySubmissions": "Muitas tentativas. Por favor, tente novamente mais tarde."
+  },
+  "openToWork": {
+    "status": "Disponível para Trabalho"
+  },
+  "cta": {
+    "workTogether": "Vamos Trabalhar Juntos",
+    "viewWork": "Ver Meu Trabalho",
+    "downloadResume": "Baixar Currículo"
   }
 }

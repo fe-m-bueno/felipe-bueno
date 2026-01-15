@@ -1,10 +1,11 @@
 "use client";
-import Image from 'next/image';
-import Badge from './Badge';
-import Link from 'next/link';
-import { GitHub } from '@mui/icons-material';
-import { useTranslation } from 'react-i18next';
-import LiquidGlass from './LiquidGlass';
+import Image from "next/image";
+import Badge from "./Badge";
+import Link from "next/link";
+import { GitHub } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
+import LiquidGlass from "./LiquidGlass";
+import { memo } from "react";
 
 type ProjectProps = {
   title: string;
@@ -13,16 +14,18 @@ type ProjectProps = {
   link: string;
   github: string;
   techs: { name: string; icon: string }[];
+  metrics?: string[];
   height?: number;
 };
 
-export default function ProjectCard({
+function ProjectCardComponent({
   title,
   description,
   image,
   link,
   github,
   techs,
+  metrics,
   height,
 }: ProjectProps) {
   const { t } = useTranslation();
@@ -30,7 +33,7 @@ export default function ProjectCard({
     <LiquidGlass variant="card" className="relative p-2 rounded-lg group">
       <div
         className="w-full overflow-hidden rounded-lg"
-        style={{ height: height ? `${height}px` : '24rem' }}
+        style={{ height: height ? `${height}px` : "24rem" }}
       >
         <Image
           src={image}
@@ -45,6 +48,19 @@ export default function ProjectCard({
       <div className="absolute bottom-0 left-0 w-full p-6 z-10">
         <h2 className="mt-4 text-2xl font-bold text-white">{title}</h2>
         <p className="mt-2 text-gray-200 line-clamp-2">{description}</p>
+
+        {metrics && metrics.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-3">
+            {metrics.map((metric, index) => (
+              <span
+                key={index}
+                className="inline-flex items-center px-2 py-1 text-xs font-medium bg-rose-500/20 text-rose-200 border border-rose-400/30 rounded-md"
+              >
+                {metric}
+              </span>
+            ))}
+          </div>
+        )}
 
         <div className="flex flex-wrap gap-1.5 md:gap-2 mt-4">
           {techs.map((tech, index) => (
@@ -64,7 +80,7 @@ export default function ProjectCard({
             target="_blank"
             className="px-3 py-1 bg-rose-600/85 hover:bg-rose-500/85 backdrop-blur-md dark:bg-rose-600/85 dark:hover:bg-rose-700/85 border border-gray-200/20 rounded-xl text-white transition font-bold ~text-sm/base"
           >
-            {t('projects.viewProject')}
+            {t("projects.viewProject")}
           </Link>
           <Link
             href={github}
@@ -81,3 +97,6 @@ export default function ProjectCard({
     </LiquidGlass>
   );
 }
+
+const ProjectCard = memo(ProjectCardComponent);
+export default ProjectCard;

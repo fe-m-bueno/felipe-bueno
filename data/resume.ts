@@ -6,7 +6,7 @@ export const resume = {
         role: "Junior Systems Analyst",
         date: "Jul 2024 - Present",
         description:
-          "Developed scalable fullstack applications with Python (Django) and TypeScript (Angular). Orchestrated ETL pipelines via Apache Airflow ensuring data integrity. Implemented Docker containerization, built web crawlers with Selenium, and optimized PostgreSQL/SQL Server databases for high-performance operations. Maintained legacy C# systems and AWS infrastructure.",
+          "Developed scalable fullstack applications with Python (Django) and TypeScript (Angular), serving 100+ daily users. Orchestrated ETL pipelines via Apache Airflow processing 10K+ records daily with 99.9% data integrity. Implemented Docker containerization reducing deployment time by 60%, built web crawlers with Selenium, and optimized PostgreSQL/SQL Server queries improving response time by 40%. Maintained legacy C# systems and AWS infrastructure.",
       },
       {
         company: "Straumann",
@@ -51,7 +51,7 @@ export const resume = {
         role: "Analista de Sistemas Júnior",
         date: "Jul 2024 - Presente",
         description:
-          "Desenvolvi aplicações fullstack escaláveis com Python (Django) e TypeScript (Angular). Orquestrei pipelines ETL via Apache Airflow garantindo integridade de dados. Implementei containerização com Docker, construí web crawlers com Selenium e otimizei bancos PostgreSQL/SQL Server para operações de alta performance. Mantive sistemas legados em C# e infraestrutura AWS.",
+          "Desenvolvi aplicações fullstack escaláveis com Python (Django) e TypeScript (Angular), atendendo 100+ usuários diários. Orquestrei pipelines ETL via Apache Airflow processando 10K+ registros diários com 99,9% de integridade. Implementei containerização com Docker reduzindo tempo de deploy em 60%, construí web crawlers com Selenium e otimizei queries PostgreSQL/SQL Server melhorando tempo de resposta em 40%. Mantive sistemas legados em C# e infraestrutura AWS.",
       },
       {
         company: "Straumann",

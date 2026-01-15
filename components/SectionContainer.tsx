@@ -1,9 +1,9 @@
 'use client';
-import { motion } from 'motion/react';
 import AboutMe from './AboutSection';
 import ContactForm from './ContactForm';
 import Hero from './Hero';
 import ProjectsSection from './ProjectsSection';
+import ScrollReveal from './ScrollReveal';
 
 export default function SectionContainer() {
   return (
@@ -18,19 +18,25 @@ export default function SectionContainer() {
         id="about"
         className="w-full min-h-screen flex flex-col justify-center items-center"
       >
-        <AboutMe />
+        <ScrollReveal>
+          <AboutMe />
+        </ScrollReveal>
       </section>
       <section
         id="projects"
         className="w-full min-h-screen flex flex-col justify-center items-center"
       >
-        <ProjectsSection />
+        <ScrollReveal delay={100}>
+          <ProjectsSection />
+        </ScrollReveal>
       </section>
       <section
         id="contact"
         className="relative w-full min-h-screen flex flex-col justify-center items-center"
       >
-        <ContactForm />
+        <ScrollReveal delay={100}>
+          <ContactForm />
+        </ScrollReveal>
       </section>
     </div>
   );

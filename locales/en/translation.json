@@ -37,5 +37,13 @@
     "success": "Message sent successfully! I'll get back to you soon.",
     "errorSending": "Error sending message. Please try again.",
     "tooManySubmissions": "Too many attempts. Please try again later."
+  },
+  "openToWork": {
+    "status": "Open to Work"
+  },
+  "cta": {
+    "workTogether": "Let's Work Together",
+    "viewWork": "View My Work",
+    "downloadResume": "Download Resume"
   }
 }

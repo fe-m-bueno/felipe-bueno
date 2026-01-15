@@ -25,6 +25,7 @@ export default function ProjectsPage() {
             link={project.link}
             github={project.github}
             techs={project.techs}
+            metrics={project.metrics}
             height={450}
           />
         ))}

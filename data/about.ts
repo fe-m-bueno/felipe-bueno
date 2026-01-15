@@ -15,9 +15,16 @@ export const about = {
     title: "About Me",
     description: `I am ${calculateAge()} years old with a degree in Business Administration and currently pursuing Systems Analysis and Development at PUCPR. My passion for technology led me from self-teaching to professional fullstack development, where I architect scalable solutions across the entire stack.
 
-I studied at a military school, developing discipline and analytical thinking that I apply to software engineering, from designing data pipelines to crafting intuitive user interfaces. My curiosity extends beyond code: I speak multiple languages fluently and have completed courses in Italian, French, and Japanese on Duolingo, which helps me collaborate in diverse, multicultural teams.
+I studied at a military school, developing discipline and analytical thinking that I apply to software engineering, from designing data pipelines to crafting intuitive user interfaces. My curiosity extends beyond code: I speak multiple languages fluently (Portuguese, English, Spanish) and have completed courses in Italian, French, and Japanese on Duolingo, which helps me collaborate in diverse, multicultural teams.
 
 Currently working as a Junior Systems Analyst at Pilgrims Consulting, I specialize in Python (Django), TypeScript (Angular), Apache Airflow, Docker, and database optimization. I thrive on solving complex problems and continuously expanding my technical expertise.`,
+    availability: {
+      status: "Open to opportunities",
+      types: ["Full-time", "Contract", "Remote"],
+      locations: ["Brazil", "Remote Worldwide"],
+      timezone: "GMT-3 (Brazil)",
+      overlap: "Available 9 AM - 6 PM EST",
+    },
     tldr: [
       `${calculateAge()} years old`,
       "Fullstack Developer",
@@ -34,9 +41,16 @@ Currently working as a Junior Systems Analyst at Pilgrims Consulting, I speciali
     title: "Sobre Mim",
     description: `Tenho ${calculateAge()} anos, sou formado em Administração e atualmente curso Análise e Desenvolvimento de Sistemas na PUCPR. Minha paixão por tecnologia me levou do aprendizado autodidata ao desenvolvimento fullstack profissional, onde arquiteto soluções escaláveis em toda a stack.
 
-Estudei em colégio militar, desenvolvendo disciplina e pensamento analítico que aplico na engenharia de software, desde o design de pipelines de dados até a criação de interfaces intuitivas. Minha curiosidade vai além do código: falo múltiplos idiomas fluentemente e completei cursos de italiano, francês e japonês no Duolingo, o que me ajuda a colaborar em equipes multiculturais.
+Estudei em colégio militar, desenvolvendo disciplina e pensamento analítico que aplico na engenharia de software, desde o design de pipelines de dados até a criação de interfaces intuitivas. Minha curiosidade vai além do código: falo múltiplos idiomas fluentemente (Português, Inglês, Espanhol) e completei cursos de italiano, francês e japonês no Duolingo, o que me ajuda a colaborar em equipes multiculturais.
 
 Atualmente trabalho como Analista de Sistemas Júnior na Pilgrims Consulting, especializado em Python (Django), TypeScript (Angular), Apache Airflow, Docker e otimização de bancos de dados. Prospero resolvendo problemas complexos e expandindo continuamente minha expertise técnica.`,
+    availability: {
+      status: "Aberto a oportunidades",
+      types: ["Tempo integral", "Contrato", "Remoto"],
+      locations: ["Brasil", "Remoto Internacional"],
+      timezone: "GMT-3 (Brasil)",
+      overlap: "Disponível 9h - 18h horário de Brasília",
+    },
     tldr: [
       `${calculateAge()} anos`,
       "Desenvolvedor Fullstack",

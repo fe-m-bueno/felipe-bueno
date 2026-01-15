@@ -9,26 +9,30 @@ const isServer = typeof window === "undefined";
 
 const i18nInstance = i18n.use(initReactI18next);
 
-// Só usa o LanguageDetector no cliente para evitar erros de hidratação
-if (!isServer) {
-  i18nInstance.use(LanguageDetector);
-}
+// Sempre usa 'en' como idioma inicial para garantir consistência entre servidor e cliente
+// O idioma será ajustado após a hidratação no componente I18nProvider
+const defaultLanguage = "en";
 
 i18nInstance.init({
   resources: {
     en: { translation: enTranslation },
     pt: { translation: ptTranslation },
   },
-  lng: isServer ? "en" : undefined, // Força 'en' no servidor, deixa o detector escolher no cliente
-  fallbackLng: "en",
+  lng: defaultLanguage, // Sempre começa com 'en' para evitar mismatch
+  fallbackLng: defaultLanguage,
   debug: false,
-  detection: {
-    order: ["localStorage", "sessionStorage", "navigator", "htmlTag"],
-    caches: ["localStorage", "sessionStorage"],
-  },
+  // Não usa detecção automática na inicialização para evitar mismatch
+  // O idioma será ajustado manualmente após a hidratação
+  detection: false,
   interpolation: {
     escapeValue: false,
   },
 });
+
+// Adiciona o LanguageDetector após a inicialização, mas ele não será usado automaticamente
+// O idioma será gerenciado manualmente no I18nProvider
+if (!isServer) {
+  i18nInstance.use(LanguageDetector);
+}
 
 export default i18n;

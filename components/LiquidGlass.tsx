@@ -1,6 +1,5 @@
 "use client";
-import { useRef, useEffect, useCallback, useState, memo } from "react";
-import { useReducedMotion } from "motion/react";
+import { useRef, useEffect, memo } from "react";
 
 interface LiquidGlassProps {
   children: React.ReactNode;
@@ -8,87 +7,73 @@ interface LiquidGlassProps {
   variant?: "badge" | "card" | "default";
 }
 
+const variantClasses = {
+  badge: "liquid-glass-badge",
+  card: "liquid-glass-card",
+  default: "liquid-glass",
+} as const;
+
 function LiquidGlassComponent({
   children,
   className = "",
   variant = "default",
 }: LiquidGlassProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number | null>(null);
-  const prefersReducedMotion = useReducedMotion();
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = useCallback(
-    (event: MouseEvent) => {
-      if (prefersReducedMotion || !containerRef.current) return;
-
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
-
-      rafRef.current = requestAnimationFrame(() => {
-        const container = containerRef.current;
-        if (!container) return;
-
-        const rect = container.getBoundingClientRect();
-        const x = ((event.clientX - rect.left) / rect.width) * 100;
-        const y = ((event.clientY - rect.top) / rect.height) * 100;
-
-        container.style.setProperty("--mouse-x", `${x}%`);
-        container.style.setProperty("--mouse-y", `${y}%`);
-      });
-    },
-    [prefersReducedMotion]
-  );
-
-  const handleMouseEnter = useCallback(() => {
-    setIsHovered(true);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setIsHovered(false);
-    if (containerRef.current) {
-      containerRef.current.style.setProperty("--mouse-x", "50%");
-      containerRef.current.style.setProperty("--mouse-y", "50%");
-    }
-  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container || prefersReducedMotion) return;
+    if (!container) return;
 
+    // Checa preferência de movimento reduzido via CSS
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReducedMotion) return;
+
+    let frameRequested = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    const updatePosition = () => {
+      frameRequested = false;
+      container.style.setProperty("--mouse-x", `${lastX}%`);
+      container.style.setProperty("--mouse-y", `${lastY}%`);
+    };
+
+    const handleMouseMove = (event: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      lastX = ((event.clientX - rect.left) / rect.width) * 100;
+      lastY = ((event.clientY - rect.top) / rect.height) * 100;
+
+      if (!frameRequested) {
+        frameRequested = true;
+        requestAnimationFrame(updatePosition);
+      }
+    };
+
+    const handleMouseLeave = () => {
+      lastX = 50;
+      lastY = 50;
+      if (!frameRequested) {
+        frameRequested = true;
+        requestAnimationFrame(updatePosition);
+      }
+    };
+
+    // Adiciona classe ativa via CSS :hover ao invés de React state
     container.addEventListener("mousemove", handleMouseMove, { passive: true });
-    container.addEventListener("mouseenter", handleMouseEnter);
     container.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       container.removeEventListener("mousemove", handleMouseMove);
-      container.removeEventListener("mouseenter", handleMouseEnter);
       container.removeEventListener("mouseleave", handleMouseLeave);
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
     };
-  }, [
-    handleMouseMove,
-    handleMouseEnter,
-    handleMouseLeave,
-    prefersReducedMotion,
-  ]);
-
-  const variantClasses = {
-    badge: "liquid-glass-badge",
-    card: "liquid-glass-card",
-    default: "liquid-glass",
-  };
-
-  const baseClass = variantClasses[variant];
-  const hoveredClass = isHovered ? "liquid-glass-active" : "";
+  }, []);
 
   return (
     <div
       ref={containerRef}
-      className={`${baseClass} ${hoveredClass} ${className}`}
+      className={`${variantClasses[variant]} ${className}`}
       style={
         {
           "--mouse-x": "50%",

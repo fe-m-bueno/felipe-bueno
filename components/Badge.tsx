@@ -1,8 +1,9 @@
 "use client";
 import { Icon } from "@iconify/react";
 import LiquidGlass from "./LiquidGlass";
+import { memo } from "react";
 
-export default function Badge({ name, icon }: { name: string; icon: string }) {
+function BadgeComponent({ name, icon }: { name: string; icon: string }) {
   return (
     <LiquidGlass
       variant="badge"
@@ -15,3 +16,6 @@ export default function Badge({ name, icon }: { name: string; icon: string }) {
     </LiquidGlass>
   );
 }
+
+const Badge = memo(BadgeComponent);
+export default Badge;

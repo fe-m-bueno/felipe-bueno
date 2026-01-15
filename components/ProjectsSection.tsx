@@ -29,6 +29,7 @@ export default function ProjectsSection() {
             link={project.link}
             github={project.github}
             techs={project.techs}
+            metrics={project.metrics}
           />
         ))}
       </div>

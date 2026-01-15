@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { about } from "@/data/about";
 import RecentTrack from "./RecentTrack";
 import LiquidGlass from "./LiquidGlass";
+import Availability from "./Availability";
 
 type LocaleKey = "en" | "pt";
 
@@ -17,6 +18,8 @@ export default function About() {
       <LiquidGlass className="mt-4 p-6">
         <p className="whitespace-pre-line text-justify">{data.description}</p>
       </LiquidGlass>
+
+      <Availability />
 
       <h3 className="mt-6 ~text-xl/2xl font-semibold">TLDR</h3>
       <ul className="mt-2 grid grid-cols-1 lg:grid-cols-2 gap-2">
