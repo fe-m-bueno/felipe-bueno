@@ -111,7 +111,11 @@ const HeroImage = memo(function HeroImage() {
     <div
       ref={containerRef}
       className="relative flex flex-col items-center justify-center mt-8 lg:mt-0 will-change-transform transition-transform duration-150 ease-out"
-      style={{ transformStyle: "preserve-3d" }}
+      style={{
+        transformStyle: "preserve-3d",
+        isolation: "isolate",
+        zIndex: 1,
+      }}
     >
       <div
         className="rounded-3xl p-px h-1/2 w-1/2 lg:h-full overflow-hidden bg-gradient-to-b from-rose-400 to-rose-400/10 shadow-2xl shadow-white/10"
@@ -185,7 +189,7 @@ export default function Hero() {
       };
 
   return (
-    <section className="relative grid grid-cols-1 lg:grid-cols-2 items-center justify-center text-center px-4 w-full mt-24 lg:mt-0 lg:pt-20 max-w-8xl mx-auto">
+    <section className="relative grid grid-cols-1 lg:grid-cols-2 items-center justify-center text-center px-4 w-full mt-24 lg:mt-0 lg:pt-20 max-w-8xl mx-auto isolation-auto">
       <div className="flex flex-col justify-center items-center lg:h-screen gap-8 lg:gap-12">
         <div className="flex flex-col justify-center items-center lg:items-start lg:ml-32 mx-auto sm:pl-0 lg:pl-24">
           <motion.h1 className="~text-3xl/7xl mb-8" {...animationProps}>
