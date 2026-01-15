@@ -91,29 +91,29 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="relative w-full px-4 md:px-16 py-6 max-w-7xl mx-auto">
+    <section className="relative w-full px-4 md:px-16 py-20 md:py-28 max-w-7xl mx-auto">
       <div className="flex items-center justify-center">
-        <h1 className="~text-2xl/3xl font-bold mt-10 mb-6">
+        <h1 className="~text-4xl/5xl md:~text-5xl/6xl lg:~text-6xl/7xl font-bold mt-12 mb-12 md:mb-16 lg:mb-20">
           {t("contact.title")}
         </h1>
       </div>
 
-      <LiquidGlass variant="card" className="max-w-lg mx-auto p-6 !rounded-3xl">
+      <LiquidGlass variant="card" className="max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto p-12 md:p-16 lg:p-20 !rounded-3xl">
         {success && (
-          <div className="mb-6 p-4 bg-green-500/20 border border-green-500/50 rounded-lg">
-            <p className="text-green-500">{t("contact.success")}</p>
+          <div className="mb-10 md:mb-12 p-6 md:p-8 bg-green-500/20 border border-green-500/50 rounded-lg">
+            <p className="text-green-500 text-lg md:text-xl lg:text-2xl">{t("contact.success")}</p>
           </div>
         )}
 
         {errors.form && (
-          <div className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
-            <p className="text-red-500">{errors.form}</p>
+          <div className="mb-10 md:mb-12 p-6 md:p-8 bg-red-500/20 border border-red-500/50 rounded-lg">
+            <p className="text-red-500 text-lg md:text-xl lg:text-2xl">{errors.form}</p>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} noValidate className="space-y-6">
-          <div className="space-y-2">
-            <label htmlFor="name" className="block text-sm font-medium">
+        <form onSubmit={handleSubmit} noValidate className="space-y-10 md:space-y-12 lg:space-y-14">
+          <div className="space-y-4 md:space-y-5">
+            <label htmlFor="name" className="block text-lg md:text-xl lg:text-2xl font-medium">
               {t("contact.name")}
             </label>
             <input
@@ -123,16 +123,16 @@ export default function ContactForm() {
               value={form.name}
               onChange={handleChange}
               disabled={loading}
-              className="w-full p-3 bg-white/10 dark:bg-black/20 border border-gray-400/20 dark:border-gray-200/20 rounded-lg shadow-sm backdrop-blur-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all"
+              className="w-full p-6 md:p-7 lg:p-8 text-lg md:text-xl lg:text-2xl bg-white/10 dark:bg-black/20 border-2 border-gray-400/20 dark:border-gray-200/20 rounded-xl shadow-sm backdrop-blur-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all"
               aria-invalid={errors.name ? "true" : "false"}
             />
             {errors.name && (
-              <span className="text-red-500 text-sm">{errors.name}</span>
+              <span className="text-red-500 text-base md:text-lg lg:text-xl">{errors.name}</span>
             )}
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-medium">
+          <div className="space-y-4 md:space-y-5">
+            <label htmlFor="email" className="block text-lg md:text-xl lg:text-2xl font-medium">
               {t("contact.email")}
             </label>
             <input
@@ -142,16 +142,16 @@ export default function ContactForm() {
               value={form.email}
               onChange={handleChange}
               disabled={loading}
-              className="w-full p-3 bg-white/10 dark:bg-black/20 border border-gray-400/20 dark:border-gray-200/20 rounded-lg shadow-sm backdrop-blur-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all"
+              className="w-full p-6 md:p-7 lg:p-8 text-lg md:text-xl lg:text-2xl bg-white/10 dark:bg-black/20 border-2 border-gray-400/20 dark:border-gray-200/20 rounded-xl shadow-sm backdrop-blur-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all"
               aria-invalid={errors.email ? "true" : "false"}
             />
             {errors.email && (
-              <span className="text-red-500 text-sm">{errors.email}</span>
+              <span className="text-red-500 text-base md:text-lg lg:text-xl">{errors.email}</span>
             )}
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="message" className="block text-sm font-medium">
+          <div className="space-y-4 md:space-y-5">
+            <label htmlFor="message" className="block text-lg md:text-xl lg:text-2xl font-medium">
               {t("contact.message")}
             </label>
             <textarea
@@ -160,12 +160,12 @@ export default function ContactForm() {
               value={form.message}
               onChange={handleChange}
               disabled={loading}
-              rows={5}
-              className="w-full p-3 bg-white/10 dark:bg-black/20 border border-gray-400/20 dark:border-gray-200/20 rounded-lg shadow-sm backdrop-blur-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent max-h-[30rem] transition-all"
+              rows={10}
+              className="w-full p-6 md:p-7 lg:p-8 text-lg md:text-xl lg:text-2xl bg-white/10 dark:bg-black/20 border-2 border-gray-400/20 dark:border-gray-200/20 rounded-xl shadow-sm backdrop-blur-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent max-h-[40rem] transition-all"
               aria-invalid={errors.message ? "true" : "false"}
             />
             {errors.message && (
-              <span className="text-red-500 text-sm">{errors.message}</span>
+              <span className="text-red-500 text-base md:text-lg lg:text-xl">{errors.message}</span>
             )}
           </div>
 
@@ -185,7 +185,7 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full px-4 py-3 bg-rose-600/85 hover:bg-rose-500/85 backdrop-blur-md dark:bg-rose-600/85 dark:hover:bg-rose-700/85 border border-gray-200/20 rounded-xl text-white transition font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-8 md:px-10 lg:px-12 py-6 md:py-7 lg:py-8 text-lg md:text-xl lg:text-2xl bg-rose-600/85 hover:bg-rose-500/85 backdrop-blur-md dark:bg-rose-600/85 dark:hover:bg-rose-700/85 border-2 border-gray-200/20 rounded-xl text-white transition font-bold disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? t("contact.sending") : t("contact.send")}
           </button>

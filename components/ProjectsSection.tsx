@@ -1,3 +1,5 @@
+"use client";
+
 import { useTranslation } from "react-i18next";
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/projects";
