@@ -145,33 +145,31 @@ const HeroImage = memo(function HeroImage() {
     const container = containerRef.current;
     if (!container) return;
 
-    let cachedRect: DOMRect | null = null;
     let effectiveRange = 500;
     let maxRotation = 10;
 
-    const updateCache = () => {
-      cachedRect = container.getBoundingClientRect();
+    const getSettings = () => {
       const vw = window.innerWidth;
       effectiveRange = vw < 768 ? 200 : vw < 1024 ? 350 : 500;
       maxRotation = vw < 768 ? 6 : 10;
     };
-    updateCache();
+    getSettings();
 
-    const handleMouseMove = (event: MouseEvent) => {
-      if (!cachedRect) return;
-
-      const centerX = cachedRect.left + cachedRect.width / 2;
-      const centerY = cachedRect.top + cachedRect.height / 2;
-      const deltaX = event.clientX - centerX;
-      const deltaY = event.clientY - centerY;
+    const processMove = (clientX: number, clientY: number) => {
+      // Always get fresh rect to handle scroll
+      const rect = container.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const deltaX = clientX - centerX;
+      const deltaY = clientY - centerY;
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
       if (distance > effectiveRange) {
         targetRotation.current = { x: 0, y: 0 };
       } else {
         const falloff = easeOutCubic(1 - distance / effectiveRange);
-        const normalizedX = deltaX / (cachedRect.width / 2);
-        const normalizedY = deltaY / (cachedRect.height / 2);
+        const normalizedX = deltaX / (rect.width / 2);
+        const normalizedY = deltaY / (rect.height / 2);
 
         targetRotation.current = {
           x:
@@ -189,26 +187,38 @@ const HeroImage = memo(function HeroImage() {
       startAnimation();
     };
 
-    const handleMouseLeave = () => {
+    const handleMouseMove = (event: MouseEvent) => {
+      processMove(event.clientX, event.clientY);
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (touch) {
+        processMove(touch.clientX, touch.clientY);
+      }
+    };
+
+    const handleLeave = () => {
       targetRotation.current = { x: 0, y: 0 };
       startAnimation();
     };
 
-    let resizeTimeout: ReturnType<typeof setTimeout>;
     const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(updateCache, 150);
+      getSettings();
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("resize", handleResize, { passive: true });
-    container.addEventListener("mouseleave", handleMouseLeave);
+    container.addEventListener("mouseleave", handleLeave);
+    container.addEventListener("touchmove", handleTouchMove, { passive: true });
+    container.addEventListener("touchend", handleLeave);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
-      container.removeEventListener("mouseleave", handleMouseLeave);
-      clearTimeout(resizeTimeout);
+      container.removeEventListener("mouseleave", handleLeave);
+      container.removeEventListener("touchmove", handleTouchMove);
+      container.removeEventListener("touchend", handleLeave);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [prefersReducedMotion, startAnimation]);
