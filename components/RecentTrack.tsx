@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import LiquidGlass from "./LiquidGlass";
 
 type Track = {
   title: string;
@@ -36,7 +37,7 @@ export default function RecentTrack() {
   }, []);
 
   return (
-    <div className="flex items-center space-x-4 p-4 bg-white/[3%] border dark:border-white/20 border-black/20  backdrop-blur-3xl rounded-3xl shadow-lg mt-4 ">
+    <LiquidGlass variant="card" className="flex items-center space-x-4 p-4 !rounded-3xl mt-4">
       <AnimatePresence mode="wait">
         {track && (
           <motion.div
@@ -61,6 +62,6 @@ export default function RecentTrack() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </LiquidGlass>
   );
 }

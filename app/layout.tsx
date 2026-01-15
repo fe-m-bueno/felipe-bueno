@@ -59,8 +59,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="preload" as="image" href="/bg-main.webp" />
-        <link rel="preload" as="image" href="/bg-main-dark.webp" />
+        <link rel="preload" as="image" href="/bg-main.webp" type="image/webp" fetchPriority="high" />
+        <link rel="preload" as="image" href="/bg-main-dark.webp" type="image/webp" fetchPriority="high" />
         <script
           id="theme-init"
           suppressHydrationWarning

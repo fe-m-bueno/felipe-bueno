@@ -1,8 +1,10 @@
+"use client";
 import Image from 'next/image';
 import Badge from './Badge';
 import Link from 'next/link';
 import { GitHub } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import LiquidGlass from './LiquidGlass';
 
 type ProjectProps = {
   title: string;
@@ -25,7 +27,7 @@ export default function ProjectCard({
 }: ProjectProps) {
   const { t } = useTranslation();
   return (
-    <div className="relative p-2 border border-gray-400/20 dark:border-gray-200/20 rounded-lg shadow-lg bg-white/[3%] hover:bg-white/[9%] transition-all ease-in-out duration-200 backdrop-blur-3xl group">
+    <LiquidGlass variant="card" className="relative p-2 rounded-lg group">
       <div
         className="w-full overflow-hidden rounded-lg"
         style={{ height: height ? `${height}px` : '24rem' }}
@@ -76,6 +78,6 @@ export default function ProjectCard({
           </Link>
         </div>
       </div>
-    </div>
+    </LiquidGlass>
   );
 }

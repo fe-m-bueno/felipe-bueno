@@ -107,7 +107,7 @@ export default function Navbar() {
             animate={{ x: open ? '0%' : '100%' }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
             onKeyDown={(e) => e.key === 'Enter' && setOpen(false)}
-            className="fixed top-0 right-0 w-64 h-full bg-white dark:bg-zinc-950 z-50 shadow-xl flex flex-col items-start p-6 transition-colors duration-150"
+            className="fixed top-0 right-0 w-64 h-full bg-white dark:bg-zinc-950 z-50 shadow-xl flex flex-col items-start p-6"
           >
             <button
               onClick={() => setOpen(false)}
@@ -167,7 +167,7 @@ export default function Navbar() {
           </motion.div>
         </div>
 
-        <div className="absolute inset-0 bg-white dark:bg-black blur -z-10 h-2/3 lg:h-5/6 transition-colors duration-150"></div>
+        <div className="absolute inset-0 bg-white dark:bg-black blur -z-10 h-2/3 lg:h-5/6"></div>
         <div className="fixed inset-0 bg-gradient-to-b from-white via-white/[99%]  to-transparent dark:from-black lg:dark:via-black/35 dark:via-black/95 dark:to-transparent h-20 -z-10"></div>
       </div>
     </nav>
