@@ -4,35 +4,6 @@ import { ChevronDown } from "lucide-react";
 
 const SECTIONS = ["landing", "about", "projects", "contact"];
 
-// Throttle helper para limitar execuções
-function throttle<T extends (...args: unknown[]) => void>(
-  fn: T,
-  delay: number
-): T {
-  let lastCall = 0;
-  let timeoutId: ReturnType<typeof setTimeout> | null = null;
-
-  return ((...args: unknown[]) => {
-    const now = Date.now();
-    const remaining = delay - (now - lastCall);
-
-    if (remaining <= 0) {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        timeoutId = null;
-      }
-      lastCall = now;
-      fn(...args);
-    } else if (!timeoutId) {
-      timeoutId = setTimeout(() => {
-        lastCall = Date.now();
-        timeoutId = null;
-        fn(...args);
-      }, remaining);
-    }
-  }) as T;
-}
-
 export default function ScrollNavigator() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isAtBottom, setIsAtBottom] = useState(false);
@@ -41,7 +12,6 @@ export default function ScrollNavigator() {
 
   // Cache de posições das seções para evitar recálculos
   const sectionPositionsRef = useRef<{ top: number; bottom: number }[]>([]);
-  const lastUpdateRef = useRef(0);
 
   // Atualiza cache de posições das seções (apenas no resize ou quando necessário)
   const updateSectionPositions = useCallback(() => {
@@ -58,11 +28,6 @@ export default function ScrollNavigator() {
   }, []);
 
   const updateScrollState = useCallback(() => {
-    const now = Date.now();
-    // Evita atualizações muito frequentes (mínimo 16ms = ~60fps)
-    if (now - lastUpdateRef.current < 16) return;
-    lastUpdateRef.current = now;
-
     const scrollTop = window.scrollY;
     const docHeight =
       document.documentElement.scrollHeight - window.innerHeight;
@@ -108,8 +73,19 @@ export default function ScrollNavigator() {
     updateSectionPositions();
     updateScrollState();
 
-    // Throttle de 50ms para scroll (20 updates/segundo é suficiente)
-    const throttledScrollHandler = throttle(updateScrollState, 50);
+    // Usa requestAnimationFrame para melhor performance no scroll
+    let rafId: number | null = null;
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        rafId = requestAnimationFrame(() => {
+          updateScrollState();
+          ticking = false;
+        });
+      }
+    };
 
     // Debounce para resize (só atualiza posições quando termina de redimensionar)
     let resizeTimeout: ReturnType<typeof setTimeout>;
@@ -121,14 +97,17 @@ export default function ScrollNavigator() {
       }, 150);
     };
 
-    window.addEventListener("scroll", throttledScrollHandler, {
+    window.addEventListener("scroll", handleScroll, {
       passive: true,
     });
     window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
-      window.removeEventListener("scroll", throttledScrollHandler);
+      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
       clearTimeout(resizeTimeout);
     };
   }, [updateScrollState, updateSectionPositions]);

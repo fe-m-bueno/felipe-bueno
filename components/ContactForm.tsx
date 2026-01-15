@@ -100,7 +100,7 @@ export default function ContactForm() {
 
       <LiquidGlass
         variant="card"
-        className="w-full !max-w-5xl mx-auto p-6 !rounded-3xl"
+        className="w-full max-w-4xl md:max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto p-6 !rounded-3xl"
       >
         {success && (
           <div className="mb-6 p-4 bg-green-500/20 border border-green-500/50 rounded-lg">

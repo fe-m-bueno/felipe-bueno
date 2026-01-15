@@ -41,7 +41,7 @@ export default function ScrollReveal({ children, className = '', delay = 0 }: Sc
   return (
     <div
       ref={ref}
-      className={`scroll-reveal ${isVisible ? 'scroll-reveal-visible' : ''} ${className}`}
+      className={`scroll-reveal w-full ${isVisible ? 'scroll-reveal-visible' : ''} ${className}`}
     >
       {children}
     </div>

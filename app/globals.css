@@ -38,7 +38,7 @@ body::after {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  /* Removido background-attachment: fixed - causa lag significativo no scroll */
   /* Force GPU acceleration and prevent recalculation during transforms */
   transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
