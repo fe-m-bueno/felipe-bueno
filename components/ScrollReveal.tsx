@@ -10,33 +10,51 @@ interface ScrollRevealProps {
 export default function ScrollReveal({ children, className = '', delay = 0 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const hasObserved = useRef(false);
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    if (prefersReducedMotion) {
+      setIsVisible(true);
+      return;
+    }
+
+    const currentRef = ref.current;
+    if (!currentRef || hasObserved.current) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !isVisible) {
-          setTimeout(() => {
+        if (entry.isIntersecting) {
+          const reveal = () => {
             setIsVisible(true);
-          }, delay);
+            hasObserved.current = true;
+            observer.disconnect();
+          };
+
+          if (delay > 0) {
+            setTimeout(reveal, delay);
+          } else if ('requestIdleCallback' in window) {
+            (window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void }).requestIdleCallback(reveal, { timeout: 100 });
+          } else {
+            reveal();
+          }
         }
       },
       {
-        threshold: 0.1,
-        rootMargin: '-50px 0px',
+        threshold: 0.05,
+        rootMargin: '50px 0px',
       }
     );
 
-    const currentRef = ref.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
+    observer.observe(currentRef);
 
     return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
+      observer.disconnect();
     };
-  }, [delay, isVisible]);
+  }, [delay]);
 
   return (
     <div

@@ -1,9 +1,8 @@
 "use client";
-import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect, useRef, useMemo, memo, useCallback } from "react";
+import { useState, useEffect, useRef, memo, useCallback } from "react";
 import { EyeClosed, ArrowRight, Eye, Download } from "lucide-react";
 import Badge from "@/components/Badge";
 import OpenToWorkBadge from "@/components/OpenToWorkBadge";
@@ -36,7 +35,6 @@ const skills = [
   { name: "CSS", icon: "flowbite:css-solid" },
 ];
 
-// Memoized skills list - Badge já é memoizado internamente
 const SkillsList = memo(function SkillsList() {
   return (
     <>
@@ -47,23 +45,19 @@ const SkillsList = memo(function SkillsList() {
   );
 });
 
-// Easing function for smooth interpolation
 const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3);
 
-// Linear interpolation helper
 const lerp = (current: number, target: number, factor: number): number =>
   current + (target - current) * factor;
 
-// Separate component for the 3D image effect - isolated re-renders
 const HeroImage = memo(function HeroImage() {
   const { t } = useTranslation();
   const [filter, setFilter] = useState(true);
-  const prefersReducedMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
+  const prefersReducedMotionRef = useRef(false);
 
-  // Animation state
   const currentRotation = useRef({ x: 0, y: 0 });
   const currentGlow = useRef({ x: 50, y: 50, intensity: 0.08 });
   const targetRotation = useRef({ x: 0, y: 0 });
@@ -71,7 +65,6 @@ const HeroImage = memo(function HeroImage() {
 
   const toggleFilter = useCallback(() => setFilter((f) => !f), []);
 
-  // Smooth animation loop
   const animate = useCallback(() => {
     const container = containerRef.current;
     const glow = glowRef.current;
@@ -80,23 +73,19 @@ const HeroImage = memo(function HeroImage() {
     const current = currentRotation.current;
     const target = targetRotation.current;
 
-    // Smooth interpolation
     const rotationLerp = 0.06;
     const lightLerp = 0.08;
 
     current.x = lerp(current.x, target.x, rotationLerp);
     current.y = lerp(current.y, target.y, rotationLerp);
 
-    // Apply 3D transform
     container.style.transform = `perspective(1000px) rotateX(${current.x}deg) rotateY(${current.y}deg)`;
 
-    // Calculate intensity based on rotation
     const rotationMagnitude = Math.sqrt(
       current.x * current.x + current.y * current.y
     );
     const targetIntensity = 0.08 + Math.min(rotationMagnitude / 15, 0.25);
 
-    // Update glow effect
     if (glow) {
       const targetGlowX = 50 + current.y * 3;
       const targetGlowY = 50 - current.x * 3;
@@ -120,7 +109,6 @@ const HeroImage = memo(function HeroImage() {
       glow.style.background = `radial-gradient(ellipse at ${currentGlow.current.x}% ${currentGlow.current.y}%, rgba(255,255,255,${currentGlow.current.intensity}) 0%, transparent 60%)`;
     }
 
-    // Continue animation
     const threshold = 0.01;
     if (
       Math.abs(target.x - current.x) > threshold ||
@@ -140,7 +128,11 @@ const HeroImage = memo(function HeroImage() {
   }, [animate]);
 
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    prefersReducedMotionRef.current = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotionRef.current) return;
 
     const container = containerRef.current;
     if (!container) return;
@@ -156,7 +148,6 @@ const HeroImage = memo(function HeroImage() {
     getSettings();
 
     const processMove = (clientX: number, clientY: number) => {
-      // Always get fresh rect to handle scroll
       const rect = container.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
@@ -221,24 +212,24 @@ const HeroImage = memo(function HeroImage() {
       container.removeEventListener("touchend", handleLeave);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [prefersReducedMotion, startAnimation]);
+  }, [startAnimation]);
 
   return (
     <div
       ref={containerRef}
-      className="relative flex flex-col items-center justify-center mt-8 lg:mt-0 will-change-transform"
+      className="relative flex flex-col items-center justify-center mt-8 lg:mt-0 hero-fade-in"
       style={{
         transformStyle: "preserve-3d",
         isolation: "isolate",
         zIndex: 1,
+        animationDelay: "150ms",
       }}
     >
       <div
-        className="relative rounded-3xl p-px h-1/2 w-1/2 lg:h-full overflow-hidden bg-gradient-to-b from-rose-400 to-rose-400/10 shadow-2xl shadow-rose-500/20 dark:shadow-rose-400/10"
+        className="relative rounded-3xl p-px w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px] overflow-hidden bg-gradient-to-b from-rose-400 to-rose-400/10 shadow-2xl shadow-rose-500/20 dark:shadow-rose-400/10"
         onClick={toggleFilter}
         style={{ transformStyle: "preserve-3d" }}
       >
-        {/* Dynamic light reflection */}
         <div
           ref={glowRef}
           className="absolute inset-0 z-30 pointer-events-none rounded-3xl"
@@ -249,7 +240,6 @@ const HeroImage = memo(function HeroImage() {
           }}
         />
 
-        {/* Static glass highlight at top */}
         <div
           className="absolute inset-x-0 top-0 h-1/3 z-20 pointer-events-none rounded-t-3xl"
           style={{
@@ -267,7 +257,7 @@ const HeroImage = memo(function HeroImage() {
           </p>
         )}
 
-        <div className="relative p-[2px] rounded-[calc(1.25rem-1px)]">
+        <div className="relative p-[2px] rounded-[calc(1.25rem-1px)] w-full h-full">
           <div
             className={`absolute inset-0 p-px rounded-3xl transition-all duration-500 ease-out z-[35] ${
               filter
@@ -280,13 +270,12 @@ const HeroImage = memo(function HeroImage() {
             alt="Felipe Bueno - Frontend Developer"
             width={500}
             height={500}
-            className="rounded-3xl"
+            className="rounded-3xl w-full h-full object-cover"
             priority
-            placeholder="empty"
+            sizes="(max-width: 640px) 250px, (max-width: 1024px) 300px, (max-width: 1280px) 400px, 500px"
           />
         </div>
 
-        {/* Border shine */}
         <div
           className="absolute inset-0 rounded-3xl pointer-events-none z-10"
           style={{
@@ -302,50 +291,7 @@ const HeroImage = memo(function HeroImage() {
 
 export default function Hero() {
   const { t, i18n } = useTranslation();
-  const prefersReducedMotion = useReducedMotion();
-  const [mounted, setMounted] = useState(false);
   const locale = (i18n.language.split("-")[0] as "en" | "pt") || "en";
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Animation variants for better performance
-  const fadeInVariants = useMemo(
-    () => ({
-      hidden: { opacity: 0 },
-      visible: { opacity: 1 },
-    }),
-    []
-  );
-
-  // Disable animations if user prefers reduced motion
-  const animationProps = prefersReducedMotion
-    ? {}
-    : {
-        initial: "hidden",
-        animate: mounted ? "visible" : "hidden",
-        variants: fadeInVariants,
-        transition: { duration: 0.6 },
-      };
-
-  const delayedAnimationProps = prefersReducedMotion
-    ? {}
-    : {
-        initial: "hidden",
-        animate: mounted ? "visible" : "hidden",
-        variants: fadeInVariants,
-        transition: { duration: 0.6, delay: 0.3 },
-      };
-
-  const ctaAnimationProps = prefersReducedMotion
-    ? {}
-    : {
-        initial: "hidden",
-        animate: mounted ? "visible" : "hidden",
-        variants: fadeInVariants,
-        transition: { duration: 0.6, delay: 0.5 },
-      };
 
   return (
     <section
@@ -354,10 +300,13 @@ export default function Hero() {
     >
       <div className="flex flex-col justify-center items-center lg:h-screen gap-8 lg:gap-12">
         <div className="flex flex-col justify-center items-center lg:items-start lg:ml-16 mx-auto sm:pl-0 lg:pl-12">
-          <motion.div className="mb-6" {...animationProps}>
+          <div className="mb-6 hero-fade-in" style={{ animationDelay: "0ms" }}>
             <OpenToWorkBadge />
-          </motion.div>
-          <motion.h1 className="~text-3xl/7xl mb-8" {...animationProps}>
+          </div>
+          <h1
+            className="~text-3xl/7xl mb-8 hero-fade-in"
+            style={{ animationDelay: "50ms" }}
+          >
             <span className="font-bold inline-block text-nowrap">
               {t("hero.title")}
               <span
@@ -367,25 +316,24 @@ export default function Hero() {
                 👋
               </span>
             </span>
-          </motion.h1>
-          <motion.p
-            className="~text-base/2xl mb-6 text-center lg:text-start"
-            {...animationProps}
+          </h1>
+          <p
+            className="~text-base/2xl mb-6 text-center lg:text-start hero-fade-in"
+            style={{ animationDelay: "100ms" }}
           >
             {t("hero.description")}
-          </motion.p>
-          <motion.p
-            className="~text-base/2xl mb-8 text-center lg:text-start font-semibold"
-            {...delayedAnimationProps}
+          </p>
+          <p
+            className="~text-base/2xl mb-8 text-center lg:text-start font-semibold hero-fade-in"
+            style={{ animationDelay: "200ms" }}
           >
             {t("hero.description2")}
-          </motion.p>
+          </p>
 
-          <motion.div
-            className="flex flex-wrap gap-3 justify-center lg:justify-start items-center w-full"
-            {...ctaAnimationProps}
+          <div
+            className="flex flex-wrap gap-3 justify-center lg:justify-start items-center w-full hero-fade-in"
+            style={{ animationDelay: "300ms" }}
           >
-            {/* CTA Primário - Gradiente com glow */}
             <Link
               href="#contact"
               className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 overflow-hidden
@@ -396,11 +344,9 @@ export default function Hero() {
             >
               <span className="relative z-10">{t("cta.workTogether")}</span>
               <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-0.5 transition-transform duration-300" />
-              {/* Shine effect */}
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
             </Link>
 
-            {/* CTA Secundário - Glass effect */}
             <Link
               href="#projects"
               className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300
@@ -414,7 +360,6 @@ export default function Hero() {
               <Eye className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" />
             </Link>
 
-            {/* CTA Terciário - Glass effect */}
             <Link
               href={
                 locale === "pt"
@@ -433,7 +378,7 @@ export default function Hero() {
               {t("cta.downloadResume")}
               <Download className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" />
             </Link>
-          </motion.div>
+          </div>
         </div>
         <div className="flex flex-wrap justify-center items-center lg:justify-start lg:items-start gap-2 lg:ml-16 h-fit mx-auto sm:pl-0 lg:pl-12">
           <SkillsList />

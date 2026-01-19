@@ -140,14 +140,12 @@ export default function RootLayout({
           as="image"
           href="/bg-main.webp"
           type="image/webp"
-          fetchPriority="high"
         />
         <link
           rel="preload"
           as="image"
           href="/bg-main-dark.webp"
           type="image/webp"
-          fetchPriority="high"
         />
       </head>
       <body>

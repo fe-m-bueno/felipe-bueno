@@ -6,29 +6,33 @@ import ThemeToggle from './ThemeToggle';
 import LanguageSelector from './LanguageSelector';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { useState, useEffect, useCallback } from 'react';
 
 export default function Navbar() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const path = usePathname();
 
+  const closeMenu = useCallback(() => setOpen(false), []);
+  const openMenu = useCallback(() => setOpen(true), []);
+
   useEffect(() => {
+    if (!open) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setOpen(false);
+        closeMenu();
       }
     };
 
-    if (open) {
-      document.addEventListener('keydown', handleKeyDown);
-    }
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
     };
-  }, [open]);
+  }, [open, closeMenu]);
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 w-screen">
       <div className="relative">
@@ -93,52 +97,58 @@ export default function Navbar() {
             <ThemeToggle />
             <LanguageSelector />
           </div>
-          <div
-            onClick={() => setOpen(true)}
-            className="lg:hidden flex gap-2 dark:hover:bg-white/25 transition-all duration-200 ease-in-out active:translate-y-1 dark:active:bg-white/45 active:bg-black/15 hover:bg-black/5 rounded px-2 py-2 cursor-pointer"
+          <button
+            onClick={openMenu}
+            aria-label="Abrir menu"
+            aria-expanded={open}
+            className="lg:hidden flex gap-2 dark:hover:bg-white/25 transition-colors duration-200 ease-in-out active:translate-y-1 dark:active:bg-white/45 active:bg-black/15 hover:bg-black/5 rounded px-2 py-2 cursor-pointer"
           >
             <Menu className="w-6 h-6" />
-          </div>
-          {open && (
-            <div
-              onClick={() => setOpen(false)}
-              className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
-            />
-          )}
-          <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: open ? '0%' : '100%' }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            onKeyDown={(e) => e.key === 'Enter' && setOpen(false)}
-            className="fixed top-0 right-0 w-64 h-full bg-white dark:bg-zinc-950 z-50 shadow-xl flex flex-col items-start p-6"
+          </button>
+          <div
+            onClick={closeMenu}
+            className={`fixed inset-0 bg-black/50 z-40 backdrop-blur-sm transition-opacity duration-300 ${
+              open ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}
+            aria-hidden="true"
+          />
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu de navegação"
+            onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
+            className={`fixed top-0 right-0 w-64 h-full bg-white dark:bg-zinc-950 z-50 shadow-xl flex flex-col items-start p-6 transition-transform duration-300 ease-out ${
+              open ? 'translate-x-0' : 'translate-x-full'
+            }`}
           >
             <button
-              onClick={() => setOpen(false)}
-              className="self-end p-2 rounded hover:bg-black/5 dark:hover:bg-rose-600 active:translate-y-1 dark:active:bg-rose-700 active:bg-black/15 transition"
+              onClick={closeMenu}
+              aria-label="Fechar menu"
+              className="self-end p-2 rounded hover:bg-black/5 dark:hover:bg-rose-600 active:translate-y-1 dark:active:bg-rose-700 active:bg-black/15 transition-colors"
             >
               <X className="w-6 h-6" />
             </button>
             <nav className="flex flex-col space-y-4 mt-4 w-full pr-8 font-space-grotesk">
               <Link
                 href="#landing"
-                onClick={() => setOpen(false)}
-                className="text-lg font-medium hover:text-rose-500"
+                onClick={closeMenu}
+                className="text-lg font-medium hover:text-rose-500 transition-colors"
                 suppressHydrationWarning
               >
                 {t('navbar.home')}
               </Link>
               <Link
                 href="#about"
-                onClick={() => setOpen(false)}
-                className="text-lg font-medium hover:text-rose-500"
+                onClick={closeMenu}
+                className="text-lg font-medium hover:text-rose-500 transition-colors"
                 suppressHydrationWarning
               >
                 {t('navbar.about')}
               </Link>
               <Link
                 href="#projects"
-                onClick={() => setOpen(false)}
-                className="text-lg font-medium hover:text-rose-500"
+                onClick={closeMenu}
+                className="text-lg font-medium hover:text-rose-500 transition-colors"
                 suppressHydrationWarning
               >
                 {t('navbar.projects')}
@@ -146,8 +156,8 @@ export default function Navbar() {
 
               <Link
                 href="#contact"
-                onClick={() => setOpen(false)}
-                className="text-lg font-medium hover:text-rose-500"
+                onClick={closeMenu}
+                className="text-lg font-medium hover:text-rose-500 transition-colors"
                 suppressHydrationWarning
               >
                 {t('navbar.contact')}
@@ -155,14 +165,14 @@ export default function Navbar() {
               <Link
                 href="https://linkedin.com/in/felipe-martins-bueno"
                 target="_blank"
-                className="text-lg font-medium hover:text-rose-500 flex items-center justify-start gap-2"
+                className="text-lg font-medium hover:text-rose-500 flex items-center justify-start gap-2 transition-colors"
               >
                 LinkedIn <LinkedIn className="w-6 h-6" />
               </Link>
               <Link
                 href="https://github.com/fe-m-bueno"
                 target="_blank"
-                className="text-lg font-medium hover:text-rose-500 flex items-center justify-start gap-2"
+                className="text-lg font-medium hover:text-rose-500 flex items-center justify-start gap-2 transition-colors"
               >
                 GitHub <GitHub className="w-6 h-6" />
               </Link>
@@ -171,7 +181,7 @@ export default function Navbar() {
                 <LanguageSelector />
               </div>
             </nav>
-          </motion.div>
+          </div>
         </div>
 
         <div className="absolute inset-0 bg-white dark:bg-black blur -z-10 h-2/3 lg:h-5/6"></div>
