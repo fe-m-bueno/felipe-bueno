@@ -56,7 +56,6 @@ const HeroImage = memo(function HeroImage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
-  const prefersReducedMotionRef = useRef(false);
 
   const currentRotation = useRef({ x: 0, y: 0 });
   const currentGlow = useRef({ x: 50, y: 50, intensity: 0.08 });
@@ -65,87 +64,76 @@ const HeroImage = memo(function HeroImage() {
 
   const toggleFilter = useCallback(() => setFilter((f) => !f), []);
 
-  const animate = useCallback(() => {
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotion) return;
+
     const container = containerRef.current;
     const glow = glowRef.current;
     if (!container) return;
 
-    const current = currentRotation.current;
-    const target = targetRotation.current;
+    let maxRotation = 12;
 
-    const rotationLerp = 0.06;
-    const lightLerp = 0.08;
+    const animate = () => {
+      const current = currentRotation.current;
+      const target = targetRotation.current;
 
-    current.x = lerp(current.x, target.x, rotationLerp);
-    current.y = lerp(current.y, target.y, rotationLerp);
+      const rotationLerp = 0.08;
+      const lightLerp = 0.1;
 
-    container.style.transform = `perspective(1000px) rotateX(${current.x}deg) rotateY(${current.y}deg)`;
+      current.x = lerp(current.x, target.x, rotationLerp);
+      current.y = lerp(current.y, target.y, rotationLerp);
 
-    const rotationMagnitude = Math.sqrt(
-      current.x * current.x + current.y * current.y
-    );
-    const targetIntensity = 0.08 + Math.min(rotationMagnitude / 15, 0.25);
+      container.style.transform = `perspective(1000px) rotateX(${current.x}deg) rotateY(${current.y}deg)`;
 
-    if (glow) {
-      const targetGlowX = 50 + current.y * 3;
-      const targetGlowY = 50 - current.x * 3;
-
-      currentGlow.current.x = lerp(
-        currentGlow.current.x,
-        targetGlowX,
-        lightLerp
+      const rotationMagnitude = Math.sqrt(
+        current.x * current.x + current.y * current.y
       );
-      currentGlow.current.y = lerp(
-        currentGlow.current.y,
-        targetGlowY,
-        lightLerp
-      );
-      currentGlow.current.intensity = lerp(
-        currentGlow.current.intensity,
-        targetIntensity,
-        lightLerp
-      );
+      const targetIntensity = 0.08 + Math.min(rotationMagnitude / 15, 0.25);
 
-      glow.style.background = `radial-gradient(ellipse at ${currentGlow.current.x}% ${currentGlow.current.y}%, rgba(255,255,255,${currentGlow.current.intensity}) 0%, transparent 60%)`;
-    }
+      if (glow) {
+        const targetGlowX = 50 + current.y * 3;
+        const targetGlowY = 50 - current.x * 3;
 
-    const threshold = 0.01;
-    if (
-      Math.abs(target.x - current.x) > threshold ||
-      Math.abs(target.y - current.y) > threshold
-    ) {
-      rafRef.current = requestAnimationFrame(animate);
-    } else {
-      isAnimating.current = false;
-    }
-  }, []);
+        currentGlow.current.x = lerp(
+          currentGlow.current.x,
+          targetGlowX,
+          lightLerp
+        );
+        currentGlow.current.y = lerp(
+          currentGlow.current.y,
+          targetGlowY,
+          lightLerp
+        );
+        currentGlow.current.intensity = lerp(
+          currentGlow.current.intensity,
+          targetIntensity,
+          lightLerp
+        );
 
-  const startAnimation = useCallback(() => {
-    if (!isAnimating.current) {
-      isAnimating.current = true;
-      animate();
-    }
-  }, [animate]);
+        glow.style.background = `radial-gradient(ellipse at ${currentGlow.current.x}% ${currentGlow.current.y}%, rgba(255,255,255,${currentGlow.current.intensity}) 0%, transparent 60%)`;
+      }
 
-  useEffect(() => {
-    prefersReducedMotionRef.current = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-    if (prefersReducedMotionRef.current) return;
-
-    const container = containerRef.current;
-    if (!container) return;
-
-    let effectiveRange = 500;
-    let maxRotation = 10;
-
-    const getSettings = () => {
-      const vw = window.innerWidth;
-      effectiveRange = vw < 768 ? 200 : vw < 1024 ? 350 : 500;
-      maxRotation = vw < 768 ? 6 : 10;
+      const threshold = 0.01;
+      if (
+        Math.abs(target.x - current.x) > threshold ||
+        Math.abs(target.y - current.y) > threshold
+      ) {
+        rafRef.current = requestAnimationFrame(animate);
+      } else {
+        isAnimating.current = false;
+      }
     };
-    getSettings();
+
+    const startAnimation = () => {
+      if (!isAnimating.current) {
+        isAnimating.current = true;
+        animate();
+      }
+    };
 
     const processMove = (clientX: number, clientY: number) => {
       const rect = container.getBoundingClientRect();
@@ -153,6 +141,8 @@ const HeroImage = memo(function HeroImage() {
       const centerY = rect.top + rect.height / 2;
       const deltaX = clientX - centerX;
       const deltaY = clientY - centerY;
+
+      const effectiveRange = Math.max(rect.width, rect.height) * 0.8;
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
       if (distance > effectiveRange) {
@@ -194,39 +184,30 @@ const HeroImage = memo(function HeroImage() {
       startAnimation();
     };
 
-    const handleResize = () => {
-      getSettings();
-    };
-
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    window.addEventListener("resize", handleResize, { passive: true });
-    container.addEventListener("mouseleave", handleLeave);
     container.addEventListener("touchmove", handleTouchMove, { passive: true });
     container.addEventListener("touchend", handleLeave);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("resize", handleResize);
-      container.removeEventListener("mouseleave", handleLeave);
       container.removeEventListener("touchmove", handleTouchMove);
       container.removeEventListener("touchend", handleLeave);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [startAnimation]);
+  }, []);
 
   return (
     <div
-      ref={containerRef}
       className="relative flex flex-col items-center justify-center mt-8 lg:mt-0 hero-fade-in"
       style={{
-        transformStyle: "preserve-3d",
+        animationDelay: "150ms",
         isolation: "isolate",
         zIndex: 1,
-        animationDelay: "150ms",
       }}
     >
       <div
-        className="relative rounded-3xl p-px w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px] overflow-hidden bg-gradient-to-b from-rose-400 to-rose-400/10 shadow-2xl shadow-rose-500/20 dark:shadow-rose-400/10"
+        ref={containerRef}
+        className="relative rounded-3xl p-px h-1/2 w-1/2 lg:h-full overflow-hidden bg-gradient-to-b from-rose-400 to-rose-400/10 shadow-2xl shadow-rose-500/20 dark:shadow-rose-400/10 will-change-transform cursor-pointer"
         onClick={toggleFilter}
         style={{ transformStyle: "preserve-3d" }}
       >
@@ -257,7 +238,7 @@ const HeroImage = memo(function HeroImage() {
           </p>
         )}
 
-        <div className="relative p-[2px] rounded-[calc(1.25rem-1px)] w-full h-full">
+        <div className="relative p-[2px] rounded-[calc(1.25rem-1px)]">
           <div
             className={`absolute inset-0 p-px rounded-3xl transition-all duration-500 ease-out z-[35] ${
               filter
@@ -270,9 +251,9 @@ const HeroImage = memo(function HeroImage() {
             alt="Felipe Bueno - Frontend Developer"
             width={500}
             height={500}
-            className="rounded-3xl w-full h-full object-cover"
+            className="rounded-3xl"
             priority
-            sizes="(max-width: 640px) 250px, (max-width: 1024px) 300px, (max-width: 1280px) 400px, 500px"
+            placeholder="empty"
           />
         </div>
 
