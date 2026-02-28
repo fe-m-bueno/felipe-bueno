@@ -254,6 +254,7 @@ const HeroImage = memo(function HeroImage() {
             className="rounded-3xl"
             priority
             placeholder="empty"
+            sizes="(min-width: 1024px) 50vw, 100vw"
           />
         </div>
 

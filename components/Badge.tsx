@@ -1,4 +1,5 @@
 "use client";
+import "@/lib/iconify-init";
 import { Icon } from "@iconify/react";
 import LiquidGlass from "./LiquidGlass";
 import { memo } from "react";
