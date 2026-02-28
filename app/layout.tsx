@@ -141,12 +141,6 @@ export default function RootLayout({
           href="/bg-main.webp"
           type="image/webp"
         />
-        <link
-          rel="preload"
-          as="image"
-          href="/bg-main-dark.webp"
-          type="image/webp"
-        />
       </head>
       <body>
         <I18nProvider>

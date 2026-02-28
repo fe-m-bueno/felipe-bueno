@@ -189,7 +189,7 @@ body::after {
   -webkit-mask-composite: xor;
   opacity: 0;
   transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: border-rotate 4s linear infinite;
+  /* animation runs only on hover — avoids ~30 idle conic-gradient repaints */
   pointer-events: none;
 }
 
@@ -214,10 +214,14 @@ body::after {
 
 /* Active state when hovered - usando CSS :hover ao invés de JS */
 .liquid-glass:hover::before,
-.liquid-glass:hover::after,
 .liquid-glass-badge:hover::before,
+.liquid-glass-card:hover::before {
+  opacity: 1;
+  animation: border-rotate 4s linear infinite;
+}
+
+.liquid-glass:hover::after,
 .liquid-glass-badge:hover::after,
-.liquid-glass-card:hover::before,
 .liquid-glass-card:hover::after {
   opacity: 1;
 }
