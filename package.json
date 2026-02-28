@@ -54,6 +54,8 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@vitejs/plugin-react": "^5.1.4",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.35",
     "fluid-tailwind": "^1.0.4",
     "jsdom": "^28.1.0",
     "postcss": "^8",
