@@ -51,22 +51,12 @@ function LiquidGlassComponent({
       }
     };
 
-    const handleMouseLeave = () => {
-      lastX = 50;
-      lastY = 50;
-      if (!frameRequested) {
-        frameRequested = true;
-        requestAnimationFrame(updatePosition);
-      }
-    };
-
-    // Adiciona classe ativa via CSS :hover ao invés de React state
+    // No position reset on leave — CSS :hover opacity transition fades the
+    // highlight at the last cursor position, avoiding a visible snap to center.
     container.addEventListener("mousemove", handleMouseMove, { passive: true });
-    container.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       container.removeEventListener("mousemove", handleMouseMove);
-      container.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
 
