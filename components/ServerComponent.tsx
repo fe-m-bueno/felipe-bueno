@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default async function LastFmTrack() {
   try {
     const res = await fetch(`http://localhost:3000/api/lastfm`, {
@@ -17,9 +19,11 @@ export default async function LastFmTrack() {
           {data?.name} - {data?.artist}
         </p>
         {data?.image && (
-          <img
+          <Image
             src={data.image}
             alt={`${data.name} album cover`}
+            width={96}
+            height={96}
             className="w-24 h-24 mt-2 rounded"
           />
         )}
