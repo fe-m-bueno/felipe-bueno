@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronDown } from "lucide-react";
+import { haptic } from "@/lib/haptic";
 
 const SECTIONS = ["landing", "about", "projects", "contact"];
 
@@ -113,6 +114,7 @@ export default function ScrollNavigator() {
   }, [updateScrollState, updateSectionPositions]);
 
   const handleClick = () => {
+    haptic();
     setIsClicked(true);
     setTimeout(() => setIsClicked(false), 300);
 
