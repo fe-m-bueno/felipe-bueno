@@ -22,14 +22,15 @@ import LanguageSelector from './LanguageSelector';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
+import { haptic } from '@/lib/haptic';
 
 export default function Navbar() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const path = usePathname();
 
-  const closeMenu = useCallback(() => setOpen(false), []);
-  const openMenu = useCallback(() => setOpen(true), []);
+  const closeMenu = useCallback(() => { haptic(); setOpen(false); }, []);
+  const openMenu = useCallback(() => { haptic(); setOpen(true); }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -56,6 +57,7 @@ export default function Navbar() {
             <Link
               href={path === '/projects' ? '/' : '#landing'}
               aria-label="Home"
+              onClick={() => haptic()}
               className="font-bold ~text-base/xl font-space-grotesk"
             >
               FELIPE BUENO
@@ -67,6 +69,7 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
+              onClick={() => haptic()}
               className="hover:scale-110 transition duration-100"
             >
               <LinkedInIcon />
@@ -76,12 +79,14 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
+              onClick={() => haptic()}
               className="hover:scale-110 transition duration-100"
             >
               <GitHubIcon />
             </Link>
             <Link
               href="#about"
+              onClick={() => haptic()}
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
               suppressHydrationWarning
             >
@@ -89,6 +94,7 @@ export default function Navbar() {
             </Link>
             <Link
               href="#projects"
+              onClick={() => haptic()}
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
               suppressHydrationWarning
             >
@@ -96,6 +102,7 @@ export default function Navbar() {
             </Link>
             <Link
               href="#contact"
+              onClick={() => haptic()}
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
               suppressHydrationWarning
             >

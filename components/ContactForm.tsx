@@ -5,6 +5,7 @@ import { contactFormSchema } from "@/lib/validation";
 import type { ContactFormData } from "@/lib/validation";
 import { z } from "zod";
 import LiquidGlass from "./LiquidGlass";
+import { haptic } from "@/lib/haptic";
 
 export default function ContactForm() {
   const { t } = useTranslation();
@@ -37,6 +38,7 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    haptic();
 
     if (submitCount > 10) {
       setErrors({ form: t("contact.tooManySubmissions") });

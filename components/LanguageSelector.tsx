@@ -9,6 +9,7 @@ import { Check, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import React, { useState, useEffect } from "react";
 import "@/node_modules/flag-icons/css/flag-icons.min.css";
+import { haptic } from "@/lib/haptic";
 
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
@@ -31,6 +32,7 @@ const LanguageSelector = () => {
   }, [i18n.language]);
 
   const handleChange = (value: string) => {
+    haptic();
     setSelectedLanguage(value);
     i18n.changeLanguage(value);
   };

@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
 import Link from "next/link";
+import { haptic } from "@/lib/haptic";
 
 type LocaleKey = "en" | "pt";
 
@@ -39,6 +40,7 @@ export default function ProjectsSection() {
         <Link
           href="/projects"
           target="_blank"
+          onClick={() => haptic()}
           className="inline-flex items-center gap-2 px-3 py-2 hover:bg-white/85 hover:shadow-sm dark:hover:bg-white/5 rounded-lg transition-all ease-in-out duration-200 group "
         >
           <span className="inline-flex items-center gap-2">

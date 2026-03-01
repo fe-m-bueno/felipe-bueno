@@ -6,6 +6,7 @@ import { useState, useEffect, useRef, memo, useCallback } from "react";
 import { EyeClosed, ArrowRight, Eye, Download } from "lucide-react";
 import Badge from "@/components/Badge";
 import OpenToWorkBadge from "@/components/OpenToWorkBadge";
+import { haptic } from "@/lib/haptic";
 
 const skills = [
   { name: "TypeScript", icon: "bxl:typescript" },
@@ -62,7 +63,7 @@ const HeroImage = memo(function HeroImage() {
   const targetRotation = useRef({ x: 0, y: 0 });
   const isAnimating = useRef(false);
 
-  const toggleFilter = useCallback(() => setFilter((f) => !f), []);
+  const toggleFilter = useCallback(() => { haptic(); setFilter((f) => !f); }, []);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -318,6 +319,7 @@ export default function Hero() {
           >
             <Link
               href="#contact"
+              onClick={() => haptic()}
               className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 overflow-hidden
                 bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500 bg-[length:200%_100%] hover:bg-[position:100%_0]
                 text-white shadow-[0_0_20px_rgba(244,63,94,0.3)] hover:shadow-[0_0_30px_rgba(244,63,94,0.5)]
@@ -331,6 +333,7 @@ export default function Hero() {
 
             <Link
               href="#projects"
+              onClick={() => haptic()}
               className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300
                 bg-white/10 dark:bg-white/5 backdrop-blur-md
                 border border-black/10 dark:border-white/10 hover:border-rose-500/50 dark:hover:border-rose-400/50
@@ -350,6 +353,7 @@ export default function Hero() {
               }
               target="_blank"
               download
+              onClick={() => haptic()}
               className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300
                 bg-white/10 dark:bg-white/5 backdrop-blur-md
                 border border-black/10 dark:border-white/10 hover:border-rose-500/50 dark:hover:border-rose-400/50
