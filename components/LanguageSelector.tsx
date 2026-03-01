@@ -57,7 +57,7 @@ const LanguageSelector = () => {
             menuPlacement === "top"
               ? "origin-bottom-center"
               : "origin-top-center"
-          } transition duration-200 ease-out [--anchor-] absolute dark:bg-black/65 bg-white/65 backdrop-blur-md w-fit dark:text-white border dark:border-white/10 border-black/10 rounded shadow-lg z-10 data-[closed]:scale-95 data-[closed]:opacity-0`}
+          } transition duration-200 ease-out absolute dark:bg-black/65 bg-white/65 backdrop-blur-md w-fit dark:text-white border dark:border-white/10 border-black/10 rounded shadow-lg z-10 data-[closed]:scale-95 data-[closed]:opacity-0`}
         >
           {languageOptions.map((option) => (
             <ListboxOption

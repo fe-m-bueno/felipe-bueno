@@ -51,7 +51,7 @@ export default function Navbar() {
   }, [open, closeMenu]);
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 w-screen">
-      <div className="relative">
+      <div className="relative overflow-visible">
         <div className="~mx-4/8 lg:~mx-24/48 flex items-center justify-between p-4">
           <div className="flex items-center space-x-4">
             <Link
@@ -63,7 +63,7 @@ export default function Navbar() {
               FELIPE BUENO
             </Link>
           </div>
-          <div className="hidden lg:flex items-center space-x-8 text-medium font-space-grotesk">
+          <div className="hidden lg:flex items-center space-x-8 text-medium font-space-grotesk overflow-visible">
             <Link
               href="https://linkedin.com/in/felipe-martins-bueno"
               target="_blank"
