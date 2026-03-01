@@ -11,14 +11,14 @@ import React, { useState, useEffect } from "react";
 import "@/node_modules/flag-icons/css/flag-icons.min.css";
 import { haptic } from "@/lib/haptic";
 
+const languageOptions = [
+  { value: "en", label: "fi fi-us" },
+  { value: "pt", label: "fi fi-br" },
+];
+
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
-
-  const languageOptions = [
-    { value: "en", label: "fi fi-us" },
-    { value: "pt", label: "fi fi-br" },
-  ];
 
   const menuPlacement = "top";
 
