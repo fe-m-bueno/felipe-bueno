@@ -52,7 +52,6 @@ const LanguageSelector = () => {
 
         <ListboxOptions
           transition
-          static
           className="origin-top-center transition duration-200 ease-out absolute top-full mt-2 dark:bg-black/65 bg-white/65 backdrop-blur-md w-fit dark:text-white border dark:border-white/10 border-black/10 rounded shadow-lg z-10 data-[closed]:scale-95 data-[closed]:opacity-0"
         >
           {languageOptions.map((option) => (
