@@ -405,7 +405,7 @@ body::after {
 }
 
 .hero-fade-in {
-  animation: hero-fade-in 0.5s ease-out forwards;
+  animation: hero-fade-in 0.5s ease-out both;
   animation-delay: var(--animation-delay, 0ms);
 }
 
