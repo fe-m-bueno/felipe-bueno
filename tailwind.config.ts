@@ -27,9 +27,9 @@ const config: Config = {
         xs: "20rem",
       },
       fontFamily: {
-        sans: ["IBM Plex Sans Variable", "sans-serif"],
-        mono: ["Geist Mono Variable", "monospace"],
-        "space-grotesk": ["Space Grotesk Variable", "sans-serif"],
+        sans: ["var(--font-sans)", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
+        "space-grotesk": ["var(--font-space-grotesk)", "sans-serif"],
       },
     },
   },

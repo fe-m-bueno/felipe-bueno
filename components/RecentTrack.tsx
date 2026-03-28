@@ -29,6 +29,11 @@ function RecentTrackComponent() {
 
         const data = await res.json();
         if (isMounted) {
+          if (!data?.title || !data?.artist) {
+            setTrack(null);
+            return;
+          }
+
           setTrack({
             title: data.title,
             artist: data.artist,
