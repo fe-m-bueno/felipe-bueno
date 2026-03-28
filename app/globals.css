@@ -1,6 +1,3 @@
-@import '@fontsource-variable/ibm-plex-sans';
-@import '@fontsource-variable/geist-mono';
-@import '@fontsource-variable/space-grotesk';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
+import localFont from "next/font/local";
 import "./globals.css";
 import I18nProvider from "@/components/i18nProvider";
 import Navbar from "@/components/TheNavbar";
@@ -6,6 +8,46 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import TheFooter from "@/components/TheFooter";
 import StructuredData from "@/components/StructuredData";
+import { normalizeTheme } from "@/lib/theme";
+
+const ibmPlexSans = localFont({
+  src: [
+    {
+      path: "../node_modules/@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2",
+      style: "normal",
+      weight: "100 700",
+    },
+  ],
+  variable: "--font-sans",
+  preload: true,
+  display: "swap",
+});
+
+const spaceGrotesk = localFont({
+  src: [
+    {
+      path: "../node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2",
+      style: "normal",
+      weight: "300 700",
+    },
+  ],
+  variable: "--font-space-grotesk",
+  preload: true,
+  display: "swap",
+});
+
+const geistMono = localFont({
+  src: [
+    {
+      path: "../node_modules/@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2",
+      style: "normal",
+      weight: "100 900",
+    },
+  ],
+  variable: "--font-mono",
+  preload: true,
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Felipe Bueno | Fullstack Developer",
@@ -101,39 +143,18 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const theme = normalizeTheme(cookieStore.get("theme")?.value) ?? "light";
+  const htmlClassName = theme === "dark" ? "dark" : undefined;
+
   return (
-    <html lang="en">
+    <html lang="en" data-mode={theme} className={htmlClassName}>
       <head>
-        <script
-          id="theme-init"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var storedTheme = localStorage.getItem('theme');
-                  var theme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'light';
-                  var html = document.documentElement;
-                  html.setAttribute('data-mode', theme);
-                  if (theme === 'dark') {
-                    html.classList.add('dark');
-                  } else {
-                    html.classList.remove('dark');
-                  }
-                } catch (e) {
-                  var html = document.documentElement;
-                  html.setAttribute('data-mode', 'light');
-                  html.classList.remove('dark');
-                }
-              })();
-            `,
-          }}
-        />
         <StructuredData />
         <link
           rel="preload"
@@ -142,7 +163,9 @@ export default function RootLayout({
           type="image/webp"
         />
       </head>
-      <body>
+      <body
+        className={`${ibmPlexSans.variable} ${spaceGrotesk.variable} ${geistMono.variable} font-sans`}
+      >
         <I18nProvider>
           <Navbar />
           {children}

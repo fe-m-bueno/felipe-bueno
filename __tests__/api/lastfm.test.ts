@@ -49,30 +49,40 @@ describe('GET /api/lastfm', () => {
   });
 
   describe('missing environment variables', () => {
-    it('returns 500 when LAST_FM_API_KEY is missing', async () => {
+    it('returns a silent fallback when LAST_FM_API_KEY is missing', async () => {
       vi.stubEnv('LAST_FM_API_KEY', '');
       vi.stubEnv('LAST_FM_USER', 'testuser');
 
       const res = await GET();
-      expect((res as any).status).toBe(500);
-      expect((res as any).data).toHaveProperty('error');
+      expect((res as any).status).toBe(200);
+      expect((res as any).data).toEqual({
+        title: null,
+        artist: null,
+        album: null,
+        image: null,
+      });
     });
 
-    it('returns 500 when LAST_FM_USER is missing', async () => {
+    it('returns a silent fallback when LAST_FM_USER is missing', async () => {
       vi.stubEnv('LAST_FM_API_KEY', 'test-api-key');
       vi.stubEnv('LAST_FM_USER', '');
 
       const res = await GET();
-      expect((res as any).status).toBe(500);
-      expect((res as any).data).toHaveProperty('error');
+      expect((res as any).status).toBe(200);
+      expect((res as any).data).toEqual({
+        title: null,
+        artist: null,
+        album: null,
+        image: null,
+      });
     });
 
-    it('returns 500 when both env vars are missing', async () => {
+    it('returns a silent fallback when both env vars are missing', async () => {
       vi.stubEnv('LAST_FM_API_KEY', '');
       vi.stubEnv('LAST_FM_USER', '');
 
       const res = await GET();
-      expect((res as any).status).toBe(500);
+      expect((res as any).status).toBe(200);
     });
   });
 

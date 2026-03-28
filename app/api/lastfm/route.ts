@@ -1,18 +1,21 @@
 import { NextResponse } from "next/server";
 
+function emptyTrackResponse() {
+  return {
+    title: null,
+    artist: null,
+    album: null,
+    image: null,
+  };
+}
+
 export async function GET() {
   const LASTFM_URL = "http://ws.audioscrobbler.com/2.0/";
   const API_KEY = process.env.LAST_FM_API_KEY;
   const USERNAME = process.env.LAST_FM_USER;
 
   if (!API_KEY || !USERNAME) {
-    console.error(
-      "LastFM API key or username not found in environment variables"
-    );
-    return NextResponse.json(
-      { error: "API configuration error" },
-      { status: 500 }
-    );
+    return NextResponse.json(emptyTrackResponse());
   }
   try {
     const url = `${LASTFM_URL}?method=user.getrecenttracks&user=${USERNAME}&api_key=${API_KEY}&format=json&limit=1`;

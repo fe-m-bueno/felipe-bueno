@@ -199,9 +199,8 @@ const HeroImage = memo(function HeroImage() {
 
   return (
     <div
-      className="relative flex flex-col items-center justify-center mt-8 lg:mt-0 hero-fade-in"
+      className="relative flex flex-col items-center justify-center mt-8 lg:mt-0"
       style={{
-        animationDelay: "150ms",
         isolation: "isolate",
         zIndex: 1,
       }}
@@ -283,12 +282,11 @@ export default function Hero() {
     >
       <div className="flex flex-col justify-center items-center lg:h-screen gap-8 lg:gap-12">
         <div className="flex flex-col justify-center items-center lg:items-start lg:ml-16 mx-auto sm:pl-0 lg:pl-12">
-          <div className="mb-6 hero-fade-in" style={{ animationDelay: "0ms" }}>
+          <div className="mb-6">
             <OpenToWorkBadge />
           </div>
           <h1
-            className="~text-3xl/7xl mb-8 hero-fade-in"
-            style={{ animationDelay: "50ms" }}
+            className="~text-3xl/7xl mb-8"
           >
             <span className="font-bold inline-block text-nowrap">
               {t("hero.title")}
@@ -301,21 +299,18 @@ export default function Hero() {
             </span>
           </h1>
           <p
-            className="~text-base/2xl mb-6 text-center lg:text-start hero-fade-in"
-            style={{ animationDelay: "100ms" }}
+            className="~text-base/2xl mb-6 text-center lg:text-start"
           >
             {t("hero.description")}
           </p>
           <p
-            className="~text-base/2xl mb-8 text-center lg:text-start font-semibold hero-fade-in"
-            style={{ animationDelay: "200ms" }}
+            className="~text-base/2xl mb-8 text-center lg:text-start font-semibold"
           >
             {t("hero.description2")}
           </p>
 
           <div
-            className="flex flex-wrap gap-3 justify-center lg:justify-start items-center w-full hero-fade-in"
-            style={{ animationDelay: "300ms" }}
+            className="flex flex-wrap gap-3 justify-center lg:justify-start items-center w-full"
           >
             <Link
               href="#contact"

@@ -26,6 +26,9 @@ function MouseGradientComponent() {
     const handleMouseMove = (event: MouseEvent) => {
       lastX = event.clientX;
       lastY = event.clientY;
+      gradient.style.opacity = "1";
+      gradient.style.setProperty("--mouse-x", `${lastX}px`);
+      gradient.style.setProperty("--mouse-y", `${lastY}px`);
 
       // Coalescência de eventos usando RAF
       if (!frameRequested) {
@@ -34,10 +37,16 @@ function MouseGradientComponent() {
       }
     };
 
+    const handlePointerLeave = () => {
+      gradient.style.opacity = "0";
+    };
+
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    document.addEventListener("mouseleave", handlePointerLeave);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseleave", handlePointerLeave);
     };
   }, []);
 
@@ -48,6 +57,7 @@ function MouseGradientComponent() {
       style={{
         ["--mouse-x" as string]: "50%",
         ["--mouse-y" as string]: "50%",
+        opacity: 0,
       }}
     />
   );

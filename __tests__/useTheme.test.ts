@@ -6,6 +6,7 @@ function clearDOMTheme() {
   document.documentElement.removeAttribute('data-mode');
   document.documentElement.classList.remove('dark');
   localStorage.clear();
+  document.cookie = 'theme=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
 }
 
 describe('useTheme', () => {
@@ -39,6 +40,14 @@ describe('useTheme', () => {
       localStorage.setItem('theme', 'dark');
       const { result } = renderHook(() => useTheme());
       // After mount effect runs, theme syncs from localStorage
+      expect(result.current.theme).toBe('dark');
+    });
+
+    it('reads dark theme from cookie when DOM and localStorage are not set', () => {
+      document.cookie = 'theme=dark';
+
+      const { result } = renderHook(() => useTheme());
+
       expect(result.current.theme).toBe('dark');
     });
 
@@ -94,6 +103,17 @@ describe('useTheme', () => {
       });
 
       expect(localStorage.getItem('theme')).toBe('dark');
+    });
+
+    it('persists new theme to cookie after toggle', () => {
+      document.documentElement.setAttribute('data-mode', 'light');
+      const { result } = renderHook(() => useTheme());
+
+      act(() => {
+        result.current.toggleTheme();
+      });
+
+      expect(document.cookie).toContain('theme=dark');
     });
 
     it('updates DOM data-mode attribute after toggle to dark', () => {
