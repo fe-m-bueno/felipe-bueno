@@ -11,23 +11,38 @@ const techs = {
   SvelteKit: { name: "SvelteKit", icon: "ri:svelte-fill" },
   WeatherAPI: { name: "Weather API", icon: "fluent:weather-rain-20-filled" },
   Gemini: { name: "Gemini AI", icon: "simple-icons:googlegemini" },
+  Supabase: { name: "Supabase", icon: "simple-icons:supabase" },
+  PostgreSQL: { name: "PostgreSQL", icon: "mdi:database-outline" },
+  Python: { name: "Python", icon: "mdi:language-python" },
+  CrewAI: { name: "CrewAI", icon: "mdi:robot-outline" },
 };
 
 export const projects = {
   en: [
     {
-      id: "1",
-      title: "Lederboxed",
+      id: "bookclubinho",
+      title: "Bookclubinho",
       description:
-        "A web app to explore 500K+ movies and TV shows using TMDB API. Features server-side rendering and optimized caching.",
-      image: "/lederboxed.webp",
-      link: "https://lederboxed.vercel.app",
-      github: "https://github.com/fe-m-bueno/lederboxed",
-      techs: [techs.Next, techs.React, techs.Tailwind, techs.TypeScript],
-      metrics: ["500K+ titles", "SSR optimized", "Real-time search"],
+        "A deployed social reading app with authentication, Row Level Security, real-time updates, and PostgreSQL-backed data modeling.",
+      image: "/bookclubinho.webp",
+      link: "https://bookclubinho.vercel.app",
+      github: "https://github.com/fe-m-bueno/bookclubinho",
+      techs: [techs.Next, techs.React, techs.TypeScript, techs.Supabase, techs.PostgreSQL],
+      metrics: ["Auth + RLS", "Real-time updates", "Deployed app"],
     },
     {
-      id: "2",
+      id: "code-review-crew",
+      title: "Code Review Crew",
+      description:
+        "A multi-agent AI code review system that coordinates specialized reviewers to inspect code quality, security risks, and maintainability.",
+      image: "/felipe-bueno.png",
+      link: "https://github.com/fe-m-bueno/code-review-crew",
+      github: "https://github.com/fe-m-bueno/code-review-crew",
+      techs: [techs.Python, techs.CrewAI],
+      metrics: ["Multi-agent AI", "Code review automation", "Security-aware checks"],
+    },
+    {
+      id: "recollagefm",
       title: "Recollagefm",
       description:
         "An app to create beautiful collages with album covers from your favorite artists using Last.fm API. Generates custom layouts dynamically.",
@@ -38,7 +53,18 @@ export const projects = {
       metrics: ["API integration", "Dynamic layouts", "Export to image"],
     },
     {
-      id: "3",
+      id: "lederboxed",
+      title: "Lederboxed",
+      description:
+        "A web app to explore 500K+ movies and TV shows using TMDB API. Features server-side rendering and optimized caching.",
+      image: "/lederboxed.webp",
+      link: "https://lederboxed.vercel.app",
+      github: "https://github.com/fe-m-bueno/lederboxed",
+      techs: [techs.Next, techs.React, techs.Tailwind, techs.TypeScript],
+      metrics: ["500K+ titles", "SSR optimized", "Real-time search"],
+    },
+    {
+      id: "breakstuff",
       title: "Break Stuff",
       description:
         "An AI-powered app to break down complex tasks into smaller, manageable subtasks. Uses Groq AI for intelligent task decomposition.",
@@ -49,24 +75,18 @@ export const projects = {
       metrics: ["AI-powered", "Real-time generation", "State management"],
     },
     {
-      id: "4",
+      id: "weathernowat",
       title: "Weather Now At",
       description:
         "A clean, responsive weather app with real-time data and location detection. Features detailed forecasts and weather alerts.",
       image: "/weathernowat.webp",
       link: "https://weathernowat.vercel.app",
       github: "https://github.com/fe-m-bueno/weathernowat",
-      techs: [
-        techs.Svelte,
-        techs.SvelteKit,
-        techs.TypeScript,
-        techs.Tailwind,
-        techs.WeatherAPI,
-      ],
+      techs: [techs.Svelte, techs.SvelteKit, techs.TypeScript, techs.Tailwind, techs.WeatherAPI],
       metrics: ["Real-time data", "Geolocation", "7-day forecast"],
     },
     {
-      id: "5",
+      id: "questione",
       title: "Questione",
       description:
         "An AI-powered quiz generator using Gemini AI. Creates custom questions and answers for any topic instantly.",
@@ -77,7 +97,7 @@ export const projects = {
       metrics: ["Gemini AI", "Instant generation", "Custom topics"],
     },
     {
-      id: "6",
+      id: "stopwatch",
       title: "Stopwatch",
       description:
         "A feature-rich web stopwatch with lap tracking, activity logging, and data persistence. Built for productivity tracking.",
@@ -90,18 +110,29 @@ export const projects = {
   ],
   pt: [
     {
-      id: "1",
-      title: "Lederboxed",
+      id: "bookclubinho",
+      title: "Bookclubinho",
       description:
-        "Um aplicativo para explorar 500K+ filmes e séries usando a API do TMDB. Com renderização no servidor e cache otimizado.",
-      image: "/lederboxed.webp",
-      link: "https://lederboxed.vercel.app",
-      github: "https://github.com/fe-m-bueno/lederboxed",
-      techs: [techs.Next, techs.React, techs.Tailwind, techs.TypeScript],
-      metrics: ["500K+ títulos", "SSR otimizado", "Busca em tempo real"],
+        "Um app social de leitura em produção com autenticação, Row Level Security, atualizações em tempo real e modelagem de dados com PostgreSQL.",
+      image: "/bookclubinho.webp",
+      link: "https://bookclubinho.vercel.app",
+      github: "https://github.com/fe-m-bueno/bookclubinho",
+      techs: [techs.Next, techs.React, techs.TypeScript, techs.Supabase, techs.PostgreSQL],
+      metrics: ["Auth + RLS", "Atualizações em tempo real", "App publicado"],
     },
     {
-      id: "2",
+      id: "code-review-crew",
+      title: "Code Review Crew",
+      description:
+        "Um sistema multiagente de revisão de código com IA que coordena revisores especializados para avaliar qualidade, riscos de segurança e manutenibilidade.",
+      image: "/felipe-bueno.png",
+      link: "https://github.com/fe-m-bueno/code-review-crew",
+      github: "https://github.com/fe-m-bueno/code-review-crew",
+      techs: [techs.Python, techs.CrewAI],
+      metrics: ["IA multiagente", "Automação de code review", "Checagens de segurança"],
+    },
+    {
+      id: "recollagefm",
       title: "Recollagefm",
       description:
         "Um aplicativo para criar colagens lindas com capas de álbuns dos seus artistas favoritos usando a API do Last.fm. Gera layouts personalizados dinamicamente.",
@@ -112,7 +143,18 @@ export const projects = {
       metrics: ["Integração API", "Layouts dinâmicos", "Exportar imagem"],
     },
     {
-      id: "3",
+      id: "lederboxed",
+      title: "Lederboxed",
+      description:
+        "Um aplicativo para explorar 500K+ filmes e séries usando a API do TMDB. Com renderização no servidor e cache otimizado.",
+      image: "/lederboxed.webp",
+      link: "https://lederboxed.vercel.app",
+      github: "https://github.com/fe-m-bueno/lederboxed",
+      techs: [techs.Next, techs.React, techs.Tailwind, techs.TypeScript],
+      metrics: ["500K+ títulos", "SSR otimizado", "Busca em tempo real"],
+    },
+    {
+      id: "breakstuff",
       title: "Break Stuff",
       description:
         "Um aplicativo com IA para quebrar tarefas complexas em subtarefas menores e gerenciáveis. Usa Groq AI para decomposição inteligente.",
@@ -123,24 +165,18 @@ export const projects = {
       metrics: ["IA integrada", "Geração em tempo real", "Gerência de estado"],
     },
     {
-      id: "4",
+      id: "weathernowat",
       title: "Weather Now At",
       description:
         "Um aplicativo de clima limpo e responsivo com dados em tempo real e detecção de localização. Com previsões detalhadas e alertas.",
       image: "/weathernowat.webp",
       link: "https://weathernowat.vercel.app",
       github: "https://github.com/fe-m-bueno/weathernowat",
-      techs: [
-        techs.Svelte,
-        techs.SvelteKit,
-        techs.TypeScript,
-        techs.Tailwind,
-        techs.WeatherAPI,
-      ],
+      techs: [techs.Svelte, techs.SvelteKit, techs.TypeScript, techs.Tailwind, techs.WeatherAPI],
       metrics: ["Dados em tempo real", "Geolocalização", "Previsão 7 dias"],
     },
     {
-      id: "5",
+      id: "questione",
       title: "Questione",
       description:
         "Um gerador de quiz com IA usando Gemini AI. Cria perguntas e respostas personalizadas para qualquer tópico instantaneamente.",
@@ -151,7 +187,7 @@ export const projects = {
       metrics: ["Gemini AI", "Geração instantânea", "Tópicos personalizados"],
     },
     {
-      id: "6",
+      id: "stopwatch",
       title: "Stopwatch",
       description:
         "Um cronômetro web completo com rastreamento de voltas, registro de atividades e persistência de dados. Feito para produtividade.",

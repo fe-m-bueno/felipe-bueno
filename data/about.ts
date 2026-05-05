@@ -13,11 +13,11 @@ const calculateAge = () => {
 export const about = {
   en: {
     title: "About Me",
-    description: `I am ${calculateAge()} years old with a degree in Business Administration and currently pursuing Systems Analysis and Development at PUCPR. My passion for technology led me from self-teaching to professional fullstack development, where I architect scalable solutions across the entire stack.
+    description: `I am ${calculateAge()} years old with a degree in Business Administration and currently pursuing Systems Analysis and Development at PUCPR. My strongest work sits at the intersection of backend engineering, internal platforms, data pipelines, and performance optimization.
 
-I studied at a military school, developing discipline and analytical thinking that I apply to software engineering, from designing data pipelines to crafting intuitive user interfaces. My curiosity extends beyond code: I speak multiple languages fluently (Portuguese, English, Spanish) and have completed courses in Italian, French, and Japanese on Duolingo, which helps me collaborate in diverse, multicultural teams.
+Currently working as a Junior Systems Analyst at Pilgrims Consulting, I maintain Django platforms, build REST APIs, optimize SQL-heavy workflows, and orchestrate Apache Airflow pipelines that support real business operations. Recent wins include reducing a production search from 92s to 3.6s, cutting dashboard runtimes from 29s to 1.2s, and saving 240+ hours through automation.
 
-Currently working as a Junior Systems Analyst at Pilgrims Consulting, I specialize in Python (Django), TypeScript (Angular), Apache Airflow, Docker, and database optimization. I thrive on solving complex problems and continuously expanding my technical expertise.`,
+I work mainly with Python, Django, TypeScript, PostgreSQL, Airflow, Docker, Redis, and API integrations. I also bring a business background and multilingual communication in Portuguese, English, and Spanish, which helps me turn messy operational problems into software that people can actually use.`,
     availability: {
       status: "Open to opportunities",
       types: ["Full-time", "Contract", "Remote"],
@@ -27,23 +27,23 @@ Currently working as a Junior Systems Analyst at Pilgrims Consulting, I speciali
     },
     tldr: [
       `${calculateAge()} years old`,
-      "Fullstack Developer",
-      "Data Engineering",
-      "Systems Analysis Student @ PUCPR",
-      "Fluent in Multiple Languages",
-      "Business Administration Background",
-      "Fast Learner & Problem Solver",
-      "Self-taught",
+      "Curitiba, Brazil",
+      "Fullstack Developer · Backend-focused",
+      "99.7% query optimization in production",
+      "140 Airflow DAGs orchestrated",
+      "240+ hours saved via automation",
+      "Django · TypeScript · PostgreSQL · Airflow · Docker",
+      "English · Portuguese · Spanish",
     ],
   },
 
   pt: {
     title: "Sobre Mim",
-    description: `Tenho ${calculateAge()} anos, sou formado em Administração e atualmente curso Análise e Desenvolvimento de Sistemas na PUCPR. Minha paixão por tecnologia me levou do aprendizado autodidata ao desenvolvimento fullstack profissional, onde arquiteto soluções escaláveis em toda a stack.
+    description: `Tenho ${calculateAge()} anos, sou formado em Administração e atualmente curso Análise e Desenvolvimento de Sistemas na PUCPR. Meu trabalho mais forte está na interseção entre engenharia backend, plataformas internas, pipelines de dados e otimização de performance.
 
-Estudei em colégio militar, desenvolvendo disciplina e pensamento analítico que aplico na engenharia de software, desde o design de pipelines de dados até a criação de interfaces intuitivas. Minha curiosidade vai além do código: falo múltiplos idiomas fluentemente (Português, Inglês, Espanhol) e completei cursos de italiano, francês e japonês no Duolingo, o que me ajuda a colaborar em equipes multiculturais.
+Atualmente trabalho como Analista de Sistemas Júnior na Pilgrims Consulting, mantendo plataformas em Django, construindo APIs REST, otimizando fluxos pesados em SQL e orquestrando pipelines no Apache Airflow que apoiam operações reais do negócio. Entre os principais resultados recentes estão a redução de uma busca em produção de 92s para 3,6s, dashboards de 29s para 1,2s e 240+ horas economizadas com automações.
 
-Atualmente trabalho como Analista de Sistemas Júnior na Pilgrims Consulting, especializado em Python (Django), TypeScript (Angular), Apache Airflow, Docker e otimização de bancos de dados. Prospero resolvendo problemas complexos e expandindo continuamente minha expertise técnica.`,
+Trabalho principalmente com Python, Django, TypeScript, PostgreSQL, Airflow, Docker, Redis e integrações com APIs. Também trago formação em negócios e comunicação multilíngue em português, inglês e espanhol, o que me ajuda a transformar problemas operacionais bagunçados em software que as pessoas realmente usam.`,
     availability: {
       status: "Aberto a oportunidades",
       types: ["Tempo integral", "Contrato", "Remoto"],
@@ -53,13 +53,13 @@ Atualmente trabalho como Analista de Sistemas Júnior na Pilgrims Consulting, es
     },
     tldr: [
       `${calculateAge()} anos`,
-      "Desenvolvedor Fullstack",
-      "Engenharia de Dados",
-      "Estudante de ADS @ PUCPR",
-      "Fluente em Múltiplos Idiomas",
-      "Formação em Administração",
-      "Aprendizado Rápido & Resolução de Problemas",
-      "Autodidata",
+      "Curitiba, Brasil",
+      "Desenvolvedor Fullstack · Foco em Backend",
+      "99,7% de otimização de queries em produção",
+      "140 DAGs do Airflow orquestradas",
+      "240+ horas economizadas via automação",
+      "Django · TypeScript · PostgreSQL · Airflow · Docker",
+      "Inglês · Português · Espanhol",
     ],
   },
 };

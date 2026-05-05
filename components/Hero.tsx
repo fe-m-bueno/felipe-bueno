@@ -28,7 +28,6 @@ const skills = [
   { name: "Nuxt.js", icon: "lineicons:nuxt" },
   { name: "Svelte", icon: "ri:svelte-fill" },
   { name: "Apollo Studio", icon: "file-icons:apollo" },
-  { name: "Swift", icon: "lineicons:swift" },
   { name: "Drizzle", icon: "lineicons:drizzle" },
   { name: "Prisma", icon: "lineicons:prisma" },
   { name: "Figma", icon: "solar:figma-bold" },

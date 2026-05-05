@@ -7,8 +7,8 @@
   },
   "hero": {
     "title": "Hey, I'm Felipe!",
-    "description": "Fullstack Developer specializing in scalable web solutions with Python, TypeScript, and modern frameworks.",
-    "description2": "I design data pipelines, build robust APIs, and create responsive interfaces that users love.",
+    "description": "Backend-focused Fullstack Developer who builds internal platforms, APIs, and data pipelines that actually perform.",
+    "description2": "I've optimized queries from 92s → 3.6s, orchestrated 140 Airflow DAGs, and saved 240+ hours through automation.",
     "scrollDown": "Scroll Down",
     "clickToRemoveBlur": "Click to see Felipe's face"
   },

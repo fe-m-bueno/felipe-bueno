@@ -79,6 +79,7 @@ function ProjectCardComponent({
           <Link
             href={link}
             target="_blank"
+            rel="noopener noreferrer"
             onClick={() => haptic()}
             className="px-3 py-1 bg-rose-600/85 hover:bg-rose-500/85 backdrop-blur-md dark:bg-rose-600/85 dark:hover:bg-rose-700/85 border border-gray-200/20 rounded-xl text-white transition font-bold ~text-sm/base"
           >
@@ -87,6 +88,7 @@ function ProjectCardComponent({
           <Link
             href={github}
             target="_blank"
+            rel="noopener noreferrer"
             onClick={() => haptic()}
             className="px-3 py-1 bg-white/85 hover:bg-white/100 dark:bg-white/5 dark:hover:bg-white/25 backdrop-blur border border-gray-200/20 rounded-xl transition ~text-sm/base"
           >

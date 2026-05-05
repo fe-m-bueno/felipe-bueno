@@ -23,7 +23,15 @@ export default function Resume() {
             <p className="text-sm text-gray-600 dark:text-gray-300">
               {exp.role} - {exp.date}
             </p>
-            <p className="mt-2">{exp.description}</p>
+            {Array.isArray(exp.description) ? (
+              <ul className="mt-3 list-disc space-y-2 pl-5">
+                {exp.description.map((item, itemIndex) => (
+                  <li key={itemIndex}>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-2">{exp.description}</p>
+            )}
           </LiquidGlass>
         ))}
       </ul>

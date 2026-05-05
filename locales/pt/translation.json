@@ -7,8 +7,8 @@
   },
   "hero": {
     "title": "Oi, Felipe aqui!",
-    "description": "Desenvolvedor Fullstack especializado em soluções web escaláveis com Python, TypeScript e frameworks modernos.",
-    "description2": "Projeto pipelines de dados, construo APIs robustas e crio interfaces responsivas que os usuários adoram.",
+    "description": "Desenvolvedor Fullstack com foco em backend, construindo plataformas internas, APIs e pipelines de dados que realmente performam.",
+    "description2": "Já otimizei queries de 92s → 3,6s, orquestrei 140 DAGs no Airflow e economizei 240+ horas com automação.",
     "scrollDown": "Deslize para baixo",
     "clickToRemoveBlur": "Clique para ver o rosto de Felipe"
   },
