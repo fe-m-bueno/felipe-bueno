@@ -9,43 +9,65 @@ function MouseGradientComponent() {
     const gradient = gradientRef.current;
     if (!gradient) return;
 
-    // Verifica preferência de movimento reduzido
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotion) {
+      gradient.style.opacity = "0.55";
+      return;
+    }
 
     let frameRequested = false;
-    let lastX = 0;
-    let lastY = 0;
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
+    let isVisible = false;
 
-    const updateGradient = () => {
+    const render = () => {
       frameRequested = false;
-      gradient.style.setProperty("--mouse-x", `${lastX}px`);
-      gradient.style.setProperty("--mouse-y", `${lastY}px`);
-    };
+      currentX += (targetX - currentX) * 0.14;
+      currentY += (targetY - currentY) * 0.14;
 
-    const handleMouseMove = (event: MouseEvent) => {
-      lastX = event.clientX;
-      lastY = event.clientY;
-      gradient.style.opacity = "1";
-      gradient.style.setProperty("--mouse-x", `${lastX}px`);
-      gradient.style.setProperty("--mouse-y", `${lastY}px`);
+      gradient.style.setProperty("--mouse-x", `${currentX}px`);
+      gradient.style.setProperty("--mouse-y", `${currentY}px`);
+      gradient.style.opacity = isVisible ? "1" : "0.62";
 
-      // Coalescência de eventos usando RAF
-      if (!frameRequested) {
+      if (Math.abs(targetX - currentX) > 0.5 || Math.abs(targetY - currentY) > 0.5) {
         frameRequested = true;
-        requestAnimationFrame(updateGradient);
+        requestAnimationFrame(render);
       }
     };
 
+    const requestRender = () => {
+      if (!frameRequested) {
+        frameRequested = true;
+        requestAnimationFrame(render);
+      }
+    };
+
+    const handlePointerMove = (event: PointerEvent | MouseEvent) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      isVisible = true;
+      gradient.style.opacity = "1";
+      gradient.style.setProperty("--mouse-x", `${targetX}px`);
+      gradient.style.setProperty("--mouse-y", `${targetY}px`);
+    };
+
     const handlePointerLeave = () => {
+      isVisible = false;
       gradient.style.opacity = "0";
     };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("mousemove", handlePointerMove, { passive: true });
     document.addEventListener("mouseleave", handlePointerLeave);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("mousemove", handlePointerMove);
       document.removeEventListener("mouseleave", handlePointerLeave);
     };
   }, []);
@@ -53,13 +75,20 @@ function MouseGradientComponent() {
   return (
     <div
       ref={gradientRef}
-      className="fixed inset-0 pointer-events-none z-[-1] lg:opacity-100 opacity-0 mouse-gradient"
-      style={{
-        ["--mouse-x" as string]: "50%",
-        ["--mouse-y" as string]: "50%",
-        opacity: 0,
-      }}
-    />
+      aria-hidden="true"
+      className="fixed inset-0 pointer-events-none z-[-1] mouse-gradient"
+      style={
+        {
+          "--mouse-x": "50vw",
+          "--mouse-y": "50vh",
+          opacity: 0,
+        } as React.CSSProperties
+      }
+    >
+      <span className="mouse-gradient__orb mouse-gradient__orb--primary" />
+      <span className="mouse-gradient__orb mouse-gradient__orb--secondary" />
+      <span className="mouse-gradient__veil" />
+    </div>
   );
 }
 

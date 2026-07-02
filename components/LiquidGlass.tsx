@@ -1,10 +1,14 @@
 "use client";
-import { useRef, useEffect, memo } from "react";
+
+import { memo, useEffect, useState } from "react";
+import RdevLiquidGlass from "liquid-glass-react";
+
+type LiquidGlassVariant = "badge" | "card" | "default";
 
 interface LiquidGlassProps {
   children: React.ReactNode;
   className?: string;
-  variant?: "badge" | "card" | "default";
+  variant?: LiquidGlassVariant;
 }
 
 const variantClasses = {
@@ -13,65 +17,82 @@ const variantClasses = {
   default: "liquid-glass",
 } as const;
 
+const glassSettings = {
+  badge: {
+    displacementScale: 34,
+    blurAmount: 0.1,
+    saturation: 145,
+    aberrationIntensity: 1.2,
+    elasticity: 0.18,
+    cornerRadius: 999,
+    padding: "0",
+    mode: "standard" as const,
+  },
+  card: {
+    displacementScale: 48,
+    blurAmount: 0.18,
+    saturation: 155,
+    aberrationIntensity: 1.6,
+    elasticity: 0.1,
+    cornerRadius: 28,
+    padding: "0",
+    mode: "prominent" as const,
+  },
+  default: {
+    displacementScale: 42,
+    blurAmount: 0.14,
+    saturation: 150,
+    aberrationIntensity: 1.4,
+    elasticity: 0.12,
+    cornerRadius: 24,
+    padding: "0",
+    mode: "standard" as const,
+  },
+};
+
+function getInitialReducedMotion() {
+  return typeof window !== "undefined"
+    ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    : false;
+}
+
+function useReducedMotion() {
+  const [reducedMotion, setReducedMotion] = useState(getInitialReducedMotion);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const handleChange = () => setReducedMotion(mediaQuery.matches);
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  return reducedMotion;
+}
+
 function LiquidGlassComponent({
   children,
   className = "",
   variant = "default",
 }: LiquidGlassProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    // Checa preferência de movimento reduzido via CSS
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReducedMotion) return;
-
-    let frameRequested = false;
-    let lastX = 0;
-    let lastY = 0;
-
-    const updatePosition = () => {
-      frameRequested = false;
-      container.style.setProperty("--mouse-x", `${lastX}%`);
-      container.style.setProperty("--mouse-y", `${lastY}%`);
-    };
-
-    const handleMouseMove = (event: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      lastX = ((event.clientX - rect.left) / rect.width) * 100;
-      lastY = ((event.clientY - rect.top) / rect.height) * 100;
-
-      if (!frameRequested) {
-        frameRequested = true;
-        requestAnimationFrame(updatePosition);
-      }
-    };
-
-    // No position reset on leave — CSS :hover opacity transition fades the
-    // highlight at the last cursor position, avoiding a visible snap to center.
-    container.addEventListener("mousemove", handleMouseMove, { passive: true });
-
-    return () => {
-      container.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
+  const reducedMotion = useReducedMotion();
+  const classes = `${variantClasses[variant]} ${className}`;
 
   return (
-    <div
-      ref={containerRef}
-      className={`${variantClasses[variant]} ${className}`}
-      style={
-        {
-          "--mouse-x": "50%",
-          "--mouse-y": "50%",
-        } as React.CSSProperties
-      }
-    >
-      {children}
+    <div className={classes}>
+      {!reducedMotion && (
+        <div className="liquid-glass-rdev-layer" aria-hidden="true">
+          <RdevLiquidGlass
+            {...glassSettings[variant]}
+            className="liquid-glass-rdev-overlay"
+            overLight={false}
+          >
+            <span className="liquid-glass-rdev-fill" />
+          </RdevLiquidGlass>
+        </div>
+      )}
+      <div className="liquid-glass-content">{children}</div>
     </div>
   );
 }
