@@ -28,7 +28,7 @@ function getInitialTheme(): Theme {
 
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
-  const [mounted, setMounted] = useState(false);
+  const [mounted] = useState(() => typeof window !== 'undefined');
 
   const applyTheme = useCallback((newTheme: Theme) => {
     document.documentElement.setAttribute('data-mode', newTheme);
@@ -40,31 +40,10 @@ export function useTheme() {
   }, []);
 
   useEffect(() => {
-    setMounted(true);
-    // Sincroniza com o estado atual do DOM, localStorage ou cookie como fallback
-    let currentTheme: Theme = 'light';
-    try {
-      const domTheme = normalizeTheme(document.documentElement.getAttribute('data-mode'));
-      if (domTheme) {
-        currentTheme = domTheme;
-      } else {
-        const storedTheme = normalizeTheme(localStorage.getItem('theme'));
-        if (storedTheme) {
-          currentTheme = storedTheme;
-        } else {
-          const cookieTheme = readThemeFromCookie(document.cookie);
-          if (cookieTheme) {
-            currentTheme = cookieTheme;
-          }
-        }
-      }
-    } catch (e) {
-      // Mantém o tema padrão em caso de erro
-    }
-    applyTheme(currentTheme);
-    document.cookie = serializeThemeCookie(currentTheme);
-    setTheme(currentTheme);
-  }, [applyTheme]);
+    // Sincroniza sistemas externos com o tema inicial já calculado no estado.
+    applyTheme(theme);
+    document.cookie = serializeThemeCookie(theme);
+  }, [applyTheme, theme]);
 
   const toggleTheme = useCallback(() => {
     const newTheme: Theme = theme === 'light' ? 'dark' : 'light';

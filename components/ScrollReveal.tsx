@@ -9,7 +9,11 @@ interface ScrollRevealProps {
 
 export default function ScrollReveal({ children, className = '', delay = 0 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(() =>
+    typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false
+  );
   const hasObserved = useRef(false);
 
   useEffect(() => {
@@ -18,7 +22,6 @@ export default function ScrollReveal({ children, className = '', delay = 0 }: Sc
     ).matches;
 
     if (prefersReducedMotion) {
-      setIsVisible(true);
       return;
     }
 

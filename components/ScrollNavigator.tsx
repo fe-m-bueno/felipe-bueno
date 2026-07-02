@@ -72,7 +72,7 @@ export default function ScrollNavigator() {
   useEffect(() => {
     // Atualiza posições iniciais
     updateSectionPositions();
-    updateScrollState();
+    const initialRafId = requestAnimationFrame(updateScrollState);
 
     // Usa requestAnimationFrame para melhor performance no scroll
     let rafId: number | null = null;
@@ -106,6 +106,7 @@ export default function ScrollNavigator() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(initialRafId);
       if (rafId !== null) {
         cancelAnimationFrame(rafId);
       }

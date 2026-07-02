@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Personal portfolio website for Felipe Bueno, a fullstack developer. Built with **Next.js 14** (App Router), **React 18**, **TypeScript**, and **Tailwind CSS**. Deployed on **Vercel**.
+Personal portfolio website for Felipe Bueno, a fullstack developer. Built with **Next.js 16** (App Router), **React 19**, **TypeScript**, and **Tailwind CSS**. Deployed on **Vercel**.
 
 Live site: https://felipe-bueno.com
 

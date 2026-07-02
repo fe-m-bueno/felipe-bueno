@@ -1,6 +1,14 @@
 import Image from "next/image";
 
+type LastFmTrackData = {
+  name?: string;
+  artist?: string;
+  image?: string;
+};
+
 export default async function LastFmTrack() {
+  let data: LastFmTrackData;
+
   try {
     const res = await fetch(`http://localhost:3000/api/lastfm`, {
       cache: "default",
@@ -10,27 +18,27 @@ export default async function LastFmTrack() {
       throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
     }
 
-    const data = await res.json();
-
-    return (
-      <div className="p-4 border rounded shadow-md flex flex-col items-center gap-2">
-        <h2 className="text-lg font-semibold">Now Playing:</h2>
-        <p>
-          {data?.name} - {data?.artist}
-        </p>
-        {data?.image && (
-          <Image
-            src={data.image}
-            alt={`${data.name} album cover`}
-            width={96}
-            height={96}
-            className="w-24 h-24 mt-2 rounded"
-          />
-        )}
-      </div>
-    );
+    data = await res.json();
   } catch (error) {
     console.error("Error fetching LastFM data:", error);
     return <div>Error fetching LastFM data</div>;
   }
+
+  return (
+    <div className="p-4 border rounded shadow-md flex flex-col items-center gap-2">
+      <h2 className="text-lg font-semibold">Now Playing:</h2>
+      <p>
+        {data?.name} - {data?.artist}
+      </p>
+      {data?.image && (
+        <Image
+          src={data.image}
+          alt={`${data.name} album cover`}
+          width={96}
+          height={96}
+          className="w-24 h-24 mt-2 rounded"
+        />
+      )}
+    </div>
+  );
 }
