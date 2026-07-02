@@ -50,6 +50,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://felipe-bueno.com"),
   title: "Felipe Bueno | Fullstack Developer",
   description:
     "Fullstack Developer specializing in Python (Django), TypeScript (React, Angular, Next.js), Apache Airflow, and PostgreSQL. Building scalable web solutions and ETL pipelines. Open to remote work worldwide.",

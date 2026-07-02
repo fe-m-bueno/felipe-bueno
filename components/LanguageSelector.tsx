@@ -7,7 +7,7 @@ import {
 } from "@headlessui/react";
 import { Check, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "@/node_modules/flag-icons/css/flag-icons.min.css";
 import { haptic } from "@/lib/haptic";
 
@@ -18,22 +18,15 @@ const languageOptions = [
 
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
+  const detectedLang = i18n.language.toLowerCase();
+  const selectedLanguage =
+    languageOptions.find((opt) => detectedLang.startsWith(opt.value))?.value ||
+    "en";
 
   const menuPlacement = "top";
 
-  useEffect(() => {
-    const detectedLang = i18n.language.toLowerCase();
-
-    const matchedLang =
-      languageOptions.find((opt) => detectedLang.startsWith(opt.value))
-        ?.value || "en";
-    setSelectedLanguage(matchedLang);
-  }, [i18n.language]);
-
   const handleChange = (value: string) => {
     haptic();
-    setSelectedLanguage(value);
     i18n.changeLanguage(value);
   };
   const { t } = useTranslation();

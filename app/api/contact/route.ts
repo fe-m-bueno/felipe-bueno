@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { contactFormSchema } from "@/lib/validation";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function createResendClient() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 const RATE_LIMIT_WINDOW = 60 * 60 * 1000;
 const MAX_REQUESTS_PER_WINDOW = 5;
@@ -55,6 +57,7 @@ export async function POST(request: Request) {
 
     const { name, email, message } = result.data;
 
+    const resend = createResendClient();
     const emailResult = await resend.emails.send({
       from: "Contact Form <onboarding@resend.dev>",
       to: "felipebueno.dev@gmail.com",
