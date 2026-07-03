@@ -9,32 +9,47 @@ function MouseGradientComponent() {
     const gradient = gradientRef.current;
     if (!gradient) return;
 
-    // Verifica preferência de movimento reduzido
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     if (prefersReducedMotion) return;
 
     let frameRequested = false;
-    let lastX = 0;
-    let lastY = 0;
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
 
     const updateGradient = () => {
       frameRequested = false;
-      gradient.style.setProperty("--mouse-x", `${lastX}px`);
-      gradient.style.setProperty("--mouse-y", `${lastY}px`);
+      currentX += (targetX - currentX) * 0.2;
+      currentY += (targetY - currentY) * 0.2;
+
+      gradient.style.setProperty("--mouse-x", `${currentX}px`);
+      gradient.style.setProperty("--mouse-y", `${currentY}px`);
+
+      if (Math.abs(targetX - currentX) > 0.5 || Math.abs(targetY - currentY) > 0.5) {
+        frameRequested = true;
+        requestAnimationFrame(updateGradient);
+      }
     };
 
-    const handleMouseMove = (event: MouseEvent) => {
-      lastX = event.clientX;
-      lastY = event.clientY;
-      gradient.style.opacity = "1";
-      gradient.style.setProperty("--mouse-x", `${lastX}px`);
-      gradient.style.setProperty("--mouse-y", `${lastY}px`);
-
-      // Coalescência de eventos usando RAF
+    const requestUpdate = () => {
       if (!frameRequested) {
         frameRequested = true;
         requestAnimationFrame(updateGradient);
       }
+    };
+
+    const handleMouseMove = (event: MouseEvent) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      currentX = targetX;
+      currentY = targetY;
+      gradient.style.opacity = "1";
+      gradient.style.setProperty("--mouse-x", `${currentX}px`);
+      gradient.style.setProperty("--mouse-y", `${currentY}px`);
+      requestUpdate();
     };
 
     const handlePointerLeave = () => {
@@ -53,13 +68,19 @@ function MouseGradientComponent() {
   return (
     <div
       ref={gradientRef}
-      className="fixed inset-0 pointer-events-none z-[-1] lg:opacity-100 opacity-0 mouse-gradient"
-      style={{
-        ["--mouse-x" as string]: "50%",
-        ["--mouse-y" as string]: "50%",
-        opacity: 0,
-      }}
-    />
+      aria-hidden="true"
+      className="fixed inset-0 pointer-events-none z-0 opacity-0 mouse-gradient"
+      style={
+        {
+          "--mouse-x": "50vw",
+          "--mouse-y": "50vh",
+          opacity: 0,
+        } as React.CSSProperties
+      }
+    >
+      <span className="mouse-gradient__core" />
+      <span className="mouse-gradient__halo" />
+    </div>
   );
 }
 
