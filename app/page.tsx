@@ -4,11 +4,9 @@ import ScrollNavigator from "@/components/ScrollNavigator";
 
 export default function Home() {
   return (
-    <div className="relative isolate min-h-screen">
+    <div className="min-h-screen">
+      <SectionContainer />
       <MouseGradient />
-      <div className="relative z-10">
-        <SectionContainer />
-      </div>
       <ScrollNavigator />
     </div>
   );

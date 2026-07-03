@@ -122,68 +122,14 @@ body::after {
   }
 }
 
-/* MouseGradient - blurred ambient light behind glass cards */
+/* MouseGradient - GPU accelerated with CSS variables */
 .mouse-gradient {
-  --mouse-x: 50vw;
-  --mouse-y: 50vh;
-  overflow: hidden;
-  transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);
-  mix-blend-mode: screen;
-}
-
-.mouse-gradient__core,
-.mouse-gradient__halo {
-  position: absolute;
-  left: var(--mouse-x);
-  top: var(--mouse-y);
-  border-radius: 9999px;
-  pointer-events: none;
-  transform: translate3d(-50%, -50%, 0);
-}
-
-.mouse-gradient__core {
-  width: clamp(20rem, 38vw, 38rem);
-  height: clamp(20rem, 38vw, 38rem);
-  background:
-    radial-gradient(circle at 44% 46%, rgba(251, 113, 133, 0.42), transparent 48%),
-    radial-gradient(circle at 64% 56%, rgba(168, 85, 247, 0.2), transparent 58%),
-    radial-gradient(circle at 52% 66%, rgba(244, 63, 94, 0.16), transparent 64%);
-  filter: blur(36px);
-  opacity: 0.92;
-  animation: mouse-gradient-drift 12s ease-in-out infinite;
-}
-
-.mouse-gradient__halo {
-  width: clamp(30rem, 56vw, 58rem);
-  height: clamp(30rem, 56vw, 58rem);
-  background: radial-gradient(circle, rgba(244, 63, 94, 0.18), rgba(168, 85, 247, 0.08) 38%, transparent 68%);
-  filter: blur(76px);
-  opacity: 0.82;
-  animation: mouse-gradient-breathe 8s ease-in-out infinite;
-}
-
-@keyframes mouse-gradient-drift {
-  0%, 100% {
-    transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(0.98);
-  }
-  50% {
-    transform: translate3d(-50%, -50%, 0) rotate(16deg) scale(1.04);
-  }
-}
-
-@keyframes mouse-gradient-breathe {
-  0%, 100% {
-    transform: translate3d(-50%, -50%, 0) scale(0.96);
-  }
-  50% {
-    transform: translate3d(-50%, -50%, 0) scale(1.06);
-  }
-}
-
-@media (max-width: 1023px), (prefers-reduced-motion: reduce) {
-  .mouse-gradient {
-    display: none;
-  }
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 105, 180, 0.3) 40px,
+    transparent 140px
+  );
+  /* Removido will-change: background - desnecessário e consome memória GPU */
 }
 
 /* Performance optimizations for transforms - aplicar apenas onde necessário */
