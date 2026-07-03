@@ -31,7 +31,10 @@ body::after {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
+  /* -2 so the mouse-gradient (z-index: -1) paints ABOVE both backgrounds and
+     is sampled by the glass backdrop-filter in dark mode too. Previously the
+     dark bg (::after) also sat at -1 and covered the gradient. */
+  z-index: -2;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -122,13 +125,16 @@ body::after {
   }
 }
 
-/* MouseGradient - GPU accelerated with CSS variables */
+/* MouseGradient - GPU accelerated with CSS variables.
+   Faint rose glow; the component only reveals it while the cursor is over a
+   glass box, so it reads as a subtle highlight behind the panel, not a cloud. */
 .mouse-gradient {
   background: radial-gradient(
     circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(255, 105, 180, 0.3) 40px,
-    transparent 140px
+    rgba(244, 63, 94, 0.14) 0px,
+    transparent 180px
   );
+  transition: opacity 0.3s ease;
   /* Removido will-change: background - desnecessário e consome memória GPU */
 }
 
@@ -156,40 +162,6 @@ body::after {
   isolation: isolate;
 }
 
-/* Animated border glow */
-.liquid-glass::before,
-.liquid-glass-badge::before,
-.liquid-glass-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  padding: 1px;
-  border-radius: inherit;
-  background: conic-gradient(
-    from var(--border-angle, 0deg),
-    transparent 0%,
-    rgba(244, 63, 94, 0.4) 10%,
-    rgba(251, 113, 133, 0.6) 20%,
-    transparent 30%,
-    transparent 70%,
-    rgba(244, 63, 94, 0.4) 80%,
-    rgba(251, 113, 133, 0.6) 90%,
-    transparent 100%
-  );
-  mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  /* animation runs only on hover — avoids ~30 idle conic-gradient repaints */
-  pointer-events: none;
-}
-
 /* Mouse-following highlight effect */
 .liquid-glass::after,
 .liquid-glass-badge::after,
@@ -210,13 +182,6 @@ body::after {
 }
 
 /* Active state when hovered - usando CSS :hover ao invés de JS */
-.liquid-glass:hover::before,
-.liquid-glass-badge:hover::before,
-.liquid-glass-card:hover::before {
-  opacity: 1;
-  animation: border-rotate 4s linear infinite;
-}
-
 .liquid-glass:hover::after,
 .liquid-glass-badge:hover::after,
 .liquid-glass-card:hover::after {
@@ -352,37 +317,14 @@ body::after {
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-/* Border rotation animation */
-@keyframes border-rotate {
-  0% {
-    --border-angle: 0deg;
-  }
-  100% {
-    --border-angle: 360deg;
-  }
-}
-
-/* Register custom property for animation */
-@property --border-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
 /* Respect user preference for reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .liquid-glass::before,
-  .liquid-glass-badge::before,
-  .liquid-glass-card::before {
-    animation: none;
-  }
-  
   .liquid-glass,
   .liquid-glass-badge,
   .liquid-glass-card {
     transition: none;
   }
-  
+
   .liquid-glass::after,
   .liquid-glass-badge::after,
   .liquid-glass-card::after {
