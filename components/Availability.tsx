@@ -1,17 +1,18 @@
 "use client";
 import { useTranslation } from "react-i18next";
-import { about } from "@/data/about";
 import { Briefcase, MapPin, Clock, Globe } from "lucide-react";
 import LiquidGlass from "./LiquidGlass";
+import { useContentfulContent } from "@/hooks/useContentfulContent";
 
 type LocaleKey = "en" | "pt";
 
 export default function Availability() {
   const { i18n } = useTranslation();
   const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";
-  const data = about[locale] || about.en;
+  const { content } = useContentfulContent(locale);
+  const data = content.about;
 
-  if (!data.availability) return null;
+  if (!data?.availability) return null;
 
   const { status, types, locations, timezone, overlap } = data.availability;
 
@@ -72,5 +73,3 @@ export default function Availability() {
     </LiquidGlass>
   );
 }
-
-

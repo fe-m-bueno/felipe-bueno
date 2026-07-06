@@ -1,201 +1,25 @@
-const techs = {
-  Next: { name: "Next.js", icon: "ri:nextjs-fill" },
-  React: { name: "React", icon: "mdi:react" },
-  Tailwind: { name: "Tailwind CSS", icon: "mdi:tailwind" },
-  TypeScript: { name: "TypeScript", icon: "bxl:typescript" },
-  Nuxt: { name: "Nuxt.js", icon: "lineicons:nuxt" },
-  Vue: { name: "Vue", icon: "mdi:vuejs" },
-  Groq: { name: "Groq", icon: "mdi:groq" },
-  Pinia: { name: "Pinia", icon: "logos:pinia" },
-  Svelte: { name: "Svelte", icon: "ri:svelte-fill" },
-  SvelteKit: { name: "SvelteKit", icon: "ri:svelte-fill" },
-  WeatherAPI: { name: "Weather API", icon: "fluent:weather-rain-20-filled" },
-  Gemini: { name: "Gemini AI", icon: "simple-icons:googlegemini" },
-  Supabase: { name: "Supabase", icon: "simple-icons:supabase" },
-  PostgreSQL: { name: "PostgreSQL", icon: "mdi:database-outline" },
-  Python: { name: "Python", icon: "mdi:language-python" },
-  CrewAI: { name: "CrewAI", icon: "mdi:robot-outline" },
+const placeholderTech = { name: "Contentful", icon: "simple-icons:contentful" };
+
+const placeholderProject = {
+  id: "contentful-placeholder",
+  title: "Content moved to Contentful",
+  description: "This placeholder keeps the app renderable while Contentful fetching is wired in.",
+  image: "/felipe-bueno.png",
+  link: "#",
+  github: "#",
+  techs: [placeholderTech],
+  metrics: ["Headless CMS"],
 };
 
 export const projects = {
-  en: [
-    {
-      id: "bookclubinho",
-      title: "Bookclubinho",
-      description:
-        "A deployed social reading app with authentication, Row Level Security, real-time updates, and PostgreSQL-backed data modeling.",
-      image: "/bookclubinho.webp",
-      link: "https://bookclubinho.vercel.app",
-      github: "https://github.com/fe-m-bueno/bookclubinho",
-      techs: [techs.Next, techs.React, techs.TypeScript, techs.Supabase, techs.PostgreSQL],
-      metrics: ["Auth + RLS", "Real-time updates", "Deployed app"],
-    },
-    {
-      id: "code-review-crew",
-      title: "Code Review Crew",
-      description:
-        "A multi-agent AI code review system that coordinates specialized reviewers to inspect code quality, security risks, and maintainability.",
-      image: "/felipe-bueno.png",
-      link: "https://github.com/fe-m-bueno/code-review-crew",
-      github: "https://github.com/fe-m-bueno/code-review-crew",
-      techs: [techs.Python, techs.CrewAI],
-      metrics: ["Multi-agent AI", "Code review automation", "Security-aware checks"],
-    },
-    {
-      id: "recollagefm",
-      title: "Recollagefm",
-      description:
-        "An app to create beautiful collages with album covers from your favorite artists using Last.fm API. Generates custom layouts dynamically.",
-      image: "/recollagefm.webp",
-      link: "https://recollagefm.vercel.app",
-      github: "https://github.com/fe-m-bueno/recollagefm",
-      techs: [techs.Next, techs.TypeScript, techs.Tailwind],
-      metrics: ["API integration", "Dynamic layouts", "Export to image"],
-    },
-    {
-      id: "lederboxed",
-      title: "Lederboxed",
-      description:
-        "A web app to explore 500K+ movies and TV shows using TMDB API. Features server-side rendering and optimized caching.",
-      image: "/lederboxed.webp",
-      link: "https://lederboxed.vercel.app",
-      github: "https://github.com/fe-m-bueno/lederboxed",
-      techs: [techs.Next, techs.React, techs.Tailwind, techs.TypeScript],
-      metrics: ["500K+ titles", "SSR optimized", "Real-time search"],
-    },
-    {
-      id: "breakstuff",
-      title: "Break Stuff",
-      description:
-        "An AI-powered app to break down complex tasks into smaller, manageable subtasks. Uses Groq AI for intelligent task decomposition.",
-      image: "/breakstuff.webp",
-      link: "https://breakstuff.netlify.app",
-      github: "https://github.com/fe-m-bueno/breakstuff",
-      techs: [techs.Nuxt, techs.Vue, techs.Tailwind, techs.Groq, techs.Pinia],
-      metrics: ["AI-powered", "Real-time generation", "State management"],
-    },
-    {
-      id: "weathernowat",
-      title: "Weather Now At",
-      description:
-        "A clean, responsive weather app with real-time data and location detection. Features detailed forecasts and weather alerts.",
-      image: "/weathernowat.webp",
-      link: "https://weathernowat.vercel.app",
-      github: "https://github.com/fe-m-bueno/weathernowat",
-      techs: [techs.Svelte, techs.SvelteKit, techs.TypeScript, techs.Tailwind, techs.WeatherAPI],
-      metrics: ["Real-time data", "Geolocation", "7-day forecast"],
-    },
-    {
-      id: "questione",
-      title: "Questione",
-      description:
-        "An AI-powered quiz generator using Gemini AI. Creates custom questions and answers for any topic instantly.",
-      image: "/questione.webp",
-      link: "https://questione.vercel.app",
-      github: "https://github.com/fe-m-bueno/questione",
-      techs: [techs.Next, techs.React, techs.Tailwind, techs.Gemini],
-      metrics: ["Gemini AI", "Instant generation", "Custom topics"],
-    },
-    {
-      id: "stopwatch",
-      title: "Stopwatch",
-      description:
-        "A feature-rich web stopwatch with lap tracking, activity logging, and data persistence. Built for productivity tracking.",
-      image: "/stopwatch.webp",
-      link: "https://my-stopwatch-hazel.vercel.app",
-      github: "https://github.com/fe-m-bueno/stopwatch",
-      techs: [techs.Svelte, techs.SvelteKit, techs.TypeScript, techs.Tailwind],
-      metrics: ["Lap tracking", "Local storage", "Export data"],
-    },
-  ],
+  en: [placeholderProject],
   pt: [
     {
-      id: "bookclubinho",
-      title: "Bookclubinho",
+      ...placeholderProject,
+      title: "Conteudo movido para o Contentful",
       description:
-        "Um app social de leitura em produção com autenticação, Row Level Security, atualizações em tempo real e modelagem de dados com PostgreSQL.",
-      image: "/bookclubinho.webp",
-      link: "https://bookclubinho.vercel.app",
-      github: "https://github.com/fe-m-bueno/bookclubinho",
-      techs: [techs.Next, techs.React, techs.TypeScript, techs.Supabase, techs.PostgreSQL],
-      metrics: ["Auth + RLS", "Atualizações em tempo real", "App publicado"],
-    },
-    {
-      id: "code-review-crew",
-      title: "Code Review Crew",
-      description:
-        "Um sistema multiagente de revisão de código com IA que coordena revisores especializados para avaliar qualidade, riscos de segurança e manutenibilidade.",
-      image: "/felipe-bueno.png",
-      link: "https://github.com/fe-m-bueno/code-review-crew",
-      github: "https://github.com/fe-m-bueno/code-review-crew",
-      techs: [techs.Python, techs.CrewAI],
-      metrics: ["IA multiagente", "Automação de code review", "Checagens de segurança"],
-    },
-    {
-      id: "recollagefm",
-      title: "Recollagefm",
-      description:
-        "Um aplicativo para criar colagens lindas com capas de álbuns dos seus artistas favoritos usando a API do Last.fm. Gera layouts personalizados dinamicamente.",
-      image: "/recollagefm.webp",
-      link: "https://recollagefm.vercel.app",
-      github: "https://github.com/fe-m-bueno/recollagefm",
-      techs: [techs.Next, techs.TypeScript, techs.Tailwind],
-      metrics: ["Integração API", "Layouts dinâmicos", "Exportar imagem"],
-    },
-    {
-      id: "lederboxed",
-      title: "Lederboxed",
-      description:
-        "Um aplicativo para explorar 500K+ filmes e séries usando a API do TMDB. Com renderização no servidor e cache otimizado.",
-      image: "/lederboxed.webp",
-      link: "https://lederboxed.vercel.app",
-      github: "https://github.com/fe-m-bueno/lederboxed",
-      techs: [techs.Next, techs.React, techs.Tailwind, techs.TypeScript],
-      metrics: ["500K+ títulos", "SSR otimizado", "Busca em tempo real"],
-    },
-    {
-      id: "breakstuff",
-      title: "Break Stuff",
-      description:
-        "Um aplicativo com IA para quebrar tarefas complexas em subtarefas menores e gerenciáveis. Usa Groq AI para decomposição inteligente.",
-      image: "/breakstuff.webp",
-      link: "https://breakstuff.netlify.app",
-      github: "https://github.com/fe-m-bueno/breakstuff",
-      techs: [techs.Nuxt, techs.Vue, techs.Tailwind, techs.Groq, techs.Pinia],
-      metrics: ["IA integrada", "Geração em tempo real", "Gerência de estado"],
-    },
-    {
-      id: "weathernowat",
-      title: "Weather Now At",
-      description:
-        "Um aplicativo de clima limpo e responsivo com dados em tempo real e detecção de localização. Com previsões detalhadas e alertas.",
-      image: "/weathernowat.webp",
-      link: "https://weathernowat.vercel.app",
-      github: "https://github.com/fe-m-bueno/weathernowat",
-      techs: [techs.Svelte, techs.SvelteKit, techs.TypeScript, techs.Tailwind, techs.WeatherAPI],
-      metrics: ["Dados em tempo real", "Geolocalização", "Previsão 7 dias"],
-    },
-    {
-      id: "questione",
-      title: "Questione",
-      description:
-        "Um gerador de quiz com IA usando Gemini AI. Cria perguntas e respostas personalizadas para qualquer tópico instantaneamente.",
-      image: "/questione.webp",
-      link: "https://questione.vercel.app",
-      github: "https://github.com/fe-m-bueno/questione",
-      techs: [techs.Next, techs.React, techs.Tailwind, techs.Gemini],
-      metrics: ["Gemini AI", "Geração instantânea", "Tópicos personalizados"],
-    },
-    {
-      id: "stopwatch",
-      title: "Stopwatch",
-      description:
-        "Um cronômetro web completo com rastreamento de voltas, registro de atividades e persistência de dados. Feito para produtividade.",
-      image: "/stopwatch.webp",
-      link: "https://my-stopwatch-hazel.vercel.app",
-      github: "https://github.com/fe-m-bueno/stopwatch",
-      techs: [techs.Svelte, techs.SvelteKit, techs.TypeScript, techs.Tailwind],
-      metrics: ["Rastreio de voltas", "Armazenamento local", "Exportar dados"],
+        "Este placeholder mantem o app renderizavel enquanto a leitura do Contentful e conectada.",
+      metrics: ["Headless CMS"],
     },
   ],
 };

@@ -2,17 +2,18 @@
 
 import { useTranslation } from "react-i18next";
 import { ArrowUpRight } from "lucide-react";
-import { projects } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
 import Link from "next/link";
 import { haptic } from "@/lib/haptic";
+import { useContentfulContent } from "@/hooks/useContentfulContent";
 
 type LocaleKey = "en" | "pt";
 
 export default function ProjectsSection() {
   const { i18n, t } = useTranslation();
   const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";
-  const data = projects[locale] || projects.en;
+  const { content } = useContentfulContent(locale);
+  const data = content.projects;
 
   return (
     <section className="relative w-full mx-auto py-6 md:px-16 px-4 max-w-7xl">

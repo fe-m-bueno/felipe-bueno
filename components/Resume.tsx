@@ -1,17 +1,18 @@
 "use client";
 import { useTranslation } from "react-i18next";
-import { resume } from "@/data/resume";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import LiquidGlass from "./LiquidGlass";
 import { haptic } from "@/lib/haptic";
+import { useContentfulContent } from "@/hooks/useContentfulContent";
 
 type LocaleKey = "en" | "pt";
 
 export default function Resume() {
   const { i18n, t } = useTranslation();
   const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";
-  const data = resume[locale] || resume.en;
+  const { content } = useContentfulContent(locale);
+  const data = content.resume;
 
   return (
     <section className="px-6 py-6 lg:py-24 flex flex-col justify-start min-h-screen">

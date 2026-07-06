@@ -23,6 +23,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.lastfm.freetls.fastly.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.ctfassets.net',
+      },
     ],
     // Formatos de imagem otimizados
     formats: ['image/avif', 'image/webp'],
