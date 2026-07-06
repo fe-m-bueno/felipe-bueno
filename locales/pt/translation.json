@@ -1,49 +1,49 @@
 {
   "navbar": {
-    "home": "Início",
-    "projects": "Projetos",
-    "about": "Sobre",
-    "contact": "Contato"
+    "home": "Placeholder Contentful",
+    "projects": "Placeholder Contentful",
+    "about": "Placeholder Contentful",
+    "contact": "Placeholder Contentful"
   },
   "hero": {
-    "title": "Oi, Felipe aqui!",
-    "description": "Desenvolvedor Fullstack com foco em backend, construindo plataformas internas, APIs e pipelines de dados que realmente performam.",
-    "description2": "Já otimizei queries de 92s → 3,6s, orquestrei 140 DAGs no Airflow e economizei 240+ horas com automação.",
-    "scrollDown": "Deslize para baixo",
-    "clickToRemoveBlur": "Clique para ver o rosto de Felipe"
+    "title": "Conteudo movido para o Contentful",
+    "description": "Placeholder Contentful",
+    "description2": "Placeholder Contentful",
+    "scrollDown": "Placeholder Contentful",
+    "clickToRemoveBlur": "Placeholder Contentful"
   },
   "resume": {
-    "experience": "Experiência",
-    "education": "Educação",
-    "additionalEducation": "Educação Adicional",
-    "seeFullResume": "Ver Currículo Completo"
+    "experience": "Placeholder Contentful",
+    "education": "Placeholder Contentful",
+    "additionalEducation": "Placeholder Contentful",
+    "seeFullResume": "Placeholder Contentful"
   },
   "about": {
-    "recentTrack": "Tocando Agora 🎧"
+    "recentTrack": "Placeholder Contentful"
   },
   "projects": {
-    "seeAllProjects": "Ver Todos os Projetos",
-    "title": "Projetos Selecionados",
-    "viewProject": "Ver Projeto",
-    "alltitle": "Todos os Projetos"
+    "seeAllProjects": "Placeholder Contentful",
+    "title": "Placeholder Contentful",
+    "viewProject": "Placeholder Contentful",
+    "alltitle": "Placeholder Contentful"
   },
   "contact": {
-    "title": "Entre em Contato",
-    "name": "Nome",
-    "email": "Email",
-    "message": "Mensagem",
-    "send": "Enviar Mensagem",
-    "sending": "Enviando...",
-    "success": "Mensagem enviada com sucesso! Entrarei em contato em breve.",
-    "errorSending": "Erro ao enviar mensagem. Por favor, tente novamente.",
-    "tooManySubmissions": "Muitas tentativas. Por favor, tente novamente mais tarde."
+    "title": "Placeholder Contentful",
+    "name": "Placeholder Contentful",
+    "email": "Placeholder Contentful",
+    "message": "Placeholder Contentful",
+    "send": "Placeholder Contentful",
+    "sending": "Placeholder Contentful",
+    "success": "Placeholder Contentful",
+    "errorSending": "Placeholder Contentful",
+    "tooManySubmissions": "Placeholder Contentful"
   },
   "openToWork": {
-    "status": "Disponível para Trabalho"
+    "status": "Placeholder Contentful"
   },
   "cta": {
-    "workTogether": "Vamos Trabalhar Juntos",
-    "viewWork": "Ver Meu Trabalho",
-    "downloadResume": "Baixar Currículo"
+    "workTogether": "Placeholder Contentful",
+    "viewWork": "Placeholder Contentful",
+    "downloadResume": "Placeholder Contentful"
   }
 }

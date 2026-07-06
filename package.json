@@ -9,7 +9,11 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "contentful:login": "contentful login",
+    "contentful:migrate": "sh -c 'set -a; [ -f .env ] && . ./.env; [ -f .env.local ] && . ./.env.local; set +a; contentful space migration --space-id \"$CONTENTFUL_SPACE_ID\" --environment-id \"${CONTENTFUL_ENVIRONMENT_ID:-master}\" --yes contentful/migrations/001-initial-content-model.js'",
+    "contentful:generate-migration": "sh -c 'set -a; [ -f .env ] && . ./.env; [ -f .env.local ] && . ./.env.local; set +a; contentful space generate migration --space-id \"$CONTENTFUL_SPACE_ID\" --environment-id \"${CONTENTFUL_ENVIRONMENT_ID:-master}\"'",
+    "contentful:seed": "sh -c 'set -a; [ -f .env ] && . ./.env; [ -f .env.local ] && . ./.env.local; set +a; node contentful/seed.js'"
   },
   "dependencies": {
     "@coreui/icons": "^3.0.1",
@@ -52,6 +56,9 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.4",
+    "contentful-cli": "^4.0.2",
+    "contentful-management": "^12.8.0",
+    "contentful-migration": "^5.0.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.10",
     "fluid-tailwind": "^1.0.4",

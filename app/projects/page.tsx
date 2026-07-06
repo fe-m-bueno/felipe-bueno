@@ -2,13 +2,14 @@
 
 import { useTranslation } from "react-i18next";
 import ProjectCard from "@/components/ProjectCard";
-import { projects } from "@/data/projects";
+import { useContentfulContent } from "@/hooks/useContentfulContent";
 
 type LocaleKey = "en" | "pt";
 export default function ProjectsPage() {
   const { t, i18n } = useTranslation();
   const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";
-  const data = projects[locale] || projects.en;
+  const { content } = useContentfulContent(locale);
+  const data = content.projects;
 
   return (
     <div className="w-screen mx-auto py-6 lg:px-16 px-4 flex flex-col items-center justify-center">

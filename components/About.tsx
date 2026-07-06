@@ -1,16 +1,19 @@
 "use client";
 import { useTranslation } from "react-i18next";
-import { about } from "@/data/about";
 import RecentTrack from "./RecentTrack";
 import LiquidGlass from "./LiquidGlass";
 import Availability from "./Availability";
+import { useContentfulContent } from "@/hooks/useContentfulContent";
 
 type LocaleKey = "en" | "pt";
 
 export default function About() {
   const { i18n, t } = useTranslation();
   const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";
-  const data = about[locale] || about.en;
+  const { content } = useContentfulContent(locale);
+  const data = content.about;
+
+  if (!data) return null;
 
   return (
     <section className="px-6 py-6 lg:py-24 flex flex-col justify-start min-h-screen">

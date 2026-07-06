@@ -1,49 +1,49 @@
 {
   "navbar": {
-    "home": "Home",
-    "projects": "Projects",
-    "about": "About",
-    "contact": "Contact"
+    "home": "Contentful placeholder",
+    "projects": "Contentful placeholder",
+    "about": "Contentful placeholder",
+    "contact": "Contentful placeholder"
   },
   "hero": {
-    "title": "Hey, I'm Felipe!",
-    "description": "Backend-focused Fullstack Developer who builds internal platforms, APIs, and data pipelines that actually perform.",
-    "description2": "I've optimized queries from 92s → 3.6s, orchestrated 140 Airflow DAGs, and saved 240+ hours through automation.",
-    "scrollDown": "Scroll Down",
-    "clickToRemoveBlur": "Click to see Felipe's face"
+    "title": "Content moved to Contentful",
+    "description": "Contentful placeholder",
+    "description2": "Contentful placeholder",
+    "scrollDown": "Contentful placeholder",
+    "clickToRemoveBlur": "Contentful placeholder"
   },
   "resume": {
-    "experience": "Experience",
-    "education": "Education",
-    "additionalEducation": "Additional Education",
-    "seeFullResume": "See Full Resume"
+    "experience": "Contentful placeholder",
+    "education": "Contentful placeholder",
+    "additionalEducation": "Contentful placeholder",
+    "seeFullResume": "Contentful placeholder"
   },
   "about": {
-    "recentTrack": "Now Playing 🎧"
+    "recentTrack": "Contentful placeholder"
   },
   "projects": {
-    "seeAllProjects": "See All Projects",
-    "title": "Selected Projects",
-    "viewProject": "View Project",
-    "alltitle": "All Projects"
+    "seeAllProjects": "Contentful placeholder",
+    "title": "Contentful placeholder",
+    "viewProject": "Contentful placeholder",
+    "alltitle": "Contentful placeholder"
   },
   "contact": {
-    "title": "Get in Touch",
-    "name": "Name",
-    "email": "Email",
-    "message": "Message",
-    "send": "Send Message",
-    "sending": "Sending...",
-    "success": "Message sent successfully! I'll get back to you soon.",
-    "errorSending": "Error sending message. Please try again.",
-    "tooManySubmissions": "Too many attempts. Please try again later."
+    "title": "Contentful placeholder",
+    "name": "Contentful placeholder",
+    "email": "Contentful placeholder",
+    "message": "Contentful placeholder",
+    "send": "Contentful placeholder",
+    "sending": "Contentful placeholder",
+    "success": "Contentful placeholder",
+    "errorSending": "Contentful placeholder",
+    "tooManySubmissions": "Contentful placeholder"
   },
   "openToWork": {
-    "status": "Open to Work"
+    "status": "Contentful placeholder"
   },
   "cta": {
-    "workTogether": "Let's Work Together",
-    "viewWork": "View My Work",
-    "downloadResume": "Download Resume"
+    "workTogether": "Contentful placeholder",
+    "viewWork": "Contentful placeholder",
+    "downloadResume": "Contentful placeholder"
   }
 }
