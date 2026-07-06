@@ -7,17 +7,18 @@ type LocaleKey = "en" | "pt";
 
 const loadedContentfulLocales = new Set<LocaleKey>();
 
-async function loadContentfulCopy(locale: LocaleKey) {
-  if (loadedContentfulLocales.has(locale)) return;
+async function loadContentfulCopy(locale: LocaleKey): Promise<boolean> {
+  if (loadedContentfulLocales.has(locale)) return true;
 
   const response = await fetch(`/api/content?locale=${locale}`);
-  if (!response.ok) return;
+  if (!response.ok) return false;
 
   const content = await response.json();
-  if (!content.uiCopy || typeof content.uiCopy !== "object") return;
+  if (!content.uiCopy || typeof content.uiCopy !== "object") return false;
 
   i18n.addResourceBundle(locale, "translation", content.uiCopy, true, true);
   loadedContentfulLocales.add(locale);
+  return true;
 }
 
 const I18nProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -33,9 +34,9 @@ const I18nProvider: React.FC<{ children: React.ReactNode }> = ({
       const locale = language.startsWith("pt") ? "pt" : "en";
       loadContentfulCopy(locale).then(() => {
         if (i18n.language !== locale) {
-          i18n.changeLanguage(locale);
+          void i18n.changeLanguage(locale);
         } else {
-          i18n.emit("loaded", { [locale]: { translation: true } });
+          i18n.emit("languageChanged", locale);
         }
       });
     };
