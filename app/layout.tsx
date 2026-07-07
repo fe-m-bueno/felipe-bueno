@@ -10,6 +10,19 @@ import TheFooter from "@/components/TheFooter";
 import StructuredData from "@/components/StructuredData";
 import { normalizeTheme } from "@/lib/theme";
 
+const backgroundPreloads = {
+  light: {
+    href: "/bg-main-1920.webp",
+    imageSrcSet:
+      "/bg-main-1280.webp 1280w, /bg-main-1920.webp 1920w, /bg-main-2560.webp 2560w",
+  },
+  dark: {
+    href: "/bg-main-dark-1920.webp",
+    imageSrcSet:
+      "/bg-main-dark-1280.webp 1280w, /bg-main-dark-1920.webp 1920w, /bg-main-dark-2560.webp 2560w",
+  },
+} as const;
+
 const ibmPlexSans = localFont({
   src: [
     {
@@ -152,6 +165,7 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const theme = normalizeTheme(cookieStore.get("theme")?.value) ?? "light";
   const htmlClassName = theme === "dark" ? "dark" : undefined;
+  const backgroundPreload = backgroundPreloads[theme];
 
   return (
     <html lang="en" data-mode={theme} className={htmlClassName}>
@@ -160,8 +174,11 @@ export default async function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/bg-main.webp"
+          href={backgroundPreload.href}
+          imageSrcSet={backgroundPreload.imageSrcSet}
+          imageSizes="100vw"
           type="image/webp"
+          fetchPriority="high"
         />
       </head>
       <body
