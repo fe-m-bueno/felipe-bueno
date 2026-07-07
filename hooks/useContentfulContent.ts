@@ -1,30 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { ContentfulSiteContent, LocaleKey } from "@/lib/contentfulContent";
-import { about } from "@/data/about";
-import { projects } from "@/data/projects";
-import { resume } from "@/data/resume";
-
-const cache = new Map<LocaleKey, ContentfulSiteContent>();
-
-function fallbackContent(locale: LocaleKey): ContentfulSiteContent {
-  return {
-    locale,
-    projects: projects[locale] || projects.en,
-    about: about[locale] || about.en,
-    resume: resume[locale] || resume.en,
-    uiCopy: {},
-  };
-}
+import type { LocaleKey } from "@/lib/contentfulContent";
+import {
+  clearContentfulContentCache as clearSharedContentfulContentCache,
+  getCachedContentfulContent,
+  getFallbackContent,
+  prefetchContentfulContent,
+} from "@/lib/contentfulClientCache";
 
 export function useContentfulContent(locale: LocaleKey) {
-  const [content, setContent] = useState<ContentfulSiteContent>(() => cache.get(locale) || fallbackContent(locale));
-  const [isLoading, setIsLoading] = useState(!cache.has(locale));
+  const [content, setContent] = useState(
+    () => getCachedContentfulContent(locale) || getFallbackContent(locale),
+  );
+  const [isLoading, setIsLoading] = useState(!getCachedContentfulContent(locale));
 
   useEffect(() => {
     let cancelled = false;
-    const cached = cache.get(locale);
+    const cached = getCachedContentfulContent(locale);
 
     if (cached) {
       queueMicrotask(() => {
@@ -42,22 +35,15 @@ export function useContentfulContent(locale: LocaleKey) {
       }
     });
 
-    fetch(`/api/content?locale=${locale}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch Contentful content");
-        }
-        return response.json() as Promise<ContentfulSiteContent>;
-      })
+    prefetchContentfulContent(locale)
       .then((nextContent) => {
-        cache.set(locale, nextContent);
         if (!cancelled) {
           setContent(nextContent);
         }
       })
       .catch(() => {
         if (!cancelled) {
-          setContent(fallbackContent(locale));
+          setContent(getFallbackContent(locale));
         }
       })
       .finally(() => {
@@ -75,10 +61,5 @@ export function useContentfulContent(locale: LocaleKey) {
 }
 
 export function clearContentfulContentCache(locale?: LocaleKey) {
-  if (locale) {
-    cache.delete(locale);
-    return;
-  }
-
-  cache.clear();
+  clearSharedContentfulContentCache(locale);
 }
