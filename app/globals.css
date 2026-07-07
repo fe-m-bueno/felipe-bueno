@@ -9,66 +9,65 @@ html {
 /* CSS custom properties para tema */
 :root {
   color-scheme: light;
+  --page-bg-color: #ffffff;
+  --page-bg-image: url('/bg-main-1280.webp');
+  --page-bg-fallback:
+    radial-gradient(circle at 20% 15%, rgba(244, 63, 94, 0.12), transparent 32rem),
+    linear-gradient(135deg, #ffffff 0%, #fff7f8 48%, #f7f7f7 100%);
 }
 
 [data-mode='dark'] {
   color-scheme: dark;
+  --page-bg-color: #0a0a0a;
+  --page-bg-image: url('/bg-main-dark-1280.webp');
+  --page-bg-fallback:
+    radial-gradient(circle at 20% 15%, rgba(244, 63, 94, 0.18), transparent 32rem),
+    linear-gradient(135deg, #0a0a0a 0%, #141012 48%, #080808 100%);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --page-bg-image: url('/bg-main-1920.webp');
+  }
+
+  [data-mode='dark'] {
+    --page-bg-image: url('/bg-main-dark-1920.webp');
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --page-bg-image: url('/bg-main-2560.webp');
+  }
+
+  [data-mode='dark'] {
+    --page-bg-image: url('/bg-main-dark-2560.webp');
+  }
 }
 
 body {
   min-height: 100dvh;
   min-height: -webkit-fill-available;
   position: relative;
+  background: var(--page-bg-color);
   color: theme('colors.black');
 }
 
-/* Background containers - one for each theme, no transitions */
-body::before,
-body::after {
+/* Fixed page background with responsive source selection. */
+body::before {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  /* -2 so the mouse-gradient (z-index: -1) paints ABOVE both backgrounds and
-     is sampled by the glass backdrop-filter in dark mode too. Previously the
-     dark bg (::after) also sat at -1 and covered the gradient. */
+  inset: 0;
+  /* -2 so the mouse-gradient (z-index: -1) paints above the page background
+     and is sampled by the glass backdrop-filter in dark mode too. */
   z-index: -2;
+  background-color: var(--page-bg-color);
+  background-image: var(--page-bg-image), var(--page-bg-fallback);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  /* Removido background-attachment: fixed - causa lag significativo no scroll */
-  /* Force GPU acceleration and prevent recalculation during transforms */
-  transform: translate3d(0, 0, 0);
-  -webkit-transform: translate3d(0, 0, 0);
-  will-change: opacity;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   pointer-events: none;
-  /* Prevent background from being affected by child transforms */
   isolation: isolate;
-}
-
-/* Light mode background - visible by default */
-body::before {
-  background-image: url('/bg-main.webp');
-  opacity: 1;
-}
-
-/* Dark mode background - hidden by default */
-body::after {
-  background-image: url('/bg-main-dark.webp');
-  opacity: 0;
-}
-
-/* Dark mode: swap visibility instantly */
-[data-mode='dark'] body::before {
-  opacity: 0;
-}
-
-[data-mode='dark'] body::after {
-  opacity: 1;
 }
 
 .dark body {
