@@ -10,6 +10,11 @@ import { useTranslation } from "react-i18next";
 import React from "react";
 import "@/node_modules/flag-icons/css/flag-icons.min.css";
 import { haptic } from "@/lib/haptic";
+import {
+  normalizeContentfulLocale,
+  prefetchContentfulContent,
+  prefetchOtherContentfulLocale,
+} from "@/lib/contentfulClientCache";
 
 const languageOptions = [
   { value: "en", label: "fi fi-us" },
@@ -27,14 +32,24 @@ const LanguageSelector = () => {
 
   const handleChange = (value: string) => {
     haptic();
+    void prefetchContentfulContent(normalizeContentfulLocale(value));
     i18n.changeLanguage(value);
   };
+
+  const prefetchAlternateLanguage = () => {
+    prefetchOtherContentfulLocale(normalizeContentfulLocale(selectedLanguage));
+  };
+
   const { t } = useTranslation();
 
   return (
     <div className="relative w-fit ~text-base/md text-nowrap">
       <Listbox value={selectedLanguage} onChange={handleChange}>
-        <ListboxButton className="w-fit flex justify-between items-center dark:bg-black/25 bg-white/80 backdrop-blur-sm border dark:border-white/10 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:ring-white/50 ~text-xs/base">
+        <ListboxButton
+          onFocus={prefetchAlternateLanguage}
+          onPointerEnter={prefetchAlternateLanguage}
+          className="w-fit flex justify-between items-center dark:bg-black/25 bg-white/80 backdrop-blur-sm border dark:border-white/10 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:ring-white/50 ~text-xs/base"
+        >
           <span
             className={
               languageOptions.find((o) => o.value === selectedLanguage)?.label

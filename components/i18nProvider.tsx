@@ -2,6 +2,11 @@
 import React, { useEffect, useRef } from "react";
 import { I18nextProvider } from "react-i18next";
 import i18n from "@/utils/i18n";
+import {
+  normalizeContentfulLocale,
+  prefetchContentfulContent,
+  prefetchOtherContentfulLocale,
+} from "@/lib/contentfulClientCache";
 
 type LocaleKey = "en" | "pt";
 
@@ -10,11 +15,8 @@ const loadedContentfulLocales = new Set<LocaleKey>();
 async function loadContentfulCopy(locale: LocaleKey): Promise<boolean> {
   if (loadedContentfulLocales.has(locale)) return true;
 
-  const response = await fetch(`/api/content?locale=${locale}`);
-  if (!response.ok) return false;
-
-  const content = await response.json();
-  if (!content.uiCopy || typeof content.uiCopy !== "object") return false;
+  const content = await prefetchContentfulContent(locale).catch(() => null);
+  if (!content?.uiCopy || typeof content.uiCopy !== "object") return false;
 
   i18n.addResourceBundle(locale, "translation", content.uiCopy, true, true);
   loadedContentfulLocales.add(locale);
@@ -31,13 +33,14 @@ const I18nProvider: React.FC<{ children: React.ReactNode }> = ({
     hasInitialized.current = true;
 
     const applyLanguage = (language: string) => {
-      const locale = language.startsWith("pt") ? "pt" : "en";
+      const locale = normalizeContentfulLocale(language);
       loadContentfulCopy(locale).then(() => {
         if (i18n.language !== locale) {
           void i18n.changeLanguage(locale);
         } else {
           i18n.emit("languageChanged", locale);
         }
+        prefetchOtherContentfulLocale(locale);
       });
     };
 
@@ -62,7 +65,7 @@ const I18nProvider: React.FC<{ children: React.ReactNode }> = ({
     });
 
     const handleLanguageChanged = (language: string) => {
-      const locale = language.startsWith("pt") ? "pt" : "en";
+      const locale = normalizeContentfulLocale(language);
       void loadContentfulCopy(locale);
     };
 
