@@ -17,6 +17,7 @@ type ProjectProps = {
   techs: { name: string; icon: string }[];
   metrics?: string[];
   height?: number;
+  priority?: boolean;
 };
 
 function ProjectCardComponent({
@@ -28,34 +29,38 @@ function ProjectCardComponent({
   techs,
   metrics,
   height,
+  priority,
 }: ProjectProps) {
   const { t } = useTranslation();
   return (
-    <LiquidGlass variant="card" className="relative p-2 rounded-lg group">
+    <LiquidGlass
+      variant="card"
+      className="group relative flex h-full flex-col p-2 rounded-lg transition-transform duration-300 ease-out motion-safe:hover:-translate-y-1"
+    >
       <div
-        className="w-full overflow-hidden rounded-lg"
-        style={{ height: height ? `${height}px` : "24rem" }}
+        className="w-full overflow-hidden rounded-lg shrink-0"
+        style={{ height: height ? `${height}px` : "14rem" }}
       >
         <Image
           src={image}
           alt={title}
           width={1980}
           height={1080}
-          loading="lazy"
-          className="rounded-lg group-hover:brightness-125 transition-all ease-in-out duration-200 object-cover"
+          loading={priority ? "eager" : "lazy"}
+          priority={priority}
+          className="h-full w-full rounded-lg object-cover object-top transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
         />
       </div>
-      <div className="absolute bottom-0 left-0 w-full h-3/4 bg-gradient-to-t from-black via-black/85 to-transparent rounded-lg"></div>
-      <div className="absolute bottom-0 left-0 w-full p-6 z-10">
-        <h2 className="mt-4 text-2xl font-bold text-white">{title}</h2>
-        <p className="mt-2 text-gray-200 line-clamp-2">{description}</p>
+      <div className="flex flex-1 flex-col p-4">
+        <h2 className="text-2xl font-bold">{title}</h2>
+        <p className="mt-2 text-gray-700 dark:text-gray-300">{description}</p>
 
         {metrics && metrics.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-3">
             {metrics.map((metric, index) => (
               <span
                 key={index}
-                className="inline-flex items-center px-2 py-1 text-xs font-medium bg-rose-500/20 text-rose-200 border border-rose-400/30 rounded-md"
+                className="inline-flex items-center px-2 py-1 text-xs font-medium bg-rose-500/10 text-rose-600 border border-rose-500/30 rounded-md dark:bg-rose-500/20 dark:text-rose-200 dark:border-rose-400/30"
               >
                 {metric}
               </span>
@@ -75,7 +80,7 @@ function ProjectCardComponent({
           ))}
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-2 md:gap-4">
+        <div className="mt-auto pt-4 flex flex-wrap gap-2 md:gap-4">
           <Link
             href={link}
             target="_blank"

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useTranslation } from "react-i18next";
 import Image from "next/image";
 import LiquidGlass from "./LiquidGlass";
 
@@ -12,6 +13,7 @@ type Track = {
 };
 
 function RecentTrackComponent() {
+  const { t } = useTranslation();
   const [track, setTrack] = useState<Track | null>(null);
 
   useEffect(() => {
@@ -58,8 +60,16 @@ function RecentTrackComponent() {
     };
   }, []);
 
+  // Hide the whole block (heading included) until there is a track to show —
+  // no empty card or spinner when Last.fm is unavailable.
+  if (!track) return null;
+
   return (
-    <LiquidGlass variant="card" className="flex items-center space-x-4 p-4 !rounded-3xl mt-4">
+    <div className="flex flex-col items-center justify-center mt-8">
+      <h3 className="mt-6 ~text-xl/2xl font-semibold">
+        {t("about.recentTrack")}
+      </h3>
+      <LiquidGlass variant="card" className="flex items-center space-x-4 p-4 !rounded-3xl mt-4">
       <AnimatePresence mode="wait">
         {track && (
           <motion.div
@@ -88,7 +98,8 @@ function RecentTrackComponent() {
           </motion.div>
         )}
       </AnimatePresence>
-    </LiquidGlass>
+      </LiquidGlass>
+    </div>
   );
 }
 

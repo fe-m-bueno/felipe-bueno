@@ -6,6 +6,11 @@ import type { ContactFormData } from "@/lib/validation";
 import { z } from "zod";
 import LiquidGlass from "./LiquidGlass";
 import { haptic } from "@/lib/haptic";
+import { Mail } from "lucide-react";
+import { GitHub, LinkedIn } from "@mui/icons-material";
+
+const directContactClass =
+  "group inline-flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 bg-white/10 dark:bg-white/5 backdrop-blur-md border border-black/10 dark:border-white/10 hover:border-rose-500/50 dark:hover:border-rose-400/50 hover:bg-rose-500/10 dark:hover:bg-rose-500/10 hover:scale-[1.02] active:scale-[0.98]";
 
 export default function ContactForm() {
   const { t } = useTranslation();
@@ -95,9 +100,40 @@ export default function ContactForm() {
   return (
     <section className="relative w-full px-4 md:px-16 py-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-center">
-        <h1 className="~text-2xl/3xl font-bold mt-10 mb-6">
+        <h1 className="~text-2xl/3xl font-bold mt-10 mb-4">
           {t("contact.title")}
         </h1>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+        <a
+          href="mailto:contact@felipe-bueno.com"
+          onClick={() => haptic()}
+          className={directContactClass}
+        >
+          <Mail className="w-4 h-4" aria-hidden="true" />
+          contact@felipe-bueno.com
+        </a>
+        <a
+          href="https://linkedin.com/in/felipe-martins-bueno"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => haptic()}
+          className={directContactClass}
+        >
+          <LinkedIn className="!w-5 !h-5" aria-hidden="true" />
+          LinkedIn
+        </a>
+        <a
+          href="https://github.com/fe-m-bueno"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => haptic()}
+          className={directContactClass}
+        >
+          <GitHub className="!w-4 !h-4" aria-hidden="true" />
+          GitHub
+        </a>
       </div>
 
       <LiquidGlass

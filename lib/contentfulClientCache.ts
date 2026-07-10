@@ -18,6 +18,7 @@ export function getFallbackContent(locale: LocaleKey): ContentfulSiteContent {
     projects: projects[locale] || projects.en,
     about: about[locale] || about.en,
     resume: resume[locale] || resume.en,
+    skills: [],
     uiCopy: {},
   };
 }

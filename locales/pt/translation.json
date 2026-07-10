@@ -10,7 +10,10 @@
     "description": "Desenvolvedor Fullstack com foco em backend, construindo plataformas internas, APIs e pipelines de dados que realmente performam.",
     "description2": "Já otimizei queries de 92s → 3,6s, orquestrei 140 DAGs no Airflow e economizei 240+ horas com automação.",
     "scrollDown": "Deslize para baixo",
-    "clickToRemoveBlur": "Clique para ver o rosto de Felipe"
+    "clickToRemoveBlur": "Clique para ver o rosto de Felipe",
+    "hoverToRemoveBlur": "Passe o mouse para ver o rosto de Felipe",
+    "moreSkills": "{{total}} mais",
+    "lessSkills": "Mostrar menos"
   },
   "resume": {
     "experience": "Experiência",
@@ -25,7 +28,8 @@
     "seeAllProjects": "Ver Todos os Projetos",
     "title": "Projetos Selecionados",
     "viewProject": "Ver Projeto",
-    "alltitle": "Todos os Projetos"
+    "alltitle": "Todos os Projetos",
+    "allSubtitle": "Uma coleção do que eu já construí — de ferramentas com IA a apps full-stack."
   },
   "contact": {
     "title": "Entre em Contato",
