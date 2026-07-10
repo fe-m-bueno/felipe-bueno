@@ -44,11 +44,18 @@ export type ResumeContent = {
   pdf: string;
 };
 
+export type HeroSkill = {
+  name: string;
+  icon: string;
+  tier: "core" | "extra";
+};
+
 export type ContentfulSiteContent = {
   locale: LocaleKey;
   projects: ProjectContent[];
   about: AboutContent | null;
   resume: ResumeContent;
+  skills: HeroSkill[];
   uiCopy: Record<string, unknown>;
 };
 
@@ -270,6 +277,16 @@ function mapEducation(entry: ResolvedContentfulEntry) {
   };
 }
 
+function mapHeroSkill(entry: ResolvedContentfulEntry): HeroSkill & { order: number } {
+  const fields = getFields(entry);
+  return {
+    name: getString(fields.name),
+    icon: getString(fields.icon),
+    tier: getString(fields.heroTier) === "extra" ? "extra" : "core",
+    order: getNumber(fields.heroOrder),
+  };
+}
+
 function mapUiCopy(entries: ResolvedContentfulEntry[]) {
   const uiCopy: Record<string, unknown> = {};
 
@@ -310,7 +327,14 @@ export async function getContentfulSiteContent(locale: LocaleKey): Promise<Conte
     return resolveCollection((await response.json()) as ContentfulCollection);
   }
 
-  const [projectEntries, siteProfileEntries, experienceEntries, educationEntries, uiCopyEntries] =
+  const [
+    projectEntries,
+    siteProfileEntries,
+    experienceEntries,
+    educationEntries,
+    skillEntries,
+    uiCopyEntries,
+  ] =
     await Promise.all([
       getEntries({
         content_type: "project",
@@ -331,6 +355,12 @@ export async function getContentfulSiteContent(locale: LocaleKey): Promise<Conte
       getEntries({
         content_type: "education",
         order: "fields.kind,fields.order",
+        limit: 100,
+      }),
+      getEntries({
+        content_type: "technology",
+        "fields.heroOrder[exists]": "true",
+        order: "fields.heroOrder",
         limit: 100,
       }),
       getEntries({
@@ -358,6 +388,10 @@ export async function getContentfulSiteContent(locale: LocaleKey): Promise<Conte
         .map(({ kind: _kind, order: _order, ...education }) => education),
       pdf: getAssetUrl(siteProfileFields.resumePdf) || getAssetTitle(siteProfileFields.resumePdf),
     },
+    skills: skillEntries
+      .map(mapHeroSkill)
+      .sort((a, b) => a.order - b.order)
+      .map(({ order: _order, ...skill }) => skill),
     uiCopy: mapUiCopy(uiCopyEntries),
   };
 }

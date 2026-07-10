@@ -18,7 +18,7 @@ export default function ProjectsSection() {
   return (
     <section className="relative w-full mx-auto py-6 md:px-16 px-4 max-w-7xl">
       <div className="flex items-center justify-center">
-        <h1 className="~text-2xl/3xl font-bold mt-10 mb-6">
+        <h1 className="~text-2xl/3xl font-bold mt-4 mb-6">
           {t("projects.title")}
         </h1>
       </div>

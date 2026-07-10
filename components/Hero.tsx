@@ -2,26 +2,39 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect, useRef, memo, useCallback } from "react";
-import { EyeClosed, ArrowRight, Eye, Download } from "lucide-react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  memo,
+  useCallback,
+  useSyncExternalStore,
+} from "react";
+import { EyeClosed, ArrowRight, Eye, Download, Plus, Minus } from "lucide-react";
+import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import Badge from "@/components/Badge";
 import OpenToWorkBadge from "@/components/OpenToWorkBadge";
+import CountUpText from "@/components/CountUpText";
 import { haptic } from "@/lib/haptic";
+import { useContentfulContent } from "@/hooks/useContentfulContent";
+import type { HeroSkill } from "@/lib/contentfulContent";
 
-const skills = [
+// Local fallback while Contentful loads (or if it's unreachable).
+// Source of truth is the `technology` content type (heroOrder/heroTier fields).
+const fallbackSkills = [
+  { name: "Python", icon: "mdi:language-python" },
+  { name: "Django", icon: "simple-icons:django" },
   { name: "TypeScript", icon: "bxl:typescript" },
   { name: "JavaScript", icon: "ri:javascript-fill" },
-  { name: "Python", icon: "mdi:language-python" },
+  { name: "PostgreSQL", icon: "mdi:database-outline" },
+  { name: "Apache Airflow", icon: "simple-icons:apacheairflow" },
+  { name: "Docker", icon: "mdi:docker" },
   { name: "React", icon: "mdi:react" },
   { name: "Next.js", icon: "ri:nextjs-fill" },
   { name: "Node.js", icon: "mdi:nodejs" },
   { name: "Vue.js", icon: "mdi:vuejs" },
-  { name: "PostgreSQL", icon: "mdi:database-outline" },
-  { name: "Docker", icon: "mdi:docker" },
   { name: "Tailwind CSS", icon: "mdi:tailwind" },
-  { name: "Django", icon: "simple-icons:django" },
   { name: "Angular", icon: "mdi:angular" },
-  { name: "Apache Airflow", icon: "simple-icons:apacheairflow" },
   { name: "LangGraph", icon: "mdi:graph" },
   { name: "GraphQL", icon: "mdi:graphql" },
   { name: "React Native", icon: "mdi:react" },
@@ -35,15 +48,87 @@ const skills = [
   { name: "CSS", icon: "flowbite:css-solid" },
 ];
 
-const SkillsList = memo(function SkillsList() {
+const CORE_SKILLS_COUNT = 10;
+
+const SkillsList = memo(function SkillsList({ skills }: { skills: HeroSkill[] }) {
+  const { t } = useTranslation();
+  const [expanded, setExpanded] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  const coreSkills = skills.filter((skill) => skill.tier === "core");
+  const extraSkills = skills.filter((skill) => skill.tier === "extra");
+
+  const toggleExpanded = useCallback(() => {
+    haptic();
+    setExpanded((value) => !value);
+  }, []);
+
   return (
     <>
-      {skills.map((skill) => (
+      {coreSkills.map((skill) => (
         <Badge key={skill.name} name={skill.name} icon={skill.icon} />
       ))}
+      <AnimatePresence initial={false}>
+        {expanded &&
+          extraSkills.map((skill, index) => (
+            <motion.div
+              key={skill.name}
+              initial={
+                prefersReducedMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, scale: 0.85 }
+              }
+              animate={{
+                opacity: 1,
+                scale: 1,
+                transition: {
+                  delay: prefersReducedMotion ? 0 : index * 0.025,
+                  duration: 0.25,
+                },
+              }}
+              exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.15 } }}
+            >
+              <Badge name={skill.name} icon={skill.icon} />
+            </motion.div>
+          ))}
+      </AnimatePresence>
+      <button
+        type="button"
+        onClick={toggleExpanded}
+        aria-expanded={expanded}
+        className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-rose-500/40 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/60 transition-colors duration-200 text-xs lg:text-sm font-space-grotesk whitespace-nowrap"
+      >
+        {expanded ? (
+          <>
+            <Minus className="w-3.5 h-3.5" aria-hidden="true" />
+            {t("hero.lessSkills")}
+          </>
+        ) : (
+          <>
+            <Plus className="w-3.5 h-3.5" aria-hidden="true" />
+            {t("hero.moreSkills", { total: extraSkills.length })}
+          </>
+        )}
+      </button>
     </>
   );
 });
+
+// Hydration-safe "(hover: hover)" media query: the server assumes a
+// hover-capable device and touch devices correct themselves after hydration.
+function subscribeToHoverCapability(callback: () => void) {
+  const mql = window.matchMedia("(hover: hover)");
+  mql.addEventListener("change", callback);
+  return () => mql.removeEventListener("change", callback);
+}
+
+function useCanHover() {
+  return useSyncExternalStore(
+    subscribeToHoverCapability,
+    () => window.matchMedia("(hover: hover)").matches,
+    () => true
+  );
+}
 
 const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3);
 
@@ -52,7 +137,11 @@ const lerp = (current: number, target: number, factor: number): number =>
 
 const HeroImage = memo(function HeroImage() {
   const { t } = useTranslation();
-  const [filter, setFilter] = useState(true);
+  // Blurred by default; hover reveals, click locks the reveal.
+  // Touch devices (no hover) get the sharp photo.
+  const canHover = useCanHover();
+  const [locked, setLocked] = useState(false);
+  const [hovering, setHovering] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
@@ -62,7 +151,11 @@ const HeroImage = memo(function HeroImage() {
   const targetRotation = useRef({ x: 0, y: 0 });
   const isAnimating = useRef(false);
 
-  const toggleFilter = useCallback(() => { haptic(); setFilter((f) => !f); }, []);
+  const filter = canHover && !locked && !hovering;
+
+  const toggleFilter = useCallback(() => { haptic(); setLocked((f) => !f); }, []);
+  const handleMouseEnter = useCallback(() => setHovering(true), []);
+  const handleMouseLeave = useCallback(() => setHovering(false), []);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -208,6 +301,8 @@ const HeroImage = memo(function HeroImage() {
         ref={containerRef}
         className="relative rounded-3xl p-px h-1/2 w-1/2 lg:h-full overflow-hidden bg-gradient-to-b from-rose-400 to-rose-400/10 shadow-2xl shadow-rose-500/20 dark:shadow-rose-400/10 will-change-transform cursor-pointer"
         onClick={toggleFilter}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         style={{ transformStyle: "preserve-3d" }}
       >
         <div
@@ -230,9 +325,9 @@ const HeroImage = memo(function HeroImage() {
         />
 
         {filter && (
-          <p className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-base z-40 text-white font-semibold px-8 lg:px-0 drop-shadow-lg">
+          <p className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-base z-40 text-white font-semibold px-8 lg:px-0 drop-shadow-lg pointer-events-none">
             <span className="inline-flex items-center gap-2">
-              <EyeClosed className="w-6 h-6" /> {t("hero.clickToRemoveBlur")}
+              <EyeClosed className="w-6 h-6" /> {t("hero.hoverToRemoveBlur")}
             </span>
           </p>
         )}
@@ -273,20 +368,55 @@ const HeroImage = memo(function HeroImage() {
 export default function Hero() {
   const { t, i18n } = useTranslation();
   const locale = (i18n.language.split("-")[0] as "en" | "pt") || "en";
+  const prefersReducedMotion = useReducedMotion();
+  const { content } = useContentfulContent(locale);
+  const skills: HeroSkill[] =
+    content.skills.length > 0
+      ? content.skills
+      : fallbackSkills.map((skill, index) => ({
+          ...skill,
+          tier: index < CORE_SKILLS_COUNT ? "core" : "extra",
+        }));
+
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: prefersReducedMotion
+        ? undefined
+        : { staggerChildren: 0.08, delayChildren: 0.1 },
+    },
+  };
+
+  const itemVariants = prefersReducedMotion
+    ? {
+        hidden: { opacity: 1, y: 0 },
+        visible: { opacity: 1, y: 0 },
+      }
+    : {
+        hidden: { opacity: 0, y: 16 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
+        },
+      };
 
   return (
     <section
       id="landing"
       className="relative grid grid-cols-1 lg:grid-cols-2 items-center justify-center text-center px-4 w-full pt-28 lg:pt-20 max-w-8xl mx-auto isolation-auto overflow-x-clip"
     >
-      <div className="flex flex-col justify-center items-center lg:h-screen gap-8 lg:gap-12">
+      <motion.div
+        className="flex flex-col justify-center items-center lg:min-h-screen gap-8 lg:gap-12"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="flex flex-col justify-center items-center lg:items-start lg:ml-16 mx-auto sm:pl-0 lg:pl-12">
-          <div className="mb-6">
+          <motion.div variants={itemVariants} className="mb-6">
             <OpenToWorkBadge />
-          </div>
-          <h1
-            className="~text-3xl/7xl mb-8"
-          >
+          </motion.div>
+          <motion.h1 variants={itemVariants} className="~text-3xl/7xl mb-8">
             <span className="font-bold inline-block text-nowrap">
               {t("hero.title")}
               <span
@@ -296,19 +426,22 @@ export default function Hero() {
                 👋
               </span>
             </span>
-          </h1>
-          <p
+          </motion.h1>
+          <motion.p
+            variants={itemVariants}
             className="~text-base/2xl mb-6 text-center lg:text-start"
           >
             {t("hero.description")}
-          </p>
-          <p
+          </motion.p>
+          <motion.p
+            variants={itemVariants}
             className="~text-base/2xl mb-8 text-center lg:text-start font-semibold"
           >
-            {t("hero.description2")}
-          </p>
+            <CountUpText text={t("hero.description2")} />
+          </motion.p>
 
-          <div
+          <motion.div
+            variants={itemVariants}
             className="flex flex-wrap gap-3 justify-center lg:justify-start items-center w-full"
           >
             <Link
@@ -358,14 +491,23 @@ export default function Hero() {
               {t("cta.downloadResume")}
               <Download className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" />
             </Link>
-          </div>
+          </motion.div>
         </div>
-        <div className="flex flex-wrap justify-center items-center lg:justify-start lg:items-start gap-2 lg:ml-16 h-fit mx-auto sm:pl-0 lg:pl-12">
-          <SkillsList />
-        </div>
-      </div>
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-wrap justify-center items-center lg:justify-start lg:items-start gap-2 lg:ml-16 h-fit mx-auto sm:pl-0 lg:pl-12"
+        >
+          <SkillsList skills={skills} />
+        </motion.div>
+      </motion.div>
 
-      <HeroImage />
+      <motion.div
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <HeroImage />
+      </motion.div>
     </section>
   );
 }

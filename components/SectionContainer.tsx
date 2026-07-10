@@ -16,7 +16,7 @@ export default function SectionContainer() {
       </section>
       <section
         id="about"
-        className="w-full min-h-screen flex flex-col justify-center items-center"
+        className="w-full min-h-screen flex flex-col justify-center items-center scroll-mt-20"
       >
         <ScrollReveal>
           <AboutMe />
@@ -24,7 +24,7 @@ export default function SectionContainer() {
       </section>
       <section
         id="projects"
-        className="w-full min-h-screen flex flex-col justify-center items-center"
+        className="w-full min-h-screen flex flex-col justify-center items-center scroll-mt-20"
       >
         <ScrollReveal delay={100}>
           <ProjectsSection />
@@ -32,7 +32,7 @@ export default function SectionContainer() {
       </section>
       <section
         id="contact"
-        className="relative w-full min-h-screen flex flex-col justify-center items-center"
+        className="relative w-full min-h-screen flex flex-col justify-center items-center scroll-mt-20"
       >
         <ScrollReveal delay={100}>
           <ContactForm />

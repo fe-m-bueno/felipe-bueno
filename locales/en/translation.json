@@ -10,7 +10,10 @@
     "description": "Backend-focused Fullstack Developer who builds internal platforms, APIs, and data pipelines that actually perform.",
     "description2": "I've optimized queries from 92s → 3.6s, orchestrated 140 Airflow DAGs, and saved 240+ hours through automation.",
     "scrollDown": "Scroll Down",
-    "clickToRemoveBlur": "Click to see Felipe's face"
+    "clickToRemoveBlur": "Click to see Felipe's face",
+    "hoverToRemoveBlur": "Hover to see Felipe's face",
+    "moreSkills": "{{total}} more",
+    "lessSkills": "Show less"
   },
   "resume": {
     "experience": "Experience",
@@ -25,7 +28,8 @@
     "seeAllProjects": "See All Projects",
     "title": "Selected Projects",
     "viewProject": "View Project",
-    "alltitle": "All Projects"
+    "alltitle": "All Projects",
+    "allSubtitle": "A collection of things I've built — from AI-powered tools to full-stack apps."
   },
   "contact": {
     "title": "Get in Touch",

@@ -15,7 +15,7 @@ export default function Resume() {
   const data = content.resume;
 
   return (
-    <section className="px-6 py-6 lg:py-24 flex flex-col justify-start min-h-screen">
+    <section className="px-6 py-6 lg:pt-24 lg:pb-10 flex flex-col justify-start min-h-screen">
       <h2 className="~text-xl/2xl font-bold">{t("resume.experience")}</h2>
       <ul className="my-4 space-y-4">
         {data.experience.map((exp, index) => (
