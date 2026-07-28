@@ -1,10 +1,12 @@
 "use client";
-import { useRef, useEffect, memo } from "react";
+import { memo } from "react";
+import BorderGlow from "@/components/BorderGlow";
 
 interface LiquidGlassProps {
   children: React.ReactNode;
   className?: string;
   variant?: "badge" | "card" | "default";
+  glowBorderRadius?: number;
 }
 
 const variantClasses = {
@@ -17,62 +19,33 @@ function LiquidGlassComponent({
   children,
   className = "",
   variant = "default",
+  glowBorderRadius,
 }: LiquidGlassProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  if (variant === "badge") {
+    return (
+      <div className={`${variantClasses.badge} ${className}`}>
+        {children}
+      </div>
+    );
+  }
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    // Checa preferência de movimento reduzido via CSS
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReducedMotion) return;
-
-    let frameRequested = false;
-    let lastX = 0;
-    let lastY = 0;
-
-    const updatePosition = () => {
-      frameRequested = false;
-      container.style.setProperty("--mouse-x", `${lastX}%`);
-      container.style.setProperty("--mouse-y", `${lastY}%`);
-    };
-
-    const handleMouseMove = (event: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      lastX = ((event.clientX - rect.left) / rect.width) * 100;
-      lastY = ((event.clientY - rect.top) / rect.height) * 100;
-
-      if (!frameRequested) {
-        frameRequested = true;
-        requestAnimationFrame(updatePosition);
-      }
-    };
-
-    // No position reset on leave — CSS :hover opacity transition fades the
-    // highlight at the last cursor position, avoiding a visible snap to center.
-    container.addEventListener("mousemove", handleMouseMove, { passive: true });
-
-    return () => {
-      container.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
+  const borderRadius =
+    glowBorderRadius ?? 24;
 
   return (
-    <div
-      ref={containerRef}
+    <BorderGlow
       className={`${variantClasses[variant]} ${className}`}
-      style={
-        {
-          "--mouse-x": "50%",
-          "--mouse-y": "50%",
-        } as React.CSSProperties
-      }
+      borderRadius={borderRadius}
+      backgroundColor="var(--border-glow-surface)"
+      edgeSensitivity={18}
+      glowColor="350 89 60"
+      glowRadius={22}
+      glowIntensity={0.5}
+      coneSpread={19}
+      colors={["#fb7185", "#f43f5e", "#e11d48"]}
     >
       {children}
-    </div>
+    </BorderGlow>
   );
 }
 
