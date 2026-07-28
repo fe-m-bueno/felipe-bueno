@@ -1,8 +1,8 @@
 "use client";
 import { useTranslation } from "react-i18next";
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import LiquidGlass from "./LiquidGlass";
+import SpecularButton from "./SpecularButton";
 import { haptic } from "@/lib/haptic";
 import { useContentfulContent } from "@/hooks/useContentfulContent";
 
@@ -64,17 +64,26 @@ export default function Resume() {
       </ul>
 
       <div className="mt-6 flex flex-col items-center justify-center lg:items-end lg:justify-end">
-        <Link
+        <SpecularButton
           href={data.pdf}
           target="_blank"
+          rel="noopener noreferrer"
           onClick={() => haptic()}
-          className="inline-flex items-center gap-2 px-3 py-2 hover:bg-white/85 hover:shadow-sm dark:hover:bg-white/5 rounded-lg transition-all ease-in-out duration-200 group "
+          size="sm"
+          radius={16}
+          tint="#09090b"
+          tintOpacity={0.92}
+          blur={12}
+          lineColor="#ffe4e6"
+          baseColor="#27272a"
+          intensity={1.25}
+          className="group"
         >
           <span className="inline-flex items-center gap-2">
             {t("resume.seeFullResume")}
             <ArrowUpRight className="w-6 h-6 hover:translate-x-1 group-hover:-translate-y-1 group-hover:translate-x-1 transition-all ease-in-out duration-200" />
           </span>
-        </Link>
+        </SpecularButton>
       </div>
     </section>
   );

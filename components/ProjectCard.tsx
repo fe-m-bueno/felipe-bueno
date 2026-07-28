@@ -5,6 +5,7 @@ import Link from "next/link";
 import { GitHub } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import LiquidGlass from "./LiquidGlass";
+import SpecularButton from "./SpecularButton";
 import { memo } from "react";
 import { haptic } from "@/lib/haptic";
 
@@ -35,6 +36,7 @@ function ProjectCardComponent({
   return (
     <LiquidGlass
       variant="card"
+      glowBorderRadius={8}
       className="group relative flex h-full flex-col p-2 rounded-lg transition-transform duration-300 ease-out motion-safe:hover:-translate-y-1"
     >
       <div
@@ -81,15 +83,23 @@ function ProjectCardComponent({
         </div>
 
         <div className="mt-auto pt-4 flex flex-wrap gap-2 md:gap-4">
-          <Link
+          <SpecularButton
             href={link}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => haptic()}
-            className="px-3 py-1 bg-rose-600/85 hover:bg-rose-500/85 backdrop-blur-md dark:bg-rose-600/85 dark:hover:bg-rose-700/85 border border-gray-200/20 rounded-xl text-white transition font-bold ~text-sm/base"
+            size="sm"
+            radius={12}
+            tint="#09090b"
+            tintOpacity={0.94}
+            blur={10}
+            lineColor="#ffe4e6"
+            baseColor="#27272a"
+            intensity={1.25}
+            className="font-bold ~text-sm/base"
           >
             {t("projects.viewProject")}
-          </Link>
+          </SpecularButton>
           <Link
             href={github}
             target="_blank"

@@ -14,6 +14,7 @@ html {
   --page-bg-fallback:
     radial-gradient(circle at 20% 15%, rgba(244, 63, 94, 0.12), transparent 32rem),
     linear-gradient(135deg, #ffffff 0%, #fff7f8 48%, #f7f7f7 100%);
+  --border-glow-surface: rgba(255, 255, 255, 0.05);
 }
 
 [data-mode='dark'] {
@@ -23,6 +24,7 @@ html {
   --page-bg-fallback:
     radial-gradient(circle at 20% 15%, rgba(244, 63, 94, 0.18), transparent 32rem),
     linear-gradient(135deg, #0a0a0a 0%, #141012 48%, #080808 100%);
+  --border-glow-surface: rgba(255, 255, 255, 0.03);
 }
 
 @media (min-width: 768px) {
@@ -58,8 +60,6 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  /* -2 so the mouse-gradient (z-index: -1) paints above the page background
-     and is sampled by the glass backdrop-filter in dark mode too. */
   z-index: -2;
   background-color: var(--page-bg-color);
   background-image: var(--page-bg-image), var(--page-bg-fallback);
@@ -124,19 +124,6 @@ body::before {
   }
 }
 
-/* MouseGradient - GPU accelerated with CSS variables.
-   Faint rose glow; the component only reveals it while the cursor is over a
-   glass box, so it reads as a subtle highlight behind the panel, not a cloud. */
-.mouse-gradient {
-  background: radial-gradient(
-    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(244, 63, 94, 0.14) 0px,
-    transparent 180px
-  );
-  transition: opacity 0.3s ease;
-  /* Removido will-change: background - desnecessário e consome memória GPU */
-}
-
 /* Performance optimizations for transforms - aplicar apenas onde necessário */
 .will-change-transform {
   backface-visibility: hidden;
@@ -154,44 +141,17 @@ body::before {
 .liquid-glass,
 .liquid-glass-badge,
 .liquid-glass-card {
-  --mouse-x: 50%;
-  --mouse-y: 50%;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   isolation: isolate;
-}
-
-/* Mouse-following highlight effect */
-.liquid-glass::after,
-.liquid-glass-badge::after,
-.liquid-glass-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    600px circle at var(--mouse-x) var(--mouse-y),
-    rgba(251, 113, 133, 0.1) 0%,
-    rgba(244, 63, 94, 0.05) 35%,
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-}
-
-/* Active state when hovered - usando CSS :hover ao invés de JS */
-.liquid-glass:hover::after,
-.liquid-glass-badge:hover::after,
-.liquid-glass-card:hover::after {
-  opacity: 1;
 }
 
 /* Badge variant - smaller, subtler effect */
 .liquid-glass-badge {
+  overflow: hidden;
   background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 9999px;
   backface-visibility: hidden;
@@ -232,9 +192,8 @@ body::before {
 
 /* Card variant - larger, more prominent effect */
 .liquid-glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 1rem;
   backface-visibility: hidden;
@@ -250,7 +209,6 @@ body::before {
 }
 
 .dark .liquid-glass-card {
-  background: rgba(255, 255, 255, 0.03);
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: 
     0 4px 6px rgba(0, 0, 0, 0.2),
@@ -259,7 +217,6 @@ body::before {
 }
 
 .liquid-glass-card:hover {
-  background: rgba(255, 255, 255, 0.08);
   transform: translateY(-4px);
   box-shadow:
     0 8px 25px rgba(244, 63, 94, 0.15),
@@ -268,7 +225,6 @@ body::before {
 }
 
 .dark .liquid-glass-card:hover {
-  background: rgba(255, 255, 255, 0.08);
   box-shadow: 
     0 8px 25px rgba(244, 63, 94, 0.2),
     0 20px 40px rgba(0, 0, 0, 0.3),
@@ -277,9 +233,8 @@ body::before {
 
 /* Default variant */
 .liquid-glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 1.5rem;
   backface-visibility: hidden;
@@ -293,8 +248,12 @@ body::before {
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
+.deferred-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 100vh;
+}
+
 .dark .liquid-glass {
-  background: rgba(255, 255, 255, 0.03);
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: 
     0 2px 4px rgba(0, 0, 0, 0.2),
@@ -302,7 +261,6 @@ body::before {
 }
 
 .liquid-glass:hover {
-  background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
   box-shadow:
     0 6px 20px rgba(244, 63, 94, 0.1),
@@ -310,7 +268,6 @@ body::before {
 }
 
 .dark .liquid-glass:hover {
-  background: rgba(255, 255, 255, 0.08);
   box-shadow: 
     0 6px 20px rgba(244, 63, 94, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -324,11 +281,6 @@ body::before {
     transition: none;
   }
 
-  .liquid-glass::after,
-  .liquid-glass-badge::after,
-  .liquid-glass-card::after {
-    display: none;
-  }
 }
 
 @keyframes hero-fade-in {

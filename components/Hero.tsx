@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import {
   useState,
@@ -15,6 +14,7 @@ import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import Badge from "@/components/Badge";
 import OpenToWorkBadge from "@/components/OpenToWorkBadge";
 import CountUpText from "@/components/CountUpText";
+import SpecularButton from "@/components/SpecularButton";
 import { haptic } from "@/lib/haptic";
 import { useContentfulContent } from "@/hooks/useContentfulContent";
 import type { HeroSkill } from "@/lib/contentfulContent";
@@ -277,12 +277,12 @@ const HeroImage = memo(function HeroImage() {
       startAnimation();
     };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    container.addEventListener("mousemove", handleMouseMove, { passive: true });
     container.addEventListener("touchmove", handleTouchMove, { passive: true });
     container.addEventListener("touchend", handleLeave);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mousemove", handleMouseMove);
       container.removeEventListener("touchmove", handleTouchMove);
       container.removeEventListener("touchend", handleLeave);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
@@ -444,35 +444,45 @@ export default function Hero() {
             variants={itemVariants}
             className="flex flex-wrap gap-3 justify-center lg:justify-start items-center w-full"
           >
-            <Link
+            <SpecularButton
               href="#contact"
               onClick={() => haptic()}
-              className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 overflow-hidden
-                bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500 bg-[length:200%_100%] hover:bg-[position:100%_0]
-                text-white shadow-[0_0_20px_rgba(244,63,94,0.3)] hover:shadow-[0_0_30px_rgba(244,63,94,0.5)]
-                border border-rose-400/30 hover:border-rose-400/50
-                hover:scale-[1.02] active:scale-[0.98]"
+              size="sm"
+              radius={999}
+              tint="#e11d48"
+              tintOpacity={0.86}
+              blur={14}
+              lineColor="#ffe4e6"
+              baseColor="#881337"
+              intensity={1.35}
+              className="group min-h-10 text-sm shadow-[0_0_24px_rgba(244,63,94,0.3)] hover:shadow-[0_0_32px_rgba(244,63,94,0.5)]"
             >
-              <span className="relative z-10">{t("cta.workTogether")}</span>
-              <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-0.5 transition-transform duration-300" />
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
-            </Link>
+              <span className="inline-flex items-center gap-2">
+                {t("cta.workTogether")}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
+              </span>
+            </SpecularButton>
 
-            <Link
+            <SpecularButton
               href="#projects"
               onClick={() => haptic()}
-              className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300
-                bg-white/10 dark:bg-white/5 backdrop-blur-md
-                border border-black/10 dark:border-white/10 hover:border-rose-500/50 dark:hover:border-rose-400/50
-                hover:bg-rose-500/10 dark:hover:bg-rose-500/10
-                shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(244,63,94,0.15),inset_0_1px_0_rgba(255,255,255,0.1)]
-                hover:scale-[1.02] active:scale-[0.98]"
+              size="sm"
+              radius={999}
+              tint="#09090b"
+              tintOpacity={0.9}
+              blur={14}
+              lineColor="#fecdd3"
+              baseColor="#27272a"
+              intensity={1.2}
+              className="group min-h-10 text-sm"
             >
-              {t("cta.viewWork")}
-              <Eye className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" />
-            </Link>
+              <span className="inline-flex items-center gap-2">
+                {t("cta.viewWork")}
+                <Eye className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" />
+              </span>
+            </SpecularButton>
 
-            <Link
+            <SpecularButton
               href={
                 locale === "pt"
                   ? "/pdfs/resume_2026_pt.pdf"
@@ -481,16 +491,21 @@ export default function Hero() {
               target="_blank"
               download
               onClick={() => haptic()}
-              className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300
-                bg-white/10 dark:bg-white/5 backdrop-blur-md
-                border border-black/10 dark:border-white/10 hover:border-rose-500/50 dark:hover:border-rose-400/50
-                hover:bg-rose-500/10 dark:hover:bg-rose-500/10
-                shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(244,63,94,0.15),inset_0_1px_0_rgba(255,255,255,0.1)]
-                hover:scale-[1.02] active:scale-[0.98]"
+              size="sm"
+              radius={999}
+              tint="#09090b"
+              tintOpacity={0.9}
+              blur={14}
+              lineColor="#fecdd3"
+              baseColor="#27272a"
+              intensity={1.2}
+              className="group min-h-10 text-sm"
             >
-              {t("cta.downloadResume")}
-              <Download className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" />
-            </Link>
+              <span className="inline-flex items-center gap-2">
+                {t("cta.downloadResume")}
+                <Download className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" />
+              </span>
+            </SpecularButton>
           </motion.div>
         </div>
         <motion.div

@@ -8,6 +8,7 @@ import LiquidGlass from "./LiquidGlass";
 import { haptic } from "@/lib/haptic";
 import { Mail } from "lucide-react";
 import { GitHub, LinkedIn } from "@mui/icons-material";
+import SpecularButton from "./SpecularButton";
 
 const directContactClass =
   "group inline-flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 bg-white/10 dark:bg-white/5 backdrop-blur-md border border-black/10 dark:border-white/10 hover:border-rose-500/50 dark:hover:border-rose-400/50 hover:bg-rose-500/10 dark:hover:bg-rose-500/10 hover:scale-[1.02] active:scale-[0.98]";
@@ -223,13 +224,21 @@ export default function ContactForm() {
             />
           </div>
 
-          <button
+          <SpecularButton
             type="submit"
             disabled={loading}
-            className="w-full px-4 py-3 bg-rose-600/85 hover:bg-rose-500/85 backdrop-blur-md dark:bg-rose-600/85 dark:hover:bg-rose-700/85 border border-gray-200/20 rounded-xl text-white transition font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+            size="md"
+            radius={12}
+            tint="#09090b"
+            tintOpacity={0.94}
+            blur={14}
+            lineColor="#ffe4e6"
+            baseColor="#27272a"
+            intensity={1.35}
+            className="w-full font-bold"
           >
             {loading ? t("contact.sending") : t("contact.send")}
-          </button>
+          </SpecularButton>
         </form>
       </LiquidGlass>
     </section>
