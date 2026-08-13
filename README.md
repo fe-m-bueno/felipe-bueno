@@ -1,6 +1,6 @@
 # Felipe Bueno - Portfolio
 
-Personal portfolio built with Next.js 14, showcasing my projects and professional experience as a fullstack developer.
+Personal portfolio built with Next.js 16, showcasing my projects and professional experience as a fullstack developer.
 
 ## About the Project
 
