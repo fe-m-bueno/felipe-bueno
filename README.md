@@ -1,23 +1,23 @@
 # Felipe Bueno - Portfolio
 
-Portfólio pessoal desenvolvido com Next.js 14, apresentando meus projetos e experiência profissional como desenvolvedor fullstack.
+Personal portfolio built with Next.js 14, showcasing my projects and professional experience as a fullstack developer.
 
-## Sobre o Projeto
+## About the Project
 
-Este é um site de portfólio moderno e responsivo que utiliza as mais recentes tecnologias web para proporcionar uma experiência fluida e envolvente. O projeto inclui internacionalização (i18n), integração com a API do Last.fm para exibir músicas recentemente tocadas, e um sistema de contato funcional.
+This is a modern, responsive portfolio site that uses recent web technologies to deliver a smooth and engaging experience. The project includes internationalization (i18n), an integration with the Last.fm API to display recently played tracks, and a working contact system.
 
-## Principais Funcionalidades
+## Key Features
 
-- Design responsivo com animações suaves usando Framer Motion
-- Suporte a tema claro/escuro
-- Internacionalização (Português e Inglês)
-- Integração com Last.fm para exibir atividade musical
-- Formulário de contato funcional com validação
-- Seção de projetos com filtros e categorização
-- SEO otimizado com metadados estruturados
-- Analytics e métricas de performance com Vercel
+- Responsive design with smooth animations using Framer Motion
+- Light/dark theme support
+- Internationalization (Portuguese and English)
+- Last.fm integration to display music activity
+- Working contact form with validation
+- Projects section with filters and categorization
+- SEO optimized with structured metadata
+- Analytics and performance metrics with Vercel
 
-## Stack Tecnológica
+## Tech Stack
 
 ### Frontend
 
@@ -26,100 +26,100 @@ Este é um site de portfólio moderno e responsivo que utiliza as mais recentes 
 - TypeScript
 - Tailwind CSS
 - Framer Motion
-- i18next (internacionalização)
+- i18next (internationalization)
 
 ### Backend
 
 - Next.js API Routes
-- Nodemailer / Resend (envio de emails)
-- Zod (validação de schemas)
+- Nodemailer / Resend (email delivery)
+- Zod (schema validation)
 
-### Ferramentas e Bibliotecas
+### Tools and Libraries
 
-- Lucide React (ícones)
-- Iconify (biblioteca de ícones)
+- Lucide React (icons)
+- Iconify (icon library)
 - Vercel Analytics & Speed Insights
 - Embla Carousel
 
-## Instalação e Execução
+## Installation and Running
 
-### Pré-requisitos
+### Prerequisites
 
-- Node.js 18+ instalado
-- npm ou yarn
+- Node.js 18+ installed
+- npm or yarn
 
-### Instalação
+### Installation
 
-Clone o repositório e instale as dependências:
+Clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/seu-usuario/felipe-bueno.git
+git clone https://github.com/your-username/felipe-bueno.git
 cd felipe-bueno
 npm install
 ```
 
-### Variáveis de Ambiente
+### Environment Variables
 
-Crie um arquivo `.env.local` na raiz do projeto com as seguintes variáveis:
+Create a `.env.local` file at the project root with the following variables:
 
 ```bash
-# Configuração de Email
-EMAIL_USER=seu-email@exemplo.com
-EMAIL_PASS=sua-senha-de-app
+# Email configuration
+EMAIL_USER=your-email@example.com
+EMAIL_PASS=your-app-password
 
-# Last.fm API (opcional)
-LASTFM_API_KEY=sua-chave-api
-LASTFM_USERNAME=seu-usuario
+# Last.fm API (optional)
+LASTFM_API_KEY=your-api-key
+LASTFM_USERNAME=your-username
 ```
 
-### Desenvolvimento
+### Development
 
-Inicie o servidor de desenvolvimento:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Acesse [http://localhost:3000](http://localhost:3000) no navegador.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Build de Produção
+### Production Build
 
-Para gerar a build otimizada:
+To generate the optimized build:
 
 ```bash
 npm run build
 npm start
 ```
 
-## Estrutura do Projeto
+## Project Structure
 
 ```
 felipe-bueno/
-├── app/                    # Rotas e páginas (App Router)
+├── app/                    # Routes and pages (App Router)
 │   ├── api/               # API routes
-│   ├── projects/          # Página de projetos
-│   └── layout.tsx         # Layout principal
-├── components/            # Componentes React reutilizáveis
-├── data/                  # Dados estáticos (projetos, experiências)
+│   ├── projects/          # Projects page
+│   └── layout.tsx         # Main layout
+├── components/            # Reusable React components
+├── data/                  # Static data (projects, experience)
 ├── hooks/                 # Custom React hooks
-├── lib/                   # Utilitários e helpers
-├── locales/               # Arquivos de tradução (i18n)
+├── lib/                   # Utilities and helpers
+├── locales/               # Translation files (i18n)
 │   ├── en/
 │   └── pt/
-├── public/                # Assets estáticos
-└── utils/                 # Funções utilitárias
+├── public/                # Static assets
+└── utils/                 # Utility functions
 ```
 
 ## Deployment
 
-O projeto está configurado para deploy automático na Vercel. Qualquer push para a branch principal aciona um novo deploy.
+The project is configured for automatic deployment on Vercel. Any push to the main branch triggers a new deployment.
 
-Para fazer deploy manual:
+To deploy manually:
 
 ```bash
 vercel --prod
 ```
 
-## Licença
+## License
 
-Este projeto é de uso pessoal. Todos os direitos reservados.
+This project is for personal use. All rights reserved.
