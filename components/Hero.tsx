@@ -9,7 +9,7 @@ import {
   useCallback,
   useSyncExternalStore,
 } from "react";
-import { EyeClosed, ArrowRight, Eye, Download, Plus, Minus } from "lucide-react";
+import { EyeClosed, ArrowRight, Eye, ArrowUpRight, Plus, Minus } from "lucide-react";
 import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import Badge from "@/components/Badge";
 import OpenToWorkBadge from "@/components/OpenToWorkBadge";
@@ -370,6 +370,9 @@ export default function Hero() {
   const locale = (i18n.language.split("-")[0] as "en" | "pt") || "en";
   const prefersReducedMotion = useReducedMotion();
   const { content } = useContentfulContent(locale);
+  const resumePdf =
+    content.resume?.pdf ||
+    (locale === "pt" ? "/pdfs/resume_2026_pt.pdf" : "/pdfs/resume_2026_en.pdf");
   const skills: HeroSkill[] =
     content.skills.length > 0
       ? content.skills
@@ -483,13 +486,9 @@ export default function Hero() {
             </SpecularButton>
 
             <SpecularButton
-              href={
-                locale === "pt"
-                  ? "/pdfs/resume_2026_pt.pdf"
-                  : "/pdfs/resume_2026_en.pdf"
-              }
+              href={resumePdf}
               target="_blank"
-              download
+              rel="noopener noreferrer"
               onClick={() => haptic()}
               size="sm"
               radius={999}
@@ -502,8 +501,8 @@ export default function Hero() {
               className="group min-h-10 text-sm"
             >
               <span className="inline-flex items-center gap-2">
-                {t("cta.downloadResume")}
-                <Download className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" />
+                {t("cta.openResume")}
+                <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform duration-300" />
               </span>
             </SpecularButton>
           </motion.div>
