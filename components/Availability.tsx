@@ -2,14 +2,10 @@
 import { useTranslation } from "react-i18next";
 import { Briefcase, MapPin, Clock, Globe } from "lucide-react";
 import LiquidGlass from "./LiquidGlass";
-import { useContentfulContent } from "@/hooks/useContentfulContent";
-
-type LocaleKey = "en" | "pt";
+import { useSiteContent } from "./SiteContentProvider";
 
 export default function Availability() {
-  const { i18n } = useTranslation();
-  const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";
-  const { content } = useContentfulContent(locale);
+  const { locale, content } = useSiteContent();
   const data = content.about;
 
   if (!data?.availability) return null;

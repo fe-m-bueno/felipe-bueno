@@ -5,9 +5,12 @@ import {
   useEffect,
   type AnchorHTMLAttributes,
   type CSSProperties,
+  type FocusEventHandler,
   type MouseEventHandler,
+  type PointerEventHandler,
   type ReactNode,
 } from "react";
+import Link from "next/link";
 import { Renderer, Program, Mesh, Triangle, Color } from 'ogl';
 
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -32,12 +35,15 @@ export interface SpecularButtonProps {
   autoAnimate?: boolean;
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
+  onPointerEnter?: PointerEventHandler<HTMLButtonElement | HTMLAnchorElement>;
+  onFocus?: FocusEventHandler<HTMLButtonElement | HTMLAnchorElement>;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
   href?: string;
   target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
   rel?: string;
   download?: boolean | string;
+  prefetch?: boolean;
   ariaLabel?: string;
 }
 
@@ -170,12 +176,15 @@ const SpecularButton = ({
   autoAnimate = false,
   disabled = false,
   onClick,
+  onPointerEnter,
+  onFocus,
   className = '',
   type = 'button',
   href,
   target,
   rel,
   download,
+  prefetch,
   ariaLabel,
 }: SpecularButtonProps) => {
   const btnRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
@@ -413,19 +422,32 @@ const SpecularButton = ({
   );
 
   if (href) {
+    const anchorProps = {
+      ref: setButtonRef,
+      target,
+      rel,
+      download,
+      'aria-label': ariaLabel,
+      'aria-disabled': disabled || undefined,
+      onClick: disabled ? undefined : onClick,
+      onPointerEnter,
+      onFocus,
+      className: sharedClassName,
+      style: sharedStyle,
+    };
+
+    const isInternalRoute = href.startsWith('/') && !target && !download;
+
+    if (isInternalRoute) {
+      return (
+        <Link href={href} prefetch={prefetch} {...anchorProps}>
+          {content}
+        </Link>
+      );
+    }
+
     return (
-      <a
-        ref={setButtonRef}
-        href={href}
-        target={target}
-        rel={rel}
-        download={download}
-        aria-label={ariaLabel}
-        aria-disabled={disabled || undefined}
-        onClick={disabled ? undefined : onClick}
-        className={sharedClassName}
-        style={sharedStyle}
-      >
+      <a href={href} {...anchorProps}>
         {content}
       </a>
     );

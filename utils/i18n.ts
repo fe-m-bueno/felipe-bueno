@@ -1,37 +1,67 @@
-import i18n from "i18next";
+import { createInstance, type i18n as I18nInstance } from "i18next";
 import { initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
 
 import enTranslation from "../locales/en/translation.json";
 import ptTranslation from "../locales/pt/translation.json";
+import { DEFAULT_LOCALE, type LocaleKey } from "@/lib/locale";
+
+export type UiCopy = Record<string, unknown>;
 
 const isServer = typeof window === "undefined";
 
-const i18nInstance = i18n.use(initReactI18next);
+let clientInstance: I18nInstance | null = null;
 
-// Sempre usa 'en' como idioma inicial para garantir consistência entre servidor e cliente
-// O idioma será ajustado após a hidratação no componente I18nProvider
-const defaultLanguage = "en";
+function applyUiCopy(instance: I18nInstance, locale: LocaleKey, uiCopy: UiCopy) {
+  if (!uiCopy || typeof uiCopy !== "object" || Object.keys(uiCopy).length === 0) {
+    return;
+  }
 
-i18nInstance.init({
-  resources: {
-    en: { translation: enTranslation },
-    pt: { translation: ptTranslation },
-  },
-  lng: defaultLanguage, // Sempre começa com 'en' para evitar mismatch
-  fallbackLng: defaultLanguage,
-  debug: false,
-  // Não usa detecção automática na inicialização para evitar mismatch
-  // O idioma será ajustado manualmente após a hidratação
-  interpolation: {
-    escapeValue: false,
-  },
-});
-
-// Adiciona o LanguageDetector após a inicialização, mas ele não será usado automaticamente
-// O idioma será gerenciado manualmente no I18nProvider
-if (!isServer) {
-  i18nInstance.use(LanguageDetector);
+  instance.addResourceBundle(locale, "translation", uiCopy, true, true);
 }
 
-export default i18n;
+function buildInstance(locale: LocaleKey, uiCopy: UiCopy) {
+  const instance = createInstance();
+
+  instance.use(initReactI18next).init({
+    resources: {
+      en: { translation: enTranslation },
+      pt: { translation: ptTranslation },
+    },
+    lng: locale,
+    fallbackLng: DEFAULT_LOCALE,
+    debug: false,
+    interpolation: {
+      escapeValue: false,
+    },
+    initImmediate: false,
+  });
+
+  applyUiCopy(instance, locale, uiCopy);
+  return instance;
+}
+
+export function syncI18nInstance(
+  instance: I18nInstance,
+  locale: LocaleKey,
+  uiCopy: UiCopy,
+) {
+  applyUiCopy(instance, locale, uiCopy);
+
+  if (instance.language !== locale) {
+    void instance.changeLanguage(locale);
+  }
+}
+
+export function resolveI18nInstance(locale: LocaleKey, uiCopy: UiCopy) {
+  if (isServer) {
+    return buildInstance(locale, uiCopy);
+  }
+
+  if (!clientInstance) {
+    clientInstance = buildInstance(locale, uiCopy);
+    return clientInstance;
+  }
+
+  syncI18nInstance(clientInstance, locale, uiCopy);
+  return clientInstance;
+}

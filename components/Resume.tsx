@@ -4,14 +4,11 @@ import { ArrowUpRight } from "lucide-react";
 import LiquidGlass from "./LiquidGlass";
 import SpecularButton from "./SpecularButton";
 import { haptic } from "@/lib/haptic";
-import { useContentfulContent } from "@/hooks/useContentfulContent";
-
-type LocaleKey = "en" | "pt";
+import { useSiteContent } from "./SiteContentProvider";
 
 export default function Resume() {
-  const { i18n, t } = useTranslation();
-  const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";
-  const { content } = useContentfulContent(locale);
+  const { t } = useTranslation();
+  const { content } = useSiteContent();
   const data = content.resume;
 
   return (

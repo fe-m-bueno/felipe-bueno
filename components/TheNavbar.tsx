@@ -56,7 +56,7 @@ export default function Navbar() {
           <div className="flex items-center space-x-4">
             <Link
               href={path === '/projects' ? '/' : '#landing'}
-              aria-label="Home"
+              aria-label={t('navbar.home')}
               onClick={() => haptic()}
               className="font-bold ~text-base/xl font-space-grotesk"
             >
@@ -88,7 +88,6 @@ export default function Navbar() {
               href="#about"
               onClick={() => haptic()}
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
-              suppressHydrationWarning
             >
               {t('navbar.about')}
             </Link>
@@ -96,7 +95,6 @@ export default function Navbar() {
               href="#projects"
               onClick={() => haptic()}
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
-              suppressHydrationWarning
             >
               {t('navbar.projects')}
             </Link>
@@ -104,7 +102,6 @@ export default function Navbar() {
               href="#contact"
               onClick={() => haptic()}
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
-              suppressHydrationWarning
             >
               {t('navbar.contact')}
             </Link>
@@ -113,7 +110,7 @@ export default function Navbar() {
           </div>
           <button
             onClick={openMenu}
-            aria-label="Abrir menu"
+            aria-label={t('navbar.openMenu')}
             aria-expanded={open}
             className="lg:hidden flex gap-2 dark:hover:bg-white/25 transition-colors duration-200 ease-in-out active:translate-y-1 dark:active:bg-white/45 active:bg-black/15 hover:bg-black/5 rounded px-2 py-2 cursor-pointer"
           >
@@ -129,7 +126,7 @@ export default function Navbar() {
           <div
             role="dialog"
             aria-modal="true"
-            aria-label="Menu de navegação"
+            aria-label={t('navbar.navigationMenu')}
             onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
             className={`fixed top-0 right-0 w-64 h-full bg-white dark:bg-zinc-950 z-50 shadow-xl flex flex-col items-start p-6 transition-transform duration-300 ease-out ${
               open ? 'translate-x-0' : 'translate-x-full'
@@ -137,7 +134,7 @@ export default function Navbar() {
           >
             <button
               onClick={closeMenu}
-              aria-label="Fechar menu"
+              aria-label={t('navbar.closeMenu')}
               className="self-end p-2 rounded hover:bg-black/5 dark:hover:bg-rose-600 active:translate-y-1 dark:active:bg-rose-700 active:bg-black/15 transition-colors"
             >
               <X className="w-6 h-6" />
@@ -147,7 +144,6 @@ export default function Navbar() {
                 href="#landing"
                 onClick={closeMenu}
                 className="text-lg font-medium hover:text-rose-500 transition-colors"
-                suppressHydrationWarning
               >
                 {t('navbar.home')}
               </Link>
@@ -155,7 +151,6 @@ export default function Navbar() {
                 href="#about"
                 onClick={closeMenu}
                 className="text-lg font-medium hover:text-rose-500 transition-colors"
-                suppressHydrationWarning
               >
                 {t('navbar.about')}
               </Link>
@@ -163,7 +158,6 @@ export default function Navbar() {
                 href="#projects"
                 onClick={closeMenu}
                 className="text-lg font-medium hover:text-rose-500 transition-colors"
-                suppressHydrationWarning
               >
                 {t('navbar.projects')}
               </Link>
@@ -172,7 +166,6 @@ export default function Navbar() {
                 href="#contact"
                 onClick={closeMenu}
                 className="text-lg font-medium hover:text-rose-500 transition-colors"
-                suppressHydrationWarning
               >
                 {t('navbar.contact')}
               </Link>

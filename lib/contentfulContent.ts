@@ -1,4 +1,6 @@
-export type LocaleKey = "en" | "pt";
+import type { LocaleKey } from "@/lib/locale";
+
+export type { LocaleKey };
 
 export type ProjectContent = {
   id: string;

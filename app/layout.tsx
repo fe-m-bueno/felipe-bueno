@@ -9,6 +9,9 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import TheFooter from "@/components/TheFooter";
 import StructuredData from "@/components/StructuredData";
 import { normalizeTheme } from "@/lib/theme";
+import { getServerLocale } from "@/lib/serverLocale";
+import { getSiteContent } from "@/lib/siteContent";
+import SiteContentProvider from "@/components/SiteContentProvider";
 
 const backgroundPreloads = {
   light: {
@@ -166,9 +169,11 @@ export default async function RootLayout({
   const theme = normalizeTheme(cookieStore.get("theme")?.value) ?? "light";
   const htmlClassName = theme === "dark" ? "dark" : undefined;
   const backgroundPreload = backgroundPreloads[theme];
+  const locale = await getServerLocale();
+  const content = await getSiteContent(locale);
 
   return (
-    <html lang="en" data-mode={theme} className={htmlClassName}>
+    <html lang={locale} data-mode={theme} className={htmlClassName}>
       <head>
         <StructuredData />
         <link
@@ -184,12 +189,14 @@ export default async function RootLayout({
       <body
         className={`${ibmPlexSans.variable} ${spaceGrotesk.variable} ${geistMono.variable} font-sans`}
       >
-        <I18nProvider>
-          <Navbar />
-          {children}
-          <Analytics />
-          <SpeedInsights />
-          <TheFooter />
+        <I18nProvider locale={locale} uiCopy={content.uiCopy}>
+          <SiteContentProvider locale={locale} content={content}>
+            <Navbar />
+            {children}
+            <Analytics />
+            <SpeedInsights />
+            <TheFooter />
+          </SiteContentProvider>
         </I18nProvider>
       </body>
     </html>
