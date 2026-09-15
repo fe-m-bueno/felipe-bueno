@@ -16,7 +16,7 @@ import OpenToWorkBadge from "@/components/OpenToWorkBadge";
 import CountUpText from "@/components/CountUpText";
 import SpecularButton from "@/components/SpecularButton";
 import { haptic } from "@/lib/haptic";
-import { useContentfulContent } from "@/hooks/useContentfulContent";
+import { useSiteContent } from "@/components/SiteContentProvider";
 import type { HeroSkill } from "@/lib/contentfulContent";
 
 // Local fallback while Contentful loads (or if it's unreachable).
@@ -342,7 +342,7 @@ const HeroImage = memo(function HeroImage() {
           />
           <Image
             src="/hero.jpg"
-            alt="Felipe Bueno - Frontend Developer"
+            alt={t("a11y.heroPortrait")}
             width={500}
             height={500}
             className="rounded-3xl"
@@ -366,10 +366,9 @@ const HeroImage = memo(function HeroImage() {
 });
 
 export default function Hero() {
-  const { t, i18n } = useTranslation();
-  const locale = (i18n.language.split("-")[0] as "en" | "pt") || "en";
+  const { t } = useTranslation();
   const prefersReducedMotion = useReducedMotion();
-  const { content } = useContentfulContent(locale);
+  const { locale, content } = useSiteContent();
   const resumePdf =
     content.resume?.pdf ||
     (locale === "pt" ? "/pdfs/resume_2026_pt.pdf" : "/pdfs/resume_2026_en.pdf");

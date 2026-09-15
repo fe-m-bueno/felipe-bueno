@@ -4,14 +4,10 @@ import { motion, useReducedMotion } from "motion/react";
 import RecentTrack from "./RecentTrack";
 import LiquidGlass from "./LiquidGlass";
 import Availability from "./Availability";
-import { useContentfulContent } from "@/hooks/useContentfulContent";
-
-type LocaleKey = "en" | "pt";
+import { useSiteContent } from "./SiteContentProvider";
 
 export default function About() {
-  const { i18n } = useTranslation();
-  const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";
-  const { content } = useContentfulContent(locale);
+  const { content } = useSiteContent();
   const data = content.about;
   const prefersReducedMotion = useReducedMotion();
 

@@ -6,15 +6,12 @@ import {
   ListboxOptions,
 } from "@headlessui/react";
 import { Check, ChevronDown } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import React from "react";
+import React, { useTransition } from "react";
+import { useRouter } from "next/navigation";
 import "@/node_modules/flag-icons/css/flag-icons.min.css";
 import { haptic } from "@/lib/haptic";
-import {
-  normalizeContentfulLocale,
-  prefetchContentfulContent,
-  prefetchOtherContentfulLocale,
-} from "@/lib/contentfulClientCache";
+import { useSiteContent } from "@/components/SiteContentProvider";
+import { normalizeLocale, serializeLocaleCookie } from "@/lib/locale";
 
 const languageOptions = [
   { value: "en", label: "fi fi-us" },
@@ -22,32 +19,28 @@ const languageOptions = [
 ];
 
 const LanguageSelector = () => {
-  const { i18n } = useTranslation();
-  const detectedLang = i18n.language.toLowerCase();
-  const selectedLanguage =
-    languageOptions.find((opt) => detectedLang.startsWith(opt.value))?.value ||
-    "en";
+  const { locale: selectedLanguage } = useSiteContent();
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const menuPlacement = "top";
 
   const handleChange = (value: string) => {
     haptic();
-    void prefetchContentfulContent(normalizeContentfulLocale(value));
-    i18n.changeLanguage(value);
-  };
+    const nextLocale = normalizeLocale(value);
+    if (!nextLocale || nextLocale === selectedLanguage) return;
 
-  const prefetchAlternateLanguage = () => {
-    prefetchOtherContentfulLocale(normalizeContentfulLocale(selectedLanguage));
+    document.cookie = serializeLocaleCookie(nextLocale);
+    startTransition(() => {
+      router.refresh();
+    });
   };
-
-  const { t } = useTranslation();
 
   return (
     <div className="relative w-fit ~text-base/md text-nowrap">
       <Listbox value={selectedLanguage} onChange={handleChange}>
         <ListboxButton
-          onFocus={prefetchAlternateLanguage}
-          onPointerEnter={prefetchAlternateLanguage}
+          aria-busy={isPending || undefined}
           className="w-fit flex justify-between items-center dark:bg-black/25 bg-white/80 backdrop-blur-sm border dark:border-white/10 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:ring-white/50 ~text-xs/base"
         >
           <span

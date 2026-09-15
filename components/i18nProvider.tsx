@@ -1,86 +1,54 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { I18nextProvider } from "react-i18next";
-import i18n from "@/utils/i18n";
+import { resolveI18nInstance, syncI18nInstance, type UiCopy } from "@/utils/i18n";
 import {
-  normalizeContentfulLocale,
-  prefetchContentfulContent,
-  prefetchOtherContentfulLocale,
-} from "@/lib/contentfulClientCache";
+  LOCALE_COOKIE_NAME,
+  normalizeLocale,
+  readLocaleFromCookie,
+  serializeLocaleCookie,
+  type LocaleKey,
+} from "@/lib/locale";
 
-type LocaleKey = "en" | "pt";
+const LEGACY_LANGUAGE_STORAGE_KEY = "i18nextLng";
 
-const loadedContentfulLocales = new Set<LocaleKey>();
+type I18nProviderProps = {
+  locale: LocaleKey;
+  uiCopy: UiCopy;
+  children: React.ReactNode;
+};
 
-async function loadContentfulCopy(locale: LocaleKey): Promise<boolean> {
-  if (loadedContentfulLocales.has(locale)) return true;
-
-  const content = await prefetchContentfulContent(locale).catch(() => null);
-  if (!content?.uiCopy || typeof content.uiCopy !== "object") return false;
-
-  i18n.addResourceBundle(locale, "translation", content.uiCopy, true, true);
-  loadedContentfulLocales.add(locale);
-  return true;
-}
-
-const I18nProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const hasInitialized = useRef(false);
+const I18nProvider: React.FC<I18nProviderProps> = ({ locale, uiCopy, children }) => {
+  const router = useRouter();
+  const [i18n] = useState(() => resolveI18nInstance(locale, uiCopy));
 
   useEffect(() => {
-    if (hasInitialized.current) return;
-    hasInitialized.current = true;
+    syncI18nInstance(i18n, locale, uiCopy);
+  }, [i18n, locale, uiCopy]);
 
-    const applyLanguage = (language: string) => {
-      const locale = normalizeContentfulLocale(language);
-      loadContentfulCopy(locale).then(() => {
-        if (i18n.language !== locale) {
-          void i18n.changeLanguage(locale);
-        } else {
-          i18n.emit("languageChanged", locale);
-        }
-        prefetchOtherContentfulLocale(locale);
-      });
-    };
+  useEffect(() => {
+    if (readLocaleFromCookie(document.cookie)) return;
 
-    queueMicrotask(() => {
-      try {
-        const storedLang = localStorage.getItem("i18nextLng");
-        if (storedLang && (storedLang === "en" || storedLang === "pt")) {
-          applyLanguage(storedLang);
-        } else {
-          const browserLang = navigator.language.toLowerCase();
-          if (browserLang.startsWith("pt")) {
-            localStorage.setItem("i18nextLng", "pt");
-            applyLanguage("pt");
-          } else {
-            applyLanguage("en");
-          }
-        }
-      } catch (e) {
-        console.warn("Erro ao acessar localStorage:", e);
-        applyLanguage("en");
-      }
-    });
+    let storedLocale: LocaleKey | null = null;
+    try {
+      storedLocale = normalizeLocale(
+        window.localStorage.getItem(LEGACY_LANGUAGE_STORAGE_KEY),
+      );
+    } catch (error) {
+      console.warn(`Could not read ${LOCALE_COOKIE_NAME} from localStorage:`, error);
+    }
 
-    const handleLanguageChanged = (language: string) => {
-      const locale = normalizeContentfulLocale(language);
-      void loadContentfulCopy(locale);
-    };
+    const preferredLocale = storedLocale ?? locale;
+    document.cookie = serializeLocaleCookie(preferredLocale);
 
-    i18n.on("languageChanged", handleLanguageChanged);
+    if (preferredLocale !== locale) {
+      router.refresh();
+    }
+  }, [locale, router]);
 
-    return () => {
-      i18n.off("languageChanged", handleLanguageChanged);
-    };
-  }, []);
-
-  return (
-    <I18nextProvider i18n={i18n}>
-      {children}
-    </I18nextProvider>
-  );
+  return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>;
 };
 
 export default I18nProvider;

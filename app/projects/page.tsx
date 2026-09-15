@@ -2,13 +2,11 @@
 
 import { useTranslation } from "react-i18next";
 import ProjectCard from "@/components/ProjectCard";
-import { useContentfulContent } from "@/hooks/useContentfulContent";
+import { useSiteContent } from "@/components/SiteContentProvider";
 
-type LocaleKey = "en" | "pt";
 export default function ProjectsPage() {
-  const { t, i18n } = useTranslation();
-  const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";
-  const { content } = useContentfulContent(locale);
+  const { t } = useTranslation();
+  const { content } = useSiteContent();
   const data = content.projects;
 
   return (

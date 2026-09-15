@@ -1,11 +1,13 @@
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { ChevronDown } from "lucide-react";
 import { haptic } from "@/lib/haptic";
 
 const SECTIONS = ["landing", "about", "projects", "contact"];
 
 export default function ScrollNavigator() {
+  const { t } = useTranslation();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isAtBottom, setIsAtBottom] = useState(false);
   const [currentSection, setCurrentSection] = useState(0);
@@ -162,7 +164,7 @@ export default function ScrollNavigator() {
         active:scale-95
         ${isClicked ? "scroll-navigator-clicked" : ""}
       `}
-      aria-label={isAtBottom ? "Voltar ao topo" : "Ir para próxima seção"}
+      aria-label={isAtBottom ? t("a11y.backToTop") : t("a11y.nextSection")}
     >
       {/* Círculo de progresso SVG */}
       <svg

@@ -1,19 +1,22 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { ArrowUpRight } from "lucide-react";
 import ProjectCard from "./ProjectCard";
 import SpecularButton from "./SpecularButton";
 import { haptic } from "@/lib/haptic";
-import { useContentfulContent } from "@/hooks/useContentfulContent";
-
-type LocaleKey = "en" | "pt";
+import { useSiteContent } from "./SiteContentProvider";
 
 export default function ProjectsSection() {
-  const { i18n, t } = useTranslation();
-  const locale = (i18n.language.split("-")[0] as LocaleKey) || "en";
-  const { content } = useContentfulContent(locale);
+  const { t } = useTranslation();
+  const router = useRouter();
+  const { content } = useSiteContent();
   const data = content.projects;
+
+  const prefetchProjectsPage = () => {
+    router.prefetch("/projects");
+  };
 
   return (
     <section className="relative w-full mx-auto py-6 md:px-16 px-4 max-w-7xl">
@@ -40,9 +43,9 @@ export default function ProjectsSection() {
       <div className="flex items-center justify-center md:items-end md:justify-end mt-4">
         <SpecularButton
           href="/projects"
-          target="_blank"
-          rel="noopener noreferrer"
           onClick={() => haptic()}
+          onPointerEnter={prefetchProjectsPage}
+          onFocus={prefetchProjectsPage}
           size="sm"
           radius={16}
           tint="#09090b"

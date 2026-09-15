@@ -3,7 +3,10 @@
     "home": "Home",
     "projects": "Projects",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "navigationMenu": "Navigation menu"
   },
   "hero": {
     "title": "Hey, I'm Felipe!",
@@ -49,5 +52,11 @@
     "workTogether": "Let's Work Together",
     "viewWork": "View My Work",
     "openResume": "Open Resume"
+  },
+  "a11y": {
+    "themeToggle": "Toggle theme",
+    "backToTop": "Back to top",
+    "nextSection": "Go to next section",
+    "heroPortrait": "Felipe Bueno - Fullstack Developer"
   }
 }

@@ -3,7 +3,10 @@
     "home": "Início",
     "projects": "Projetos",
     "about": "Sobre",
-    "contact": "Contato"
+    "contact": "Contato",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "navigationMenu": "Menu de navegação"
   },
   "hero": {
     "title": "Oi, Felipe aqui!",
@@ -49,5 +52,11 @@
     "workTogether": "Vamos Trabalhar Juntos",
     "viewWork": "Ver Meu Trabalho",
     "openResume": "Abrir Currículo"
+  },
+  "a11y": {
+    "themeToggle": "Alternar tema",
+    "backToTop": "Voltar ao topo",
+    "nextSection": "Ir para a próxima seção",
+    "heroPortrait": "Felipe Bueno - Desenvolvedor Fullstack"
   }
 }
