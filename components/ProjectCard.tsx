@@ -105,12 +105,10 @@ function ProjectCardComponent({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => haptic()}
-            className="px-3 py-1 bg-white/85 hover:bg-white/100 dark:bg-white/5 dark:hover:bg-white/25 backdrop-blur border border-gray-200/20 rounded-xl transition ~text-sm/base"
+            className="relative z-[2] flex items-center justify-center gap-2 px-3 py-1 bg-white/85 hover:bg-white/100 dark:bg-white/10 dark:hover:bg-white/25 border border-gray-200/20 dark:border-white/15 rounded-xl transition ~text-sm/base"
           >
-            <span className="flex items-center justify-center gap-2">
-              <GitHub className="w-6 h-6" />
-              GitHub
-            </span>
+            <GitHub className="w-6 h-6 shrink-0" />
+            GitHub
           </Link>
         </div>
       </div>
