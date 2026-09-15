@@ -185,7 +185,7 @@ function BorderGlowComponent({
         />
       </span>
 
-      <div className="relative z-[1] flex flex-col overflow-auto">
+      <div className="relative z-[1] flex flex-col">
         {children}
       </div>
     </div>
