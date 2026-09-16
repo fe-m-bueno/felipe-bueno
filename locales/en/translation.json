@@ -2,6 +2,7 @@
   "navbar": {
     "home": "Home",
     "projects": "Projects",
+    "words": "Words",
     "about": "About",
     "contact": "Contact",
     "openMenu": "Open menu",
@@ -58,5 +59,28 @@
     "backToTop": "Back to top",
     "nextSection": "Go to next section",
     "heroPortrait": "Felipe Bueno - Fullstack Developer"
+  },
+  "words": {
+    "title": "Words",
+    "subtitle": "Notes on data, backend and the interface decisions I can't leave alone.",
+    "search": "Search",
+    "searchPlaceholder": "Title, tag, category…",
+    "sort": "Sort",
+    "sortRecent": "Newest",
+    "sortOldest": "Oldest",
+    "sortShortest": "Quick reads",
+    "sortTitle": "A–Z",
+    "posts": "Posts",
+    "totalReading": "Total reading",
+    "minutes": "{{count}} min",
+    "empty": "Nothing found for “{{query}}”.",
+    "emptyAll": "No posts published yet.",
+    "inThisPost": "In this post",
+    "continueReading": "Continue reading",
+    "clearSearch": "Clear search",
+    "resultsStatus": "{{count}} posts found",
+    "errorTitle": "The blog is not loading",
+    "errorDescription": "The posts could not be fetched right now. This is on my side, not yours — try again in a moment.",
+    "retry": "Try again"
   }
 }

@@ -3,6 +3,16 @@ export type LocaleKey = "en" | "pt";
 export const LOCALE_COOKIE_NAME = "lang";
 export const DEFAULT_LOCALE: LocaleKey = "en";
 
+/**
+ * Tag BCP-47 de cada locale do app. Usada para Intl (datas, collation) e também
+ * como código de locale do Contentful — o espaço é configurado com exatamente
+ * estes códigos, então acrescentar um idioma aqui cobre os dois usos.
+ */
+export const BCP47_BY_LOCALE: Record<LocaleKey, string> = {
+  en: "en-US",
+  pt: "pt-BR",
+};
+
 const LOCALE_COOKIE_MAX_AGE = 31536000;
 
 export function normalizeLocale(value: string | null | undefined): LocaleKey | null {

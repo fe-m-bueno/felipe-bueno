@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import LiquidGlass from "./LiquidGlass";
 import { memo } from "react";
 
-function BadgeComponent({ name, icon }: { name: string; icon: string }) {
+function BadgeComponent({ name, icon }: { name: string; icon?: string }) {
   return (
     <LiquidGlass
       variant="badge"

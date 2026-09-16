@@ -1,4 +1,4 @@
-import type { LocaleKey } from "@/lib/locale";
+import { BCP47_BY_LOCALE, type LocaleKey } from "@/lib/locale";
 
 export type { LocaleKey };
 
@@ -61,10 +61,7 @@ export type ContentfulSiteContent = {
   uiCopy: Record<string, unknown>;
 };
 
-const contentfulLocaleByAppLocale: Record<LocaleKey, string> = {
-  en: "en-US",
-  pt: "pt-BR",
-};
+const contentfulLocaleByAppLocale = BCP47_BY_LOCALE;
 
 type ContentfulSys = {
   id: string;
@@ -101,7 +98,7 @@ type LinkObject = {
   };
 };
 
-function getConfig() {
+export function getDeliveryConfig() {
   const space = process.env.CONTENTFUL_SPACE_ID;
   const accessToken = process.env.CONTENTFUL_DELIVERY_TOKEN;
   const environment = process.env.CONTENTFUL_ENVIRONMENT_ID || "master";
@@ -117,16 +114,19 @@ function getFields(entry: ResolvedContentfulEntry | undefined): Record<string, u
   return (entry?.fields || {}) as Record<string, unknown>;
 }
 
+/**
+ * As URLs de asset do Contentful vêm sem protocolo (`//images.ctfassets.net/...`),
+ * o que next/image recusa.
+ */
+export function normalizeAssetUrl(url: unknown): string {
+  if (typeof url !== "string" || !url) return "";
+  return url.startsWith("//") ? `https:${url}` : url;
+}
+
 function getAssetUrl(asset: unknown): string {
   const fields = (asset as ResolvedContentfulEntry | undefined)?.fields;
   const file = fields?.file as { url?: unknown } | undefined;
-  const url = file?.url;
-
-  if (typeof url !== "string") {
-    return "";
-  }
-
-  return url.startsWith("//") ? `https:${url}` : url;
+  return normalizeAssetUrl(file?.url);
 }
 
 function getAssetPath(asset: unknown): string {
@@ -306,7 +306,7 @@ function mapUiCopy(entries: ResolvedContentfulEntry[]) {
 }
 
 export async function getContentfulSiteContent(locale: LocaleKey): Promise<ContentfulSiteContent> {
-  const { space, accessToken, environment } = getConfig();
+  const { space, accessToken, environment } = getDeliveryConfig();
   const contentfulLocale = contentfulLocaleByAppLocale[locale];
   const baseUrl = `https://cdn.contentful.com/spaces/${space}/environments/${environment}/entries`;
 
