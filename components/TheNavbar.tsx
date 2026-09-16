@@ -32,6 +32,9 @@ export default function Navbar() {
   const closeMenu = useCallback(() => { haptic(); setOpen(false); }, []);
   const openMenu = useCallback(() => { haptic(); setOpen(true); }, []);
 
+  // As seções vivem na home; fora dela o hash sozinho não navega para lugar nenhum.
+  const sectionHref = (hash: string) => (path === '/' ? `#${hash}` : `/#${hash}`);
+
   useEffect(() => {
     if (!open) return;
 
@@ -55,7 +58,7 @@ export default function Navbar() {
         <div className="~mx-4/8 lg:~mx-24/48 flex items-center justify-between p-4">
           <div className="flex items-center space-x-4">
             <Link
-              href={path === '/projects' ? '/' : '#landing'}
+              href={sectionHref('landing')}
               aria-label={t('navbar.home')}
               onClick={() => haptic()}
               className="font-bold ~text-base/xl font-space-grotesk"
@@ -85,21 +88,29 @@ export default function Navbar() {
               <GitHubIcon />
             </Link>
             <Link
-              href="#about"
+              href={sectionHref('about')}
               onClick={() => haptic()}
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
             >
               {t('navbar.about')}
             </Link>
             <Link
-              href="#projects"
+              href={sectionHref('projects')}
               onClick={() => haptic()}
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
             >
               {t('navbar.projects')}
             </Link>
             <Link
-              href="#contact"
+              href="/words"
+              onClick={() => haptic()}
+              aria-current={path.startsWith('/words') ? 'page' : undefined}
+              className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
+            >
+              {t('navbar.words')}
+            </Link>
+            <Link
+              href={sectionHref('contact')}
               onClick={() => haptic()}
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
             >
@@ -141,29 +152,36 @@ export default function Navbar() {
             </button>
             <nav className="flex flex-col space-y-4 mt-4 w-full pr-8 font-space-grotesk">
               <Link
-                href="#landing"
+                href={sectionHref('landing')}
                 onClick={closeMenu}
                 className="text-lg font-medium hover:text-rose-500 transition-colors"
               >
                 {t('navbar.home')}
               </Link>
               <Link
-                href="#about"
+                href={sectionHref('about')}
                 onClick={closeMenu}
                 className="text-lg font-medium hover:text-rose-500 transition-colors"
               >
                 {t('navbar.about')}
               </Link>
               <Link
-                href="#projects"
+                href={sectionHref('projects')}
                 onClick={closeMenu}
                 className="text-lg font-medium hover:text-rose-500 transition-colors"
               >
                 {t('navbar.projects')}
               </Link>
-
               <Link
-                href="#contact"
+                href="/words"
+                onClick={closeMenu}
+                aria-current={path.startsWith('/words') ? 'page' : undefined}
+                className="text-lg font-medium hover:text-rose-500 transition-colors"
+              >
+                {t('navbar.words')}
+              </Link>
+              <Link
+                href={sectionHref('contact')}
                 onClick={closeMenu}
                 className="text-lg font-medium hover:text-rose-500 transition-colors"
               >

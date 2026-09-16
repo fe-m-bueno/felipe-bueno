@@ -2,6 +2,7 @@
   "navbar": {
     "home": "Início",
     "projects": "Projetos",
+    "words": "Blog",
     "about": "Sobre",
     "contact": "Contato",
     "openMenu": "Abrir menu",
@@ -58,5 +59,28 @@
     "backToTop": "Voltar ao topo",
     "nextSection": "Ir para a próxima seção",
     "heroPortrait": "Felipe Bueno - Desenvolvedor Fullstack"
+  },
+  "words": {
+    "title": "Blog",
+    "subtitle": "Notas sobre dados, backend e as decisões de interface que eu não consigo deixar quietas.",
+    "search": "Buscar",
+    "searchPlaceholder": "Título, tag, categoria…",
+    "sort": "Ordenar",
+    "sortRecent": "Mais recentes",
+    "sortOldest": "Mais antigos",
+    "sortShortest": "Leitura curta",
+    "sortTitle": "A–Z",
+    "posts": "Posts",
+    "totalReading": "Leitura total",
+    "minutes": "{{count}} min",
+    "empty": "Nada encontrado para “{{query}}”.",
+    "emptyAll": "Nenhum post publicado ainda.",
+    "inThisPost": "Neste post",
+    "continueReading": "Continue lendo",
+    "clearSearch": "Limpar busca",
+    "resultsStatus": "{{count}} posts encontrados",
+    "errorTitle": "O blog não está carregando",
+    "errorDescription": "Não deu para buscar os posts agora. O problema é do meu lado, não do seu — tente de novo em instantes.",
+    "retry": "Tentar de novo"
   }
 }

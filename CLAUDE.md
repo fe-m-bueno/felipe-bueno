@@ -23,11 +23,19 @@ app/                    # Next.js App Router pages and API routes
 │   ├── contact/route.ts    # POST - Contact form (Resend email, rate-limited)
 │   └── lastfm/route.ts     # GET  - Last.fm now-playing (60s cache)
 ├── projects/page.tsx       # /projects - Full project listing
+├── words/
+│   ├── page.tsx            # /words - Blog listing (client search + sort)
+│   └── [slug]/page.tsx     # /words/[slug] - Blog post
 ├── layout.tsx              # Root layout (metadata, providers, theme init)
 ├── page.tsx                # / - Home page
 └── globals.css             # Global styles, Tailwind, liquid glass effects
 
 components/             # React components (mostly client components)
+├── blog/
+│   ├── BlogArticle.tsx     # Post layout: TOC, reading progress, recommendations
+│   ├── MetaBadge.tsx       # Site badge sized for a metadata line
+│   ├── RichText.tsx        # Contentful Rich Text renderer
+│   └── WordsList.tsx       # /words listing with search and sort
 ├── utils/
 │   └── mouse-position.tsx  # useMousePosition hook
 ├── Hero.tsx                # Hero section with 3D image rotation
@@ -63,7 +71,17 @@ hooks/
 └── useTheme.ts             # Theme state management with localStorage
 
 lib/
+├── blog.ts                 # Pure search, sort and recommendation logic
+├── blogContent.ts          # Contentful blog fetching (locale-aware)
+├── contentfulContent.ts    # Contentful site content fetching
+├── locale.ts               # Locale cookie parsing and negotiation
+├── richText.ts             # Rich Text headings, plain text, reading time
+├── serverLocale.ts         # Locale resolution on the server
+├── siteContent.ts          # Contentful with bundled fallback
 └── validation.ts           # Zod schemas (contact form, disposable email detection)
+
+contentful/             # Content model migrations and seed script
+└── migrations/
 
 locales/                # i18n translation files
 ├── en/translation.json     # English UI strings
@@ -128,15 +146,20 @@ public/                 # Static assets
 Create `.env.local` at project root:
 
 ```bash
-RESEND_API_KEY=...       # Required - Resend email service API key
-LAST_FM_API_KEY=...      # Optional - Last.fm API key for now-playing
-LAST_FM_USER=...         # Optional - Last.fm username
+RESEND_API_KEY=...             # Required - Resend email service API key
+CONTENTFUL_SPACE_ID=...        # Required - Contentful space
+CONTENTFUL_DELIVERY_TOKEN=...  # Required - Contentful Content Delivery API token
+CONTENTFUL_ENVIRONMENT_ID=...  # Optional - defaults to "master"
+CONTENTFUL_MANAGEMENT_TOKEN=.. # Only for running migrations
+LAST_FM_API_KEY=...            # Optional - Last.fm API key for now-playing
+LAST_FM_USER=...               # Optional - Last.fm username
 ```
 
 ## External Integrations
 
 | Service | Purpose | Config |
 |---------|---------|--------|
+| **Contentful** | Site content, resume, projects and blog posts | `CONTENTFUL_*` env vars |
 | **Resend** | Contact form email delivery | `RESEND_API_KEY` env var |
 | **Last.fm** | Currently playing track display | `LAST_FM_API_KEY` + `LAST_FM_USER` env vars |
 | **Vercel Analytics** | User analytics | Auto-configured on Vercel |
@@ -173,8 +196,11 @@ LAST_FM_USER=...         # Optional - Last.fm username
 
 ## Important Notes
 
-- **No test framework** is currently configured - the project has no automated tests
-- **Contentful** and **Groq** packages are installed but **not actively used** in the codebase
+- Tests run on **Vitest** (`npm test`); they cover pure logic, hooks and API routes
+- **Contentful is the live content source** for projects, about, resume, UI copy and
+  the blog. `lib/siteContent.ts` falls back to the bundled `data/*.ts` copy if the
+  API fails; the blog has no bundled fallback and renders an empty state instead
+- **Groq** is installed but **not actively used** in the codebase
 - The `ServerComponent.tsx` file is unused legacy code
 - Node.js 18+ is required
 - The project uses **npm** as its package manager (not yarn/pnpm)

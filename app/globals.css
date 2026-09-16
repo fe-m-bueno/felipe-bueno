@@ -357,3 +357,29 @@ body::before {
     animation: none;
   }
 }
+
+/*
+ * Reading surface — usada pelas páginas de /words.
+ * Os vidros acima quase não têm fundo (--border-glow-surface fica entre 3% e 5%
+ * de branco), o que basta para um card curto mas deixa texto longo ilegível
+ * sobre a trama do fundo. Esta variante é opaca de verdade, como o
+ * .liquid-glass-badge, mantendo blur e borda da mesma família.
+ */
+.reading-surface {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 1rem;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.05),
+    0 10px 15px rgba(0, 0, 0, 0.03);
+}
+
+.dark .reading-surface {
+  background: rgba(11, 11, 13, 0.85);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.3),
+    0 10px 15px rgba(0, 0, 0, 0.2);
+}
