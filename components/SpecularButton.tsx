@@ -344,7 +344,8 @@ const SpecularButton = ({
       last = now;
       const p = propsRef.current;
 
-      idleAngle += p.speed * dt;
+      // A moving target never settles, even when the shine is invisible.
+      if (p.autoAnimate) idleAngle += p.speed * dt;
       const steer = p.followMouse && pointerAngle != null && (!p.autoAnimate || proximityT > 0);
       const target = steer ? (pointerAngle ?? idleAngle) : idleAngle;
       const diff = ((target - angle + Math.PI * 3) % (Math.PI * 2)) - Math.PI;

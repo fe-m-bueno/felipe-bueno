@@ -95,7 +95,7 @@ export default function Navbar() {
               {t('navbar.about')}
             </Link>
             <Link
-              href={sectionHref('projects')}
+              href={path === '/' ? '#projects' : '/projects'}
               onClick={() => haptic()}
               className="relative after:bg-black dark:after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer"
             >
@@ -166,7 +166,7 @@ export default function Navbar() {
                 {t('navbar.about')}
               </Link>
               <Link
-                href={sectionHref('projects')}
+                href={path === '/' ? '#projects' : '/projects'}
                 onClick={closeMenu}
                 className="text-lg font-medium hover:text-rose-500 transition-colors"
               >
