@@ -192,7 +192,7 @@ export default async function RootLayout({
         <I18nProvider locale={locale} uiCopy={content.uiCopy}>
           <SiteContentProvider locale={locale} content={content}>
             <Navbar />
-            {children}
+            <div className="flex-1">{children}</div>
             <Analytics />
             <SpeedInsights />
             <TheFooter />
