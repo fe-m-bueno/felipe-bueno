@@ -13,18 +13,13 @@ import { getServerLocale } from "@/lib/serverLocale";
 import { getSiteContent } from "@/lib/siteContent";
 import SiteContentProvider from "@/components/SiteContentProvider";
 
-const backgroundPreloads = {
-  light: {
-    href: "/bg-main-1920.webp",
-    imageSrcSet:
-      "/bg-main-1280.webp 1280w, /bg-main-1920.webp 1920w, /bg-main-2560.webp 2560w",
-  },
-  dark: {
-    href: "/bg-main-dark-1920.webp",
-    imageSrcSet:
-      "/bg-main-dark-1280.webp 1280w, /bg-main-dark-1920.webp 1920w, /bg-main-dark-2560.webp 2560w",
-  },
-} as const;
+// Mesmos breakpoints do `--page-bg-image` em globals.css: o CSS escolhe o
+// arquivo pela largura, então um srcset aqui baixaria outro em telas retina.
+const backgroundBreakpoints = [
+  { width: 1280, media: "(max-width: 767px)" },
+  { width: 1920, media: "(min-width: 768px) and (max-width: 1919px)" },
+  { width: 2560, media: "(min-width: 1920px)" },
+] as const;
 
 const ibmPlexSans = localFont({
   src: [
@@ -168,7 +163,7 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const theme = normalizeTheme(cookieStore.get("theme")?.value) ?? "light";
   const htmlClassName = theme === "dark" ? "dark" : undefined;
-  const backgroundPreload = backgroundPreloads[theme];
+  const backgroundPrefix = theme === "dark" ? "/bg-main-dark" : "/bg-main";
   const locale = await getServerLocale();
   const content = await getSiteContent(locale);
 
@@ -176,15 +171,17 @@ export default async function RootLayout({
     <html lang={locale} data-mode={theme} className={htmlClassName}>
       <head>
         <StructuredData />
-        <link
-          rel="preload"
-          as="image"
-          href={backgroundPreload.href}
-          imageSrcSet={backgroundPreload.imageSrcSet}
-          imageSizes="100vw"
-          type="image/webp"
-          fetchPriority="high"
-        />
+        {backgroundBreakpoints.map(({ width, media }) => (
+          <link
+            key={width}
+            rel="preload"
+            as="image"
+            href={`${backgroundPrefix}-${width}.webp`}
+            media={media}
+            type="image/webp"
+            fetchPriority="high"
+          />
+        ))}
       </head>
       <body
         className={`${ibmPlexSans.variable} ${spaceGrotesk.variable} ${geistMono.variable} font-sans`}

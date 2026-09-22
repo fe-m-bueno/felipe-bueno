@@ -10,7 +10,7 @@ function emptyTrackResponse() {
 }
 
 export async function GET() {
-  const LASTFM_URL = "http://ws.audioscrobbler.com/2.0/";
+  const LASTFM_URL = "https://ws.audioscrobbler.com/2.0/";
   const API_KEY = process.env.LAST_FM_API_KEY;
   const USERNAME = process.env.LAST_FM_USER;
 
@@ -42,12 +42,16 @@ export async function GET() {
       );
     }
 
-    return NextResponse.json({
-      title: track.name,
-      artist: track.artist["#text"],
-      album: track.album["#text"] || "Unknown Album",
-      image: track.image?.[2]?.["#text"] || null,
-    });
+    return NextResponse.json(
+      {
+        title: track.name,
+        artist: track.artist["#text"],
+        album: track.album["#text"] || "Unknown Album",
+        image: track.image?.[2]?.["#text"] || null,
+      },
+      // Deixa a CDN responder: sem isto cada visita invoca a função.
+      { headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300" } }
+    );
   } catch (error) {
     console.error("Error fetching LastFM data:", error);
     return NextResponse.json(

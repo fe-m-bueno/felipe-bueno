@@ -16,12 +16,6 @@ const config: Config = {
     screens,
     fontSize,
     extend: {
-      backgroundImage: {
-        'main': 'url("/bg-main.webp")',
-        'main-dark': 'url("/bg-main-dark.webp")',
-        'main-mobile': 'url("/bg-main.webp")',
-        'main-dark-mobile': 'url("/bg-main-dark.webp")',
-      },
       screens: {
         xsm: "8rem",
         xs: "20rem",

@@ -59,8 +59,8 @@ components/             # React components (mostly client components)
 ├── OpenToWorkBadge.tsx     # Pulsing "Open to Work" badge
 ├── Badge.tsx               # Skill/tech badge with icon
 ├── StructuredData.tsx      # JSON-LD SEO schemas
-├── i18nProvider.tsx        # i18next provider wrapper
-└── ServerComponent.tsx     # Unused server-side LastFm fetch
+├── SocialIcons.tsx         # Inline GitHub/LinkedIn SVG icons
+└── i18nProvider.tsx        # i18next provider wrapper
 
 data/                   # Static content data (bilingual EN/PT)
 ├── about.ts                # Bio, availability, skills TLDR
@@ -74,11 +74,12 @@ lib/
 ├── blog.ts                 # Pure search, sort and recommendation logic
 ├── blogContent.ts          # Contentful blog fetching (locale-aware)
 ├── contentfulContent.ts    # Contentful site content fetching
+├── disposableEmail.ts      # Server-only disposable email check + server contact schema
 ├── locale.ts               # Locale cookie parsing and negotiation
 ├── richText.ts             # Rich Text headings, plain text, reading time
 ├── serverLocale.ts         # Locale resolution on the server
 ├── siteContent.ts          # Contentful with bundled fallback
-└── validation.ts           # Zod schemas (contact form, disposable email detection)
+└── validation.ts           # Client-safe Zod contact form schema
 
 contentful/             # Content model migrations and seed script
 └── migrations/
@@ -128,8 +129,7 @@ public/                 # Static assets
 - Reusable wrapper component: `components/LiquidGlass.tsx`
 
 ### Animation Patterns
-- **Framer Motion** (`motion` package) for component animations
-- **CSS animations** for emoji wave, border rotation, hero fade-in
+- **CSS animations only** (emoji wave, `.hero-fade-in`, `.scroll-reveal`) — no animation library, to keep JS off the critical path
 - **Intersection Observer** via `ScrollReveal.tsx` for scroll-triggered reveals
 - **Always respect** `prefers-reduced-motion` - disable animations when user prefers reduced motion
 
@@ -200,7 +200,6 @@ LAST_FM_USER=...               # Optional - Last.fm username
 - **Contentful is the live content source** for projects, about, resume, UI copy and
   the blog. `lib/siteContent.ts` falls back to the bundled `data/*.ts` copy if the
   API fails; the blog has no bundled fallback and renders an empty state instead
-- **Groq** is installed but **not actively used** in the codebase
-- The `ServerComponent.tsx` file is unused legacy code
+- Never import `lib/disposableEmail.ts` from a client component: the domain list is ~2.3 MB
 - Node.js 18+ is required
 - The project uses **npm** as its package manager (not yarn/pnpm)

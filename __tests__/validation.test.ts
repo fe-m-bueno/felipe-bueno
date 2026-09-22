@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { contactFormSchema } from '@/lib/validation';
+import { isDisposableEmail, serverContactFormSchema } from '@/lib/disposableEmail';
 
 const validData = {
   name: 'Felipe Bueno',
@@ -67,7 +68,7 @@ describe('contactFormSchema', () => {
     });
 
     it('rejects disposable email from mailinator.com', () => {
-      const result = contactFormSchema.safeParse({
+      const result = serverContactFormSchema.safeParse({
         ...validData,
         email: 'user@mailinator.com',
       });
@@ -79,7 +80,7 @@ describe('contactFormSchema', () => {
     });
 
     it('rejects disposable email from guerrillamail.com', () => {
-      const result = contactFormSchema.safeParse({
+      const result = serverContactFormSchema.safeParse({
         ...validData,
         email: 'user@guerrillamail.com',
       });
@@ -87,11 +88,18 @@ describe('contactFormSchema', () => {
     });
 
     it('rejects disposable email from yopmail.com', () => {
-      const result = contactFormSchema.safeParse({
+      const result = serverContactFormSchema.safeParse({
         ...validData,
         email: 'user@yopmail.com',
       });
       expect(result.success).toBe(false);
+    });
+
+    it('rejects subdomains of wildcard disposable domains', () => {
+      expect(isDisposableEmail('user@33mail.com')).toBe(true);
+      expect(isDisposableEmail('user@anything.33mail.com')).toBe(true);
+      expect(isDisposableEmail('user@Mailinator.com')).toBe(true);
+      expect(isDisposableEmail('user@example.com')).toBe(false);
     });
 
     it('rejects email with no domain', () => {

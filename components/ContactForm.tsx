@@ -1,13 +1,11 @@
 "use client";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { contactFormSchema } from "@/lib/validation";
 import type { ContactFormData } from "@/lib/validation";
-import { z } from "zod";
 import LiquidGlass from "./LiquidGlass";
 import { haptic } from "@/lib/haptic";
 import { Mail } from "lucide-react";
-import { GitHub, LinkedIn } from "@mui/icons-material";
+import { GitHubIcon, LinkedInIcon } from "./SocialIcons";
 import SpecularButton from "./SpecularButton";
 
 const directContactClass =
@@ -51,19 +49,18 @@ export default function ContactForm() {
       return;
     }
 
-    try {
-      contactFormSchema.parse(form);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const fieldErrors: Record<string, string> = {};
-        error.errors.forEach((err) => {
-          if (err.path[0]) {
-            fieldErrors[err.path[0] as string] = err.message;
-          }
-        });
-        setErrors(fieldErrors);
-        return;
-      }
+    // Zod só é baixado quando alguém envia o formulário.
+    const { contactFormSchema } = await import("@/lib/validation");
+    const result = contactFormSchema.safeParse(form);
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0]) {
+          fieldErrors[err.path[0] as string] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return;
     }
 
     setLoading(true);
@@ -122,7 +119,7 @@ export default function ContactForm() {
           onClick={() => haptic()}
           className={directContactClass}
         >
-          <LinkedIn className="!w-5 !h-5" aria-hidden="true" />
+          <LinkedInIcon className="w-4 h-4" />
           LinkedIn
         </a>
         <a
@@ -132,7 +129,7 @@ export default function ContactForm() {
           onClick={() => haptic()}
           className={directContactClass}
         >
-          <GitHub className="!w-4 !h-4" aria-hidden="true" />
+          <GitHubIcon className="w-4 h-4" />
           GitHub
         </a>
       </div>

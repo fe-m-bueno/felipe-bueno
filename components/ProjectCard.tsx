@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Badge from "./Badge";
 import Link from "next/link";
-import { GitHub } from "@mui/icons-material";
+import { GitHubIcon } from "./SocialIcons";
 import { useTranslation } from "react-i18next";
 import LiquidGlass from "./LiquidGlass";
 import SpecularButton from "./SpecularButton";
@@ -50,6 +50,7 @@ function ProjectCardComponent({
           height={1080}
           loading={priority ? "eager" : "lazy"}
           priority={priority}
+          sizes="(min-width: 1024px) 50vw, 100vw"
           className="h-full w-full rounded-lg object-cover object-top transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
         />
       </div>
@@ -107,7 +108,7 @@ function ProjectCardComponent({
             onClick={() => haptic()}
             className="relative z-[2] flex items-center justify-center gap-2 px-3 py-1 bg-white/85 hover:bg-white/100 dark:bg-white/10 dark:hover:bg-white/25 border border-gray-200/20 dark:border-white/15 rounded-xl transition ~text-sm/base"
           >
-            <GitHub className="w-6 h-6 shrink-0" />
+            <GitHubIcon className="w-6 h-6 shrink-0" />
             GitHub
           </Link>
         </div>
