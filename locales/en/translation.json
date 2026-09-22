@@ -7,12 +7,14 @@
     "contact": "Contact",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "navigationMenu": "Navigation menu"
+    "navigationMenu": "Navigation menu",
+    "tldr": "tl;dr",
+    "tldrLabel": "Short version of this site (opens in a new tab)"
   },
   "hero": {
     "title": "Hey, I'm Felipe!",
-    "description": "Backend-focused Fullstack Developer who builds internal platforms, APIs, and data pipelines that actually perform.",
-    "description2": "I've optimized queries from 92s → 3.6s, orchestrated 140 Airflow DAGs, and saved 240+ hours through automation.",
+    "description": "Software Engineer with a backend focus. I design services and APIs from scratch, and I get systems that were never meant to talk to each other to agree on the same numbers.",
+    "description2": "A production screen I inherited took 92s to load. I got it to 0.8s.",
     "scrollDown": "Scroll Down",
     "clickToRemoveBlur": "Click to see Felipe's face",
     "hoverToRemoveBlur": "Hover to see Felipe's face",
