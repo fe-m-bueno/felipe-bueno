@@ -1,4 +1,4 @@
-import { GitHub } from '@mui/icons-material';
+import { GitHubIcon } from '@/components/SocialIcons';
 import Link from 'next/link';
 
 export default function TheFooter() {
@@ -7,7 +7,7 @@ export default function TheFooter() {
       <div className="flex flex-row items-end justify-end gap-4">
         &copy; {new Date().getFullYear()} FELIPE BUENO{' '}
         <Link href="https://github.com/fe-m-bueno/felipe-bueno">
-          <GitHub className="w-6 h-6 transition-all ease-in-out duration-200 hover:text-rose-500" />
+          <GitHubIcon className="w-6 h-6 transition-all ease-in-out duration-200 hover:text-rose-500" />
         </Link>
       </div>
     </footer>

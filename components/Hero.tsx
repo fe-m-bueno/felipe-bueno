@@ -10,7 +10,6 @@ import {
   useSyncExternalStore,
 } from "react";
 import { EyeClosed, ArrowRight, Eye, ArrowUpRight, Plus, Minus } from "lucide-react";
-import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import Badge from "@/components/Badge";
 import OpenToWorkBadge from "@/components/OpenToWorkBadge";
 import CountUpText from "@/components/CountUpText";
@@ -53,45 +52,38 @@ const CORE_SKILLS_COUNT = 10;
 const SkillsList = memo(function SkillsList({ skills }: { skills: HeroSkill[] }) {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
+  const rowRef = useRef<HTMLDivElement>(null);
 
   const coreSkills = skills.filter((skill) => skill.tier === "core");
   const extraSkills = skills.filter((skill) => skill.tier === "extra");
 
   const toggleExpanded = useCallback(() => {
     haptic();
+    // No desktop a coluna do hero é centralizada na vertical: se a lista
+    // crescesse, o título subiria. Travada na altura fechada, as extras
+    // transbordam para baixo sem mover nada.
+    // ponytail: a trava não acompanha resize com a lista aberta.
+    const row = rowRef.current;
+    if (row && window.matchMedia("(min-width: 1024px)").matches) {
+      row.style.height = expanded ? "" : `${row.offsetHeight}px`;
+    }
     setExpanded((value) => !value);
-  }, []);
+  }, [expanded]);
 
   return (
-    <>
+    <div
+      ref={rowRef}
+      className="flex flex-wrap justify-center items-center lg:justify-start lg:items-start gap-2"
+    >
       {coreSkills.map((skill) => (
         <Badge key={skill.name} name={skill.name} icon={skill.icon} />
       ))}
-      <AnimatePresence initial={false}>
-        {expanded &&
-          extraSkills.map((skill, index) => (
-            <motion.div
-              key={skill.name}
-              initial={
-                prefersReducedMotion
-                  ? { opacity: 0 }
-                  : { opacity: 0, scale: 0.85 }
-              }
-              animate={{
-                opacity: 1,
-                scale: 1,
-                transition: {
-                  delay: prefersReducedMotion ? 0 : index * 0.025,
-                  duration: 0.25,
-                },
-              }}
-              exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.15 } }}
-            >
-              <Badge name={skill.name} icon={skill.icon} />
-            </motion.div>
-          ))}
-      </AnimatePresence>
+      {expanded &&
+        extraSkills.map((skill) => (
+          <div key={skill.name} className="pop-in">
+            <Badge name={skill.name} icon={skill.icon} />
+          </div>
+        ))}
       <button
         type="button"
         onClick={toggleExpanded}
@@ -110,7 +102,7 @@ const SkillsList = memo(function SkillsList({ skills }: { skills: HeroSkill[] })
           </>
         )}
       </button>
-    </>
+    </div>
   );
 });
 
@@ -343,12 +335,12 @@ const HeroImage = memo(function HeroImage() {
           <Image
             src="/hero.jpg"
             alt={t("a11y.heroPortrait")}
-            width={500}
-            height={500}
+            width={720}
+            height={1083}
             className="rounded-3xl"
             priority
             placeholder="empty"
-            sizes="(min-width: 1024px) 50vw, 100vw"
+            sizes="(min-width: 1024px) 25vw, 50vw"
           />
         </div>
 
@@ -367,7 +359,6 @@ const HeroImage = memo(function HeroImage() {
 
 export default function Hero() {
   const { t } = useTranslation();
-  const prefersReducedMotion = useReducedMotion();
   const { locale, content } = useSiteContent();
   const resumePdf =
     content.resume?.pdf ||
@@ -380,45 +371,17 @@ export default function Hero() {
           tier: index < CORE_SKILLS_COUNT ? "core" : "extra",
         }));
 
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: prefersReducedMotion
-        ? undefined
-        : { staggerChildren: 0.08, delayChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = prefersReducedMotion
-    ? {
-        hidden: { opacity: 1, y: 0 },
-        visible: { opacity: 1, y: 0 },
-      }
-    : {
-        hidden: { opacity: 0, y: 16 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
-        },
-      };
-
   return (
     <section
       id="landing"
       className="relative grid grid-cols-1 lg:grid-cols-2 items-center justify-center text-center px-4 w-full pt-28 lg:pt-20 max-w-8xl mx-auto isolation-auto overflow-x-clip"
     >
-      <motion.div
-        className="flex flex-col justify-center items-center lg:min-h-screen gap-8 lg:gap-12"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+      <div className="flex flex-col justify-center items-center lg:min-h-screen gap-8 lg:gap-12">
         <div className="flex flex-col justify-center items-center lg:items-start lg:ml-16 mx-auto sm:pl-0 lg:pl-12">
-          <motion.div variants={itemVariants} className="mb-6">
+          <div className="hero-fade-in [--animation-delay:100ms] mb-6">
             <OpenToWorkBadge />
-          </motion.div>
-          <motion.h1 variants={itemVariants} className="~text-3xl/7xl mb-8">
+          </div>
+          <h1 className="hero-fade-in [--animation-delay:180ms] ~text-3xl/7xl mb-8">
             <span className="font-bold inline-block text-nowrap">
               {t("hero.title")}
               <span
@@ -428,24 +391,15 @@ export default function Hero() {
                 👋
               </span>
             </span>
-          </motion.h1>
-          <motion.p
-            variants={itemVariants}
-            className="~text-base/2xl mb-6 text-center lg:text-start"
-          >
+          </h1>
+          <p className="hero-fade-in [--animation-delay:260ms] ~text-base/2xl mb-6 text-center lg:text-start">
             {t("hero.description")}
-          </motion.p>
-          <motion.p
-            variants={itemVariants}
-            className="~text-base/2xl mb-8 text-center lg:text-start font-semibold"
-          >
+          </p>
+          <p className="hero-fade-in [--animation-delay:340ms] ~text-base/2xl mb-8 text-center lg:text-start font-semibold">
             <CountUpText text={t("hero.description2")} />
-          </motion.p>
+          </p>
 
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-wrap gap-3 justify-center lg:justify-start items-center w-full"
-          >
+          <div className="hero-fade-in [--animation-delay:420ms] flex flex-wrap gap-3 justify-center lg:justify-start items-center w-full">
             <SpecularButton
               href="#contact"
               onClick={() => haptic()}
@@ -504,23 +458,16 @@ export default function Hero() {
                 <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform duration-300" />
               </span>
             </SpecularButton>
-          </motion.div>
+          </div>
         </div>
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-wrap justify-center items-center lg:justify-start lg:items-start gap-2 lg:ml-16 h-fit mx-auto sm:pl-0 lg:pl-12"
-        >
+        <div className="hero-fade-in [--animation-delay:500ms] lg:ml-16 h-fit mx-auto sm:pl-0 lg:pl-12">
           <SkillsList skills={skills} />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
-      <motion.div
-        initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      >
+      <div className="hero-fade-in [--animation-delay:350ms]">
         <HeroImage />
-      </motion.div>
+      </div>
     </section>
   );
 }

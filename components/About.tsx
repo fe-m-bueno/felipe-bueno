@@ -1,6 +1,4 @@
 "use client";
-import { useTranslation } from "react-i18next";
-import { motion, useReducedMotion } from "motion/react";
 import RecentTrack from "./RecentTrack";
 import LiquidGlass from "./LiquidGlass";
 import Availability from "./Availability";
@@ -9,7 +7,6 @@ import { useSiteContent } from "./SiteContentProvider";
 export default function About() {
   const { content } = useSiteContent();
   const data = content.about;
-  const prefersReducedMotion = useReducedMotion();
 
   if (!data) return null;
 
@@ -25,26 +22,14 @@ export default function About() {
       <h3 className="mt-6 ~text-xl/2xl font-semibold">TLDR</h3>
       <ul className="mt-2 grid grid-cols-1 lg:grid-cols-2 gap-2">
         {data.tldr.map((item, index) => (
-          <motion.li
-            key={index}
-            initial={
-              prefersReducedMotion ? false : { opacity: 0, y: 12 }
-            }
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{
-              duration: 0.35,
-              delay: prefersReducedMotion ? 0 : index * 0.06,
-            }}
-            className="flex"
-          >
+          <li key={index} className="flex">
             <LiquidGlass
               variant="badge"
               className="inline-flex w-full items-center gap-2 px-4 py-2 !rounded-2xl cursor-default"
             >
               <span className="inline-flex ~text-sm/base">{item}</span>
             </LiquidGlass>
-          </motion.li>
+          </li>
         ))}
       </ul>
 

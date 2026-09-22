@@ -5,13 +5,17 @@ import { ChevronDown } from "lucide-react";
 import { haptic } from "@/lib/haptic";
 
 const SECTIONS = ["landing", "about", "projects", "contact"];
+const CIRCUMFERENCE = 2 * Math.PI * 22;
 
 export default function ScrollNavigator() {
   const { t } = useTranslation();
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [isAtBottom, setIsAtBottom] = useState(false);
   const [currentSection, setCurrentSection] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
+
+  // O anel é escrito direto no SVG: com estado, cada quadro de scroll
+  // re-renderizaria o botão.
+  const progressRef = useRef<SVGCircleElement>(null);
 
   // Cache de posições das seções para evitar recálculos
   const sectionPositionsRef = useRef<{ top: number; bottom: number }[]>([]);
@@ -37,9 +41,9 @@ export default function ScrollNavigator() {
     const progress =
       docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
 
-    // Só atualiza se mudou significativamente (evita re-renders desnecessários)
-    setScrollProgress((prev) =>
-      Math.abs(prev - progress) > 0.5 ? progress : prev
+    progressRef.current?.style.setProperty(
+      "stroke-dashoffset",
+      String(CIRCUMFERENCE - (progress / 100) * CIRCUMFERENCE)
     );
 
     // Detectar seção atual usando cache
@@ -141,10 +145,6 @@ export default function ScrollNavigator() {
     }
   };
 
-  const circumference = 2 * Math.PI * 22;
-  const strokeDashoffset =
-    circumference - (scrollProgress / 100) * circumference;
-
   return (
     <button
       onClick={handleClick}
@@ -183,6 +183,7 @@ export default function ScrollNavigator() {
         />
         {/* Círculo de progresso rosa */}
         <circle
+          ref={progressRef}
           cx="28"
           cy="28"
           r="22"
@@ -190,8 +191,8 @@ export default function ScrollNavigator() {
           stroke="url(#progressGradient)"
           strokeWidth="3"
           strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
+          strokeDasharray={CIRCUMFERENCE}
+          strokeDashoffset={CIRCUMFERENCE}
           className="transition-all duration-150 ease-out"
         />
         {/* Gradiente rosa */}

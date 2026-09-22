@@ -55,7 +55,12 @@ it.each([false, true])('only keeps rendering an idle button when autoAnimate is 
   });
   vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => { frames.set(++id, callback); return id; });
   vi.stubGlobal('cancelAnimationFrame', (key: number) => frames.delete(key));
-  render(<SpecularButton autoAnimate={autoAnimate}>Test</SpecularButton>);
+  const { container } = render(<SpecularButton autoAnimate={autoAnimate}>Test</SpecularButton>);
+  // O WebGL só nasce quando o botão chega perto da viewport...
+  expect(container.querySelector('canvas')).toBeNull();
+  act(() => intersect([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver));
+  expect(container.querySelector('canvas')).not.toBeNull();
+  // ...e então o observer de visibilidade passa a controlar o render.
   act(() => intersect([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver));
   const start = performance.now();
   for (let frame = 1; frame <= 180; frame++) {

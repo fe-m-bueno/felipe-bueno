@@ -39,7 +39,6 @@ const nextConfig = {
   experimental: {
     // Otimiza imports de pacotes grandes
     optimizePackageImports: [
-      '@mui/icons-material',
       'lucide-react',
       '@iconify/react',
       '@headlessui/react',

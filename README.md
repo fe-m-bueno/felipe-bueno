@@ -8,7 +8,7 @@ This is a modern, responsive portfolio site that uses recent web technologies to
 
 ## Key Features
 
-- Responsive design with smooth animations using Framer Motion
+- Responsive design with smooth CSS animations
 - Light/dark theme support
 - Internationalization (Portuguese and English)
 - Last.fm integration to display music activity
@@ -25,7 +25,6 @@ This is a modern, responsive portfolio site that uses recent web technologies to
 - React 18
 - TypeScript
 - Tailwind CSS
-- Framer Motion
 - i18next (internationalization)
 
 ### Backend
