@@ -7,12 +7,14 @@
     "contact": "Contato",
     "openMenu": "Abrir menu",
     "closeMenu": "Fechar menu",
-    "navigationMenu": "Menu de navegação"
+    "navigationMenu": "Menu de navegação",
+    "tldr": "tl;dr",
+    "tldrLabel": "Versão curta deste site, em inglês (abre em nova aba)"
   },
   "hero": {
     "title": "Oi, Felipe aqui!",
-    "description": "Desenvolvedor Fullstack com foco em backend, construindo plataformas internas, APIs e pipelines de dados que realmente performam.",
-    "description2": "Já otimizei queries de 92s → 3,6s, orquestrei 140 DAGs no Airflow e economizei 240+ horas com automação.",
+    "description": "Engenheiro de software com foco em backend. Desenho serviços e APIs do zero e ponho sistemas que nunca foram feitos para conversar de acordo sobre os mesmos números.",
+    "description2": "Uma tela de produção que herdei levava 92s para carregar. Coloquei em 0,8s.",
     "scrollDown": "Deslize para baixo",
     "clickToRemoveBlur": "Clique para ver o rosto de Felipe",
     "hoverToRemoveBlur": "Passe o mouse para ver o rosto de Felipe",

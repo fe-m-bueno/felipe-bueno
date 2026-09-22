@@ -20,7 +20,7 @@ function GitHubIcon() {
 }
 import LanguageSelector from './LanguageSelector';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 import { haptic } from '@/lib/haptic';
 
@@ -116,6 +116,17 @@ export default function Navbar() {
             >
               {t('navbar.contact')}
             </Link>
+            <Link
+              href="https://tldr.felipe-bueno.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={t('navbar.tldrLabel')}
+              onClick={() => haptic()}
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border border-rose-500/40 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 font-mono text-sm transition-colors"
+            >
+              {t('navbar.tldr')}
+              <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+            </Link>
             <ThemeToggle />
             <LanguageSelector />
           </div>
@@ -200,6 +211,17 @@ export default function Navbar() {
                 className="text-lg font-medium hover:text-rose-500 flex items-center justify-start gap-2 transition-colors"
               >
                 GitHub <GitHubIcon />
+              </Link>
+              <Link
+                href="https://tldr.felipe-bueno.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t('navbar.tldrLabel')}
+                onClick={closeMenu}
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border border-rose-500/40 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 font-mono text-lg transition-colors"
+              >
+                {t('navbar.tldr')}
+                <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
               </Link>
               <div className="flex justify-between items-center gap-2">
                 <ThemeToggle />
